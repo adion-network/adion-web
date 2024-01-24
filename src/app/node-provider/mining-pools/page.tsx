@@ -37,6 +37,7 @@ export default function Overview() {
   const [showInputApplicationParams, setShowInputApplicationParams] = useState(false)
   const [applicationParamsOrigin, setApplicationParamsOrigin] = useState("")
   const [openSelectServer, setOpenSelectServer] = useState(false)
+  const [openAddWallet, setOpenAddWallet] = useState(false)
   const [poolList, setPoolList] = useState([
     {
       name: "KLS",
@@ -300,7 +301,7 @@ export default function Overview() {
             </StepLabel>
             <StepContent>
               <Box className="ml-[350px]">
-                <Button className="px-16 py-2 text-base" variant="contained">
+                <Button className="px-16 py-2 text-base" variant="contained" onClick={() => setOpenAddWallet(true)}>
                   Add Wallet
                 </Button>
                 <TableContainer component={Paper} className="mt-6" variant="outlined">
@@ -452,7 +453,7 @@ export default function Overview() {
             ></TextField>
           </FormControl>
         </DialogContent>
-        <DialogActions className="justify-center mb-2">
+        <DialogActions className="justify-center pb-5">
           <Button
             className="w-[150px]"
             onClick={() => {
@@ -476,6 +477,30 @@ export default function Overview() {
             variant="text"
             size="large"
           >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openAddWallet} fullWidth>
+        <DialogTitle>New Wallet</DialogTitle>
+        <DialogContent>
+          <FormControl className="mt-2 w-full flex flex-col gap-y-5">
+            <TextField label="Name" placeholder="Input a wallet name"></TextField>
+            <TextField label="Address" placeholder="Input a wallet address"></TextField>
+            <TextField label="Currency" value={createParams.currency} disabled></TextField>
+          </FormControl>
+        </DialogContent>
+        <DialogActions className="justify-center pb-5">
+          <Button
+            className="w-[150px]"
+            onClick={() => setOpenAddWallet(false)}
+            color="primary"
+            variant="contained"
+            size="large"
+          >
+            OK
+          </Button>
+          <Button onClick={() => setOpenAddWallet(false)} variant="text" size="large">
             Cancel
           </Button>
         </DialogActions>
