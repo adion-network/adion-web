@@ -1,8 +1,10 @@
+"use client"
 import Navigator from "@/components/node-provider/Navigator"
 import { Box, Paper, Table, TableCell, TableHead, TableRow, TableContainer, TableBody } from "@mui/material"
+import { useState } from "react"
 
 export default function Farm() {
-  const farmList = [
+  const [farmList, setFarmList] = useState([
     {
       name: "VWAqwvki",
       cluster: "ClusterA",
@@ -93,7 +95,7 @@ export default function Farm() {
       walletAddress: "BJMBR1du0hSddxhkfh5gxDI8StFMRkWXWHHu3Uy9fY",
       blockExplorer: "Explorer2",
     },
-  ]
+  ])
 
   return (
     <Box>
