@@ -1,5 +1,4 @@
 "use client"
-import { UilCloudComputing } from "@/components/Icons"
 import Navigator from "@/components/node-provider/Navigator"
 import { Description, CheckCircleOutline, Delete, Settings } from "@mui/icons-material"
 import {
@@ -16,10 +15,7 @@ import {
   DialogContent,
   DialogActions,
   Radio,
-  RadioGroup,
   FormControl,
-  FormControlLabel,
-  Grid,
   Table,
   TableContainer,
   TableRow,
@@ -30,218 +26,141 @@ import {
   MenuItem,
   Select,
   InputLabel,
+  Avatar,
+  CircularProgress,
+  Backdrop,
 } from "@mui/material"
-import { useState } from "react"
+import Badge, { BadgeProps } from "@mui/material/Badge"
+import { styled } from "@mui/material/styles"
+import { useState, useEffect } from "react"
+import useCoins from "@/app/api/coins"
+import useWallet, { CreateWalletReq } from "@/app/api/wallet"
+import useWorkers from "@/app/api/worker"
+import { enqueueSnackbar } from "notistack"
+import { useConfirm } from "material-ui-confirm"
 
 export default function Overview() {
   const [showInputApplicationParams, setShowInputApplicationParams] = useState(false)
   const [applicationParamsOrigin, setApplicationParamsOrigin] = useState("")
-  const [openSelectServer, setOpenSelectServer] = useState(false)
   const [openAddWallet, setOpenAddWallet] = useState(false)
-  const [poolList, setPoolList] = useState([
-    {
-      name: "KLS",
-      provider: [
-        {
-          name: "F2pool",
-          servers: [
-            {
-              location: "US",
-              url: "a.b.c.us:10000",
-            },
-            {
-              location: "EU",
-              url: "a.b.c.eu:10000",
-            },
-          ],
-        },
-        {
-          name: "herominers",
-          servers: [
-            {
-              location: "US",
-              url: "c.b.a.us:10000",
-            },
-            {
-              location: "EU",
-              url: "c.b.a.eu:10000",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "RVN",
-      provider: [
-        {
-          name: "F2pool",
-          servers: [
-            {
-              location: "US",
-              url: "a.b.c.us:10000",
-            },
-            {
-              location: "EU",
-              url: "a.b.c.eu:10000",
-            },
-          ],
-        },
-        {
-          name: "herominers",
-          servers: [
-            {
-              location: "US",
-              url: "c.b.a.us:10000",
-            },
-            {
-              location: "EU",
-              url: "c.b.a.eu:10000",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "KAS",
-      provider: [
-        {
-          name: "herominers",
-          servers: [
-            {
-              location: "US",
-              url: "c.b.a.us:10000",
-            },
-            {
-              location: "EU",
-              url: "c.b.a.eu:10000",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "IRON",
-      provider: [
-        {
-          name: "F2pool",
-          servers: [
-            {
-              location: "US",
-              url: "a.b.c.us:10000",
-            },
-            {
-              location: "EU",
-              url: "a.b.c.eu:10000",
-            },
-          ],
-        },
-      ],
-    },
-  ])
+  const [providerList, setProviderList] = useState<any[]>([])
+  const [createWalletParams, setCreateWalletParams] = useState<CreateWalletReq>({
+    name: "",
+    address: "",
+    coin_name: "",
+  })
+  const confirm = useConfirm()
 
-  const walletList = [
-    {
-      name: "myaddress1",
-      address: "223344556677889900",
-      currency: "RVN",
-    },
-    {
-      name: "myaddress2",
-      address: "223344556677889922",
-      currency: "RVN",
-    },
-    {
-      name: "myaddress3",
-      address: "993344556677889900",
-      currency: "RVN",
-    },
-  ]
+  const {
+    coinList,
+    fetchCoinList,
+    isCoinListFetching,
+    coinApplicationList,
+    fetchCoinApplications,
+    fetchServerList,
+    isServerListFetching,
+    serverList,
+  } = useCoins()
+
+  const {
+    walletList,
+    isWalletListFetching,
+    fetchWalletList,
+    createWallet,
+    isCreatingWallet,
+    deleteWallet,
+    isDeleteingWallet,
+  } = useWallet()
+  const { workerList, fetchWorkerList } = useWorkers()
 
   const createParamsInit = {
     currency: "",
     provider: "",
-    walletAddress: "",
-    serverInfo: {
-      location: "",
-      url: "",
-    },
-    applicationInfo: {
-      name: "",
-      cluster: "",
-      application: "",
-      applicationParams: "",
-    },
+    walletId: "",
+    serverId: "",
+    clusterId: "",
+    clientId: "",
+    name: "",
+    args: "",
     activeStep: 0,
   }
 
-  const clusterList = [
-    {
-      name: "us-west-1",
-      id: 1,
-    },
-    {
-      name: "us-west-2",
-      id: 2,
-    },
-  ]
-
-  const miningApplications = ["hoe-v1", "hoe-v2", "hoe-v3"]
-
   const [createParams, setCreateParams] = useState(createParamsInit)
 
-  const filterServerList = (currency: string, provider: string) => {
-    const pool = poolList.find((item) => item.name === currency)
-    const p = pool?.provider.find((item) => item.name === provider)
-    return p?.servers || []
-  }
-
-  const showSelectServer = (currency: string, provider: string) => {
-    setOpenSelectServer(true)
-    setCreateParams({
-      ...createParams,
-      currency: currency,
-      provider: provider,
-      walletAddress: "",
-      serverInfo: { location: "", url: "" },
-      applicationInfo: {
+  const processStepOne = async (currency: string) => {
+    if (createParams.currency !== currency) {
+      setCreateParams({
+        ...createParams,
+        currency: currency,
+        provider: "",
+        walletId: "",
+        serverId: "",
+        clusterId: "",
+        clientId: "",
         name: "",
-        cluster: "",
-        application: "",
-        applicationParams: "",
-      },
-      activeStep: 0,
-    })
-  }
-  const handleCloseSelectServer = () => {
-    setOpenSelectServer(false)
-    if (createParams.serverInfo.location && createParams.serverInfo.url) {
-      setCreateParams({ ...createParams, activeStep: 1 })
-      //todo: fetch wallet list
+        activeStep: 1,
+      })
+      setProviderList(coinList.find((p: any) => p.name === currency).miner_pools)
+      fetchCoinApplications(currency)
+      fetchWalletList(currency)
+      fetchWorkerList()
     }
   }
 
-  const handleCancelSelectServer = () => {
-    setOpenSelectServer(false)
-    setCreateParams(createParamsInit)
+  const isPoolSelected = (currency: string): boolean => {
+    return currency === createParams.currency
   }
 
-  const isPoolSelected = (currency: string, provider: string): boolean => {
-    const p = poolList.find((item) => item.name === currency)?.provider.find((p) => p.name === provider)
-    const servers = p?.servers || []
-    return (
-      createParams.activeStep > 0 &&
-      createParams.currency === currency &&
-      createParams.provider === provider &&
-      createParams.serverInfo.location !== "" &&
-      createParams.serverInfo.url !== "" &&
-      servers.filter(
-        (s) => (s.location === createParams.serverInfo.location && s.url === createParams.serverInfo.url) || []
-      ).length > 0
-    )
+  const HotBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      backgroundColor: "#FD6260",
+      fontWeight: "900",
+      color: "white",
+      transform: "rotate(45deg)",
+      transformOrigin: "top right",
+      textAlign: "center",
+      lineHeight: "20px",
+      borderRadius: 0,
+      right: -15,
+      top: 17,
+      padding: "0px 20px 0px 20px",
+    },
+  }))
+
+  const handleAddWallet = async () => {
+    const res = await createWallet({ ...createWalletParams, coin_name: createParams.currency })
+    if (res.code === 200) {
+      enqueueSnackbar("Create wallet successful", { variant: "success" })
+      setOpenAddWallet(false)
+      fetchWalletList(createParams.currency)
+    } else {
+      enqueueSnackbar(res.msg, { variant: "error" })
+    }
   }
+
+  const handleDeleteWallet = async (walletId: number) => {
+    confirm({
+      description: "Are you sure to delete this wallet address?",
+    }).then(async () => {
+      const res = await deleteWallet({ id: walletId })
+      if (res.code === 200) {
+        enqueueSnackbar("Delete wallet successful", { variant: "success" })
+        fetchWalletList(createParams.currency)
+      } else {
+        enqueueSnackbar(res.msg, { variant: "error" })
+      }
+    })
+  }
+
+  useEffect(() => {
+    fetchCoinList()
+  }, [])
 
   return (
     <Box>
+      <Backdrop open={isDeleteingWallet || isCoinListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <CircularProgress />
+      </Backdrop>
       <Navigator></Navigator>
       <Box className="w-[1000px] ml-auto mr-auto mt-6 mb-10">
         <Typography variant="h5">Add New Mining Pool</Typography>
@@ -249,47 +168,37 @@ export default function Overview() {
           <Step key="0" expanded>
             <StepLabel className="block">
               <Typography variant="h6" className="text-gray-400 mt-2">
-                Select crypto and mining pool provider
+                Select crypto to mining
               </Typography>
             </StepLabel>
             <StepContent>
               <Box className="ml-[350px] mt-[-35px]">
-                {poolList.map((item, index) => {
-                  return (
-                    <Box className="mb-2" key={`pool-${index}`}>
-                      <Typography variant="subtitle1">{item.name}</Typography>
-                      <Box className="grid grid-cols-3 gap-4">
-                        {item.provider.map((p, i) => {
-                          return (
-                            <Paper
-                              key={`pool-${index}-${i}`}
-                              onClick={() => {
-                                showSelectServer(item.name, p.name)
-                              }}
-                              className={`px-4 py-3 relative cursor-pointer ${
-                                isPoolSelected(item.name, p.name) ? "bg-gray-100 border" : "hover:bg-gray-100 "
-                              }`}
-                              elevation={isPoolSelected(item.name, p.name) ? 0 : 4}
-                            >
-                              {isPoolSelected(item.name, p.name) && (
-                                <CheckCircleOutline className="text-blue-500 text-lg absolute right-4 top-2" />
-                              )}
-                              <Box className="flex flex-row items-center">
-                                <UilCloudComputing />
-                                <Typography className="ml-2" variant="subtitle1">
-                                  {p.name}
-                                </Typography>
-                              </Box>
-                              <Box className="mt-2 flex justify-end">
-                                <Description className="text-gray-500 hover:text-gray-700 text-lg" />
-                              </Box>
-                            </Paper>
-                          )
-                        })}
-                      </Box>
-                    </Box>
-                  )
-                })}
+                <Box className="mb-2 grid grid-cols-2 gap-4">
+                  {coinList.map((item: any, index: number) => {
+                    return (
+                      <Paper
+                        key={`pool-${index}`}
+                        onClick={() => processStepOne(item.name)}
+                        className={`py-3 relative flex cursor-pointer overflow-hidden ${
+                          isPoolSelected(item.name) ? "bg-gray-100 border" : "hover:bg-gray-100 "
+                        }`}
+                        elevation={isPoolSelected(item.name) ? 0 : 4}
+                      >
+                        <Box className="ml-4 py-3 flex flex-row items-center w-full">
+                          <Avatar src={item.logo} sx={{ width: 50, height: 50 }}></Avatar>
+                          <Typography className="ml-2" variant="h6">
+                            {item.name}
+                          </Typography>
+                        </Box>
+                        {isPoolSelected(item.name) && (
+                          <CheckCircleOutline className="absolute text-lg right-7 bottom-2 text-blue-500" />
+                        )}
+                        <Description className="absolute text-gray-500 hover:text-gray-700 text-lg right-2 bottom-2" />
+                        {item.is_hot && <HotBadge badgeContent="Hot"></HotBadge>}
+                      </Paper>
+                    )
+                  })}
+                </Box>
               </Box>
             </StepContent>
           </Step>
@@ -301,7 +210,14 @@ export default function Overview() {
             </StepLabel>
             <StepContent>
               <Box className="ml-[350px]">
-                <Button className="px-16 py-2 text-base" variant="contained" onClick={() => setOpenAddWallet(true)}>
+                <Button
+                  className="px-16 py-2 text-base"
+                  variant="contained"
+                  onClick={() => {
+                    setCreateWalletParams({ name: "", address: "", coin_name: createParams.currency })
+                    setOpenAddWallet(true)
+                  }}
+                >
                   Add Wallet
                 </Button>
                 <TableContainer component={Paper} className="mt-6" variant="outlined">
@@ -316,28 +232,57 @@ export default function Overview() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {walletList.map((wallet, index) => (
-                        <TableRow key={`wallet-list-${index}`}>
-                          <TableCell>
-                            <Radio
-                              name="select-wallet-address"
-                              onChange={(e) => {
-                                if (e.target.value) {
-                                  setCreateParams({ ...createParams, walletAddress: e.target.value, activeStep: 2 })
-                                }
-                              }}
-                              checked={createParams.walletAddress === wallet.address}
-                              value={wallet.address}
-                            />
-                          </TableCell>
-                          <TableCell>{wallet.name}</TableCell>
-                          <TableCell>{wallet.address}</TableCell>
-                          <TableCell>{wallet.currency}</TableCell>
-                          <TableCell align="center">
-                            <Delete />
+                      {isWalletListFetching ? (
+                        <TableRow>
+                          <TableCell colSpan={5} align="center">
+                            <CircularProgress color="inherit" />
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ) : walletList.length > 0 ? (
+                        walletList.map((wallet: any, index: number) => (
+                          <TableRow key={`wallet-list-${index}`}>
+                            <TableCell>
+                              <Radio
+                                name="select-wallet-address"
+                                onChange={(e) => {
+                                  if (e.target.value) {
+                                    setCreateParams({
+                                      ...createParams,
+                                      walletId: e.target.value,
+                                      activeStep: 2,
+                                    })
+                                  }
+                                }}
+                                checked={createParams.walletId === wallet.id.toString()}
+                                value={wallet.id}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              {wallet.name.length > 16
+                                ? wallet.name.slice(0, 8) + "..." + wallet.name.slice(-8)
+                                : wallet.name}
+                            </TableCell>
+                            <TableCell>
+                              {wallet.address.length > 16
+                                ? wallet.address.slice(0, 8) + "..." + wallet.address.slice(-8)
+                                : wallet.address}
+                            </TableCell>
+                            <TableCell>{wallet.coin_name}</TableCell>
+                            <TableCell align="center">
+                              <Delete
+                                className="cursor-pointer hover:text-gray-500"
+                                onClick={() => handleDeleteWallet(wallet.id)}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={5} align="center" className="py-6">
+                            <Typography variant="subtitle1">No Address Found</Typography>
+                          </TableCell>
+                        </TableRow>
+                      )}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -355,31 +300,77 @@ export default function Overview() {
                 <Box component="form" className="flex flex-col justify-start gap-y-4">
                   <TextField
                     label="Name"
+                    error={createParams.name === ""}
                     placeholder="Input a task name"
-                    value={createParams.applicationInfo.name}
+                    value={createParams.name}
                     onChange={(e) => {
                       setCreateParams({
                         ...createParams,
-                        applicationInfo: { ...createParams.applicationInfo, name: e.target.value },
+                        name: e.target.value,
                       })
                     }}
                   ></TextField>
                   <TextField
                     select
                     label="Cluster"
+                    error={createParams.clusterId === ""}
                     placeholder="Select a cluster for mining task"
                     onChange={(e) => {
                       setCreateParams({
                         ...createParams,
-                        applicationInfo: { ...createParams.applicationInfo, cluster: e.target.value },
+                        clusterId: e.target.value,
                       })
                     }}
                   >
-                    {clusterList.map((c, index) => (
+                    {workerList.map((c: any, index: number) => (
                       <MenuItem key={`select-cluster-${index}`} value={c.id}>
                         {c.name}
                       </MenuItem>
                     ))}
+                  </TextField>
+                  <TextField
+                    select
+                    label="Provider"
+                    error={createParams.provider === ""}
+                    placeholder="Select a mining pool provider"
+                    onChange={(e) => {
+                      setCreateParams({
+                        ...createParams,
+                        provider: e.target.value,
+                      })
+                      fetchServerList(Number(e.target.value))
+                    }}
+                  >
+                    {providerList.map((p: any, index: number) => (
+                      <MenuItem key={`select-provider-${index}`} value={p.id}>
+                        {p.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    label="Server"
+                    error={createParams.serverId === ""}
+                    disabled={!createParams.currency || !createParams.provider}
+                    placeholder="Select a mining pool server"
+                    onChange={(e) => {
+                      setCreateParams({
+                        ...createParams,
+                        serverId: e.target.value,
+                      })
+                    }}
+                  >
+                    {isServerListFetching ? (
+                      <Box className="flex justify-center w-full">
+                        <CircularProgress />
+                      </Box>
+                    ) : (
+                      serverList.map((s: any, index: number) => (
+                        <MenuItem key={`select-server-${index}`} value={s.id}>
+                          {s.server}
+                        </MenuItem>
+                      ))
+                    )}
                   </TextField>
                   <Box className="flex">
                     <FormControl className="w-full">
@@ -387,16 +378,17 @@ export default function Overview() {
                       <Select
                         placeholder="Select a mining application for mining task"
                         label="Mining Application"
+                        error={createParams.clientId === ""}
                         onChange={(e) => {
                           setCreateParams({
                             ...createParams,
-                            applicationInfo: { ...createParams.applicationInfo, application: e.target.value as string },
+                            clientId: e.target.value as string,
                           })
                         }}
                       >
-                        {miningApplications.map((app: string, index: number) => (
-                          <MenuItem key={`select-mining-application-${index}`} value={app}>
-                            <Box className="flex flex-row justify-between items-center">{app}</Box>
+                        {coinApplicationList.map((app: any, index: number) => (
+                          <MenuItem key={`select-mining-application-${index}`} value={app.id}>
+                            <Box className="flex flex-row justify-between items-center">{app.name}</Box>
                           </MenuItem>
                         ))}
                       </Select>
@@ -404,7 +396,7 @@ export default function Overview() {
                     <Button
                       variant="outlined"
                       className="ml-4"
-                      disabled={createParams.applicationInfo.application === ""}
+                      disabled={createParams.clientId === ""}
                       onClick={() => {
                         setShowInputApplicationParams(true)
                       }}
@@ -423,9 +415,11 @@ export default function Overview() {
             disabled={
               !(
                 createParams.activeStep === 2 &&
-                createParams.applicationInfo.name !== "" &&
-                createParams.applicationInfo.cluster !== "" &&
-                createParams.applicationInfo.application !== ""
+                createParams.name !== "" &&
+                createParams.serverId !== "" &&
+                createParams.clientId !== "" &&
+                createParams.walletId !== "" &&
+                createParams.clusterId !== ""
               )
             }
             size="large"
@@ -460,7 +454,7 @@ export default function Overview() {
               setShowInputApplicationParams(false)
               setCreateParams({
                 ...createParams,
-                applicationInfo: { ...createParams.applicationInfo, applicationParams: applicationParamsOrigin },
+                args: applicationParamsOrigin,
               })
             }}
             color="primary"
@@ -471,7 +465,7 @@ export default function Overview() {
           </Button>
           <Button
             onClick={() => {
-              setApplicationParamsOrigin(createParams.applicationInfo.applicationParams)
+              setApplicationParamsOrigin(createParams.args)
               setShowInputApplicationParams(false)
             }}
             variant="text"
@@ -485,74 +479,37 @@ export default function Overview() {
         <DialogTitle>New Wallet</DialogTitle>
         <DialogContent>
           <FormControl className="mt-2 w-full flex flex-col gap-y-5">
-            <TextField label="Name" placeholder="Input a wallet name"></TextField>
-            <TextField label="Address" placeholder="Input a wallet address"></TextField>
+            <TextField
+              label="Name"
+              placeholder="Input a wallet name"
+              value={createWalletParams.name}
+              onChange={(e) => {
+                setCreateWalletParams({ ...createWalletParams, name: e.target.value })
+              }}
+            ></TextField>
+            <TextField
+              label="Address"
+              placeholder="Input a wallet address"
+              value={createWalletParams.address}
+              onChange={(e) => {
+                setCreateWalletParams({ ...createWalletParams, address: e.target.value })
+              }}
+            ></TextField>
             <TextField label="Currency" value={createParams.currency} disabled></TextField>
           </FormControl>
         </DialogContent>
         <DialogActions className="justify-center pb-5">
           <Button
             className="w-[150px]"
-            onClick={() => setOpenAddWallet(false)}
+            onClick={handleAddWallet}
             color="primary"
             variant="contained"
             size="large"
+            disabled={isCreatingWallet}
           >
-            OK
+            {isCreatingWallet ? <CircularProgress size={26} color="inherit" /> : "OK"}
           </Button>
-          <Button onClick={() => setOpenAddWallet(false)} variant="text" size="large">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openSelectServer} fullWidth>
-        <DialogTitle>Select servers</DialogTitle>
-        <DialogContent>
-          <FormControl>
-            <RadioGroup
-              onChange={(e) => {
-                e.preventDefault()
-                const _value = JSON.parse(e.target.value)
-                setCreateParams({
-                  ...createParams,
-                  serverInfo: { location: _value.location, url: _value.url },
-                })
-              }}
-            >
-              {filterServerList(createParams.currency, createParams.provider).map((item, index) => {
-                return (
-                  <FormControlLabel
-                    key={`server-list-${index}`}
-                    control={<Radio />}
-                    value={JSON.stringify(item)}
-                    checked={item.url === createParams.serverInfo.url}
-                    label={
-                      <Grid container spacing={5}>
-                        <Grid item xs={3}>
-                          {item.location}
-                        </Grid>
-                        <Grid item xs={9}>
-                          {item.url}
-                        </Grid>
-                      </Grid>
-                    }
-                  />
-                )
-              })}
-            </RadioGroup>
-          </FormControl>
-        </DialogContent>
-        <DialogActions className="justify-center mb-2">
-          <Button
-            className="w-[150px]"
-            onClick={handleCloseSelectServer}
-            color="primary"
-            variant="contained"
-            size="large"
-          >
-            OK
-          </Button>
-          <Button onClick={handleCancelSelectServer} variant="text" size="large">
+          <Button onClick={() => setOpenAddWallet(false)} variant="text" size="large" disabled={isCreatingWallet}>
             Cancel
           </Button>
         </DialogActions>
