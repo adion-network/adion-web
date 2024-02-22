@@ -1,14 +1,14 @@
 "use client"
-import type { Metadata } from "next"
 import "./globals.css"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
 import { ThemeProvider } from "@mui/material/styles"
-import { theme } from "@/app/theme"
+import { darkTheme } from "@/app/theme"
 
 //components
 import Header from "@/components/Header"
 import { SnackbarProvider } from "notistack"
 import { ConfirmProvider } from "material-ui-confirm"
+import { CssBaseline } from "@mui/material"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,9 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppRouterCacheProvider>
           <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }} autoHideDuration={3000}>
             <ConfirmProvider>
-              <ThemeProvider theme={theme}>
-                {" "}
-                <Header />
+              <ThemeProvider theme={darkTheme}>
+                <CssBaseline /> <Header />
                 {children}
               </ThemeProvider>
             </ConfirmProvider>

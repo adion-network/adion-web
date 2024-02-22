@@ -1,7 +1,6 @@
 "use client"
 import { useState, useCallback } from "react"
 import { get, post } from "./request"
-import { enqueueSnackbar } from "notistack"
 
 export interface CreateWalletReq {
   name: string
