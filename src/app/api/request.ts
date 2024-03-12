@@ -6,6 +6,12 @@ headers.append("X-Auth-Token", process.env.API_KEY || "")
 
 const apiAddress = process.env.API_ADDRESS || "https://api.demeters.io"
 
+export interface ResData {
+  msg: string | null
+  code: number
+  data: any
+}
+
 export const get = async (url: string) => {
   console.log(apiAddress + url)
   const res = await fetch(apiAddress + url, {

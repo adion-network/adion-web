@@ -5,20 +5,53 @@ import { Box, MenuItem } from "@mui/material"
 import Link from "next/link"
 import { CryptocurrencyColorIotx, FluentSettingsCogMultiple24Regular } from "./Icons"
 import { KeyboardArrowDown } from "@mui/icons-material"
-import { styled, alpha } from "@mui/material/styles"
+import { styled } from "@mui/material/styles"
 import Menu, { MenuProps } from "@mui/material/Menu"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { ResData } from "@/app/api/request"
+import { useRouter } from "next/navigation"
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
+  const [username, setUsername] = useState<string | null>("")
   const open = Boolean(anchorEl)
+  const userMenuopen = Boolean(userAnchorEl)
+  const router = useRouter()
+
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleCloseMenu = () => {
     setAnchorEl(null)
+  }
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setUserAnchorEl(event.currentTarget)
+  }
+
+  const handleCloseUserMenu = () => {
+    setUserAnchorEl(null)
+  }
+
+  const toLogout = () => {
+    router.push("/api/logout")
+  }
+
+  useEffect(() => {
+    fetchUsreInfo()
+  }, [])
+
+  const fetchUsreInfo = async () => {
+    let username = localStorage.getItem("username")
+    if (!username) {
+      const res: ResData = await (await fetch("/api/login", { method: "GET" })).json()
+      username = res.data.username
+    }
+    console.log(username)
+    setUsername(username)
   }
 
   const StyledMenu = styled((props: MenuProps) => (
@@ -38,7 +71,7 @@ const Header = () => {
     "& .MuiPaper-root": {
       borderRadius: 10,
       minWidth: 180,
-      backgroundColor: "#000000",
+      backgroundColor: "transparent",
       border: "2px solid #333333",
       boxShadow:
         "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
@@ -75,7 +108,24 @@ const Header = () => {
             </Box>
           </Box>
         </Box>
-        <Button>username</Button>
+        <Button onClick={handleOpenUserMenu}>{username}</Button>
+        <StyledMenu
+          id="basic-menu"
+          anchorEl={userAnchorEl}
+          open={userMenuopen}
+          onClose={handleCloseUserMenu}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              toLogout()
+            }}
+          >
+            Logout
+          </MenuItem>
+        </StyledMenu>
       </Box>
     </Box>
   )

@@ -8,8 +8,13 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropFilter: {
+        none: "none",
+        blur: "blur(2px)",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-filters")],
 }
 export default config

@@ -146,6 +146,18 @@ export function AILogo(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+
+export function UilExchange(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M18 10a1 1 0 0 0-1-1H5.41l2.3-2.29a1 1 0 0 0-1.42-1.42l-4 4a1 1 0 0 0-.21 1.09A1 1 0 0 0 3 11h14a1 1 0 0 0 1-1m3.92 3.62A1 1 0 0 0 21 13H7a1 1 0 0 0 0 2h11.59l-2.3 2.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l4-4a1 1 0 0 0 .21-1.09"
+      ></path>
+    </svg>
+  )
+}
+
 export function GpuMiningPool(props: SVGProps<SVGSVGElement>) {
   return (
     <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -216,6 +228,135 @@ export function GpuMiningPool(props: SVGProps<SVGSVGElement>) {
           <rect width="50" height="50" fill="white" />
         </clipPath>
       </defs>
+    </svg>
+  )
+}
+
+export function SvgSpinnersBlocksScale(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <rect width="9" height="9" x="1.5" y="1.5" fill="currentColor" rx="1">
+        <animate
+          id="svgSpinnersBlocksScale0"
+          attributeName="x"
+          begin="0;svgSpinnersBlocksScale1.end+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="1.5;.5;1.5"
+        ></animate>
+        <animate
+          attributeName="y"
+          begin="0;svgSpinnersBlocksScale1.end+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="1.5;.5;1.5"
+        ></animate>
+        <animate
+          attributeName="width"
+          begin="0;svgSpinnersBlocksScale1.end+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+        <animate
+          attributeName="height"
+          begin="0;svgSpinnersBlocksScale1.end+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+      </rect>
+      <rect width="9" height="9" x="13.5" y="1.5" fill="currentColor" rx="1">
+        <animate
+          attributeName="x"
+          begin="svgSpinnersBlocksScale0.begin+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="13.5;12.5;13.5"
+        ></animate>
+        <animate
+          attributeName="y"
+          begin="svgSpinnersBlocksScale0.begin+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="1.5;.5;1.5"
+        ></animate>
+        <animate
+          attributeName="width"
+          begin="svgSpinnersBlocksScale0.begin+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+        <animate
+          attributeName="height"
+          begin="svgSpinnersBlocksScale0.begin+0.15s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+      </rect>
+      <rect width="9" height="9" x="13.5" y="13.5" fill="currentColor" rx="1">
+        <animate
+          attributeName="x"
+          begin="svgSpinnersBlocksScale0.begin+0.3s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="13.5;12.5;13.5"
+        ></animate>
+        <animate
+          attributeName="y"
+          begin="svgSpinnersBlocksScale0.begin+0.3s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="13.5;12.5;13.5"
+        ></animate>
+        <animate
+          attributeName="width"
+          begin="svgSpinnersBlocksScale0.begin+0.3s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+        <animate
+          attributeName="height"
+          begin="svgSpinnersBlocksScale0.begin+0.3s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+      </rect>
+      <rect width="9" height="9" x="1.5" y="13.5" fill="currentColor" rx="1">
+        <animate
+          id="svgSpinnersBlocksScale1"
+          attributeName="x"
+          begin="svgSpinnersBlocksScale0.begin+0.45s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="1.5;.5;1.5"
+        ></animate>
+        <animate
+          attributeName="y"
+          begin="svgSpinnersBlocksScale0.begin+0.45s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="13.5;12.5;13.5"
+        ></animate>
+        <animate
+          attributeName="width"
+          begin="svgSpinnersBlocksScale0.begin+0.45s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+        <animate
+          attributeName="height"
+          begin="svgSpinnersBlocksScale0.begin+0.45s"
+          dur="0.6s"
+          keyTimes="0;.2;1"
+          values="9;11;9"
+        ></animate>
+      </rect>
     </svg>
   )
 }

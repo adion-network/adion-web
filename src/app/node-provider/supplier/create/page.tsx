@@ -14,13 +14,16 @@ import {
 } from "@mui/material"
 import Badge, { BadgeProps } from "@mui/material/Badge"
 import { styled } from "@mui/material/styles"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import useCoins from "@/app/api/coins"
 import Link from "next/link"
 import { AILogo, GpuMiningPool } from "@/components/Icons"
+import { useRouter } from "next/navigation"
 
 export default function Overview() {
   const { coinList, fetchCoinList, isCoinListFetching } = useCoins()
+  const [isLaunching, setIsLaunching] = useState(false)
+  const router = useRouter()
 
   const createParamsInit = {
     option: "",
@@ -38,6 +41,8 @@ export default function Overview() {
         application: "",
         activeStep: 1,
       })
+      fetchCoinList()
+      //todo: fetch application list
     }
   }
 
@@ -86,17 +91,11 @@ export default function Overview() {
     },
   ]
 
-  useEffect(() => {
-    fetchCoinList()
-    //todo: fetch application list
-  }, [])
-
   return (
     <Box>
       <Backdrop open={isCoinListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
-
       <Box className="w-[1000px] ml-auto mr-auto mt-6 mb-10">
         <Box className="mb-4">
           <Link href="/node-provider/overview">
@@ -123,7 +122,7 @@ export default function Overview() {
                       <Paper
                         key={`option-${index}`}
                         onClick={() => processStepOne(item.name)}
-                        className={`py-6 relative rounded-xl flex cursor-pointer bg-black overflow-hidden border-2 border-gray-600 ${
+                        className={`py-6 bg-transparent relative rounded-xl flex cursor-pointer overflow-hidden border-2 border-gray-600 ${
                           isOptionSelected(item.name) ? "border-yellow-600" : "hover:border-yellow-600"
                         }`}
                       >
@@ -134,7 +133,7 @@ export default function Overview() {
                           </Typography>
                         </Box>
                         {isOptionSelected(item.name) && (
-                          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center">
+                          <div className="absolute top-0 left-0 w-full h-full bg-yellow-600 bg-opacity-20 flex justify-center items-center">
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
                         )}
@@ -159,7 +158,7 @@ export default function Overview() {
                       <Paper
                         key={`pool-${index}`}
                         onClick={() => processStepTwo(item.name)}
-                        className={`py-6 relative rounded-xl flex cursor-pointer bg-black overflow-hidden border-2 border-gray-600 ${
+                        className={`py-6 relative rounded-xl flex cursor-pointer bg-transparent overflow-hidden border-2 border-gray-600 ${
                           isApplicationSelected(item.name) ? "border-yellow-600" : "hover:border-yellow-600"
                         }`}
                       >
@@ -170,7 +169,7 @@ export default function Overview() {
                           </Typography>
                         </Box>
                         {isApplicationSelected(item.name) && (
-                          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center">
+                          <div className="absolute top-0 left-0 w-full h-full bg-yellow-900 bg-opacity-20 flex justify-center items-center">
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
                         )}
@@ -189,7 +188,11 @@ export default function Overview() {
             disabled={!(createParams.activeStep === 2 && createParams.option !== "" && createParams.application !== "")}
             size="large"
             variant="contained"
-            className="w-full py-2 text-xl font-extrabold mt-10"
+            className="w-full py-2 text-xl font-extrabold mt-10 rounded-lg"
+            onClick={() => {
+              //todo: request api
+              router.push("/node-provider/supplier/list")
+            }}
           >
             Launch Now
           </Button>
