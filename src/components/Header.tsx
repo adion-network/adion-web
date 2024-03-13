@@ -1,24 +1,23 @@
 "use client"
 
 import Button from "@mui/material/Button"
-import { Box, MenuItem } from "@mui/material"
+import { Avatar, Box, MenuItem } from "@mui/material"
 import Link from "next/link"
 import { CryptocurrencyColorIotx, FluentSettingsCogMultiple24Regular } from "./Icons"
 import { KeyboardArrowDown } from "@mui/icons-material"
 import { styled } from "@mui/material/styles"
 import Menu, { MenuProps } from "@mui/material/Menu"
-
-import { useEffect, useState } from "react"
-import { ResData } from "@/app/api/request"
-import { useRouter } from "next/navigation"
+import { useState, Fragment, useEffect } from "react"
+import useProfile from "@/app/api/profile"
+import { usePathname } from "next/navigation"
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
-  const [username, setUsername] = useState<string | null>("")
   const open = Boolean(anchorEl)
   const userMenuopen = Boolean(userAnchorEl)
-  const router = useRouter()
+  const { userInfo, fetchUserInfo, logout } = useProfile()
+  const path = usePathname()
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -36,23 +35,9 @@ const Header = () => {
     setUserAnchorEl(null)
   }
 
-  const toLogout = () => {
-    router.push("/api/logout")
-  }
-
   useEffect(() => {
-    fetchUsreInfo()
-  }, [])
-
-  const fetchUsreInfo = async () => {
-    let username = localStorage.getItem("username")
-    if (!username) {
-      const res: ResData = await (await fetch("/api/login", { method: "GET" })).json()
-      username = res.data.username
-    }
-    console.log(username)
-    setUsername(username)
-  }
+    fetchUserInfo()
+  }, [userInfo.isLogin, path])
 
   const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -71,7 +56,6 @@ const Header = () => {
     "& .MuiPaper-root": {
       borderRadius: 10,
       minWidth: 180,
-      backgroundColor: "transparent",
       border: "2px solid #333333",
       boxShadow:
         "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
@@ -80,7 +64,7 @@ const Header = () => {
 
   return (
     <Box className="h-[80px]">
-      <Box className="h-full flex justify-between mx-20">
+      <Box className="h-full flex justify-between items-center mx-20">
         <Box className="flex justify-between items-center">
           <CryptocurrencyColorIotx fontSize={50}></CryptocurrencyColorIotx>
           <Box className="ml-10 w-full flex items-center">
@@ -98,8 +82,8 @@ const Header = () => {
               <StyledMenu open={open} anchorEl={anchorEl} onClose={handleCloseMenu}>
                 <MenuItem>
                   <Link href="/supplier">
-                    <Box className="flex items-center text-2xl px-4 py-2 gap-3">
-                      <FluentSettingsCogMultiple24Regular fontSize={36} />
+                    <Box className=" flex items-center text-lg px-4 py-2 gap-3">
+                      <FluentSettingsCogMultiple24Regular fontSize={20} />
                       Supplier
                     </Box>
                   </Link>
@@ -108,24 +92,31 @@ const Header = () => {
             </Box>
           </Box>
         </Box>
-        <Button onClick={handleOpenUserMenu}>{username}</Button>
-        <StyledMenu
-          id="basic-menu"
-          anchorEl={userAnchorEl}
-          open={userMenuopen}
-          onClose={handleCloseUserMenu}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              toLogout()
-            }}
-          >
-            Logout
-          </MenuItem>
-        </StyledMenu>
+        {userInfo.isLogin && (
+          <Fragment>
+            <Box className="flex">
+              <Avatar>{userInfo.username.slice(0, 1).toUpperCase()}</Avatar>
+              <Button onClick={handleOpenUserMenu}>{userInfo.username}</Button>
+              <StyledMenu
+                id="basic-menu"
+                anchorEl={userAnchorEl}
+                open={userMenuopen}
+                onClose={handleCloseUserMenu}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem
+                  onClick={async () => {
+                    await logout()
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              </StyledMenu>
+            </Box>
+          </Fragment>
+        )}
       </Box>
     </Box>
   )

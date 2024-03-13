@@ -11,57 +11,65 @@ import {
   Paper,
   CircularProgress,
   Backdrop,
+  Avatar,
 } from "@mui/material"
 import Badge, { BadgeProps } from "@mui/material/Badge"
 import { styled } from "@mui/material/styles"
-import { useState } from "react"
-import useCoins from "@/app/api/coins"
+import { useEffect, useState } from "react"
+import { useProjects } from "@/app/api/projects"
 import Link from "next/link"
-import { AILogo, GpuMiningPool } from "@/components/Icons"
+import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
 import { useRouter } from "next/navigation"
 
 export default function Overview() {
-  const { coinList, fetchCoinList, isCoinListFetching } = useCoins()
-  const [isLaunching, setIsLaunching] = useState(false)
+  const {
+    projectList,
+    fetchProjectList,
+    isProjectListFetching,
+    projectDetailList,
+    setProjectDetailList,
+    searchProjecByType,
+    joinProject,
+    isJoiningProject,
+  } = useProjects()
   const router = useRouter()
 
   const createParamsInit = {
-    option: "",
-    application: "",
+    option: -1,
     activeStep: 0,
+    projectInfo: {} as any,
   }
 
   const [createParams, setCreateParams] = useState(createParamsInit)
 
-  const processStepOne = async (option: string) => {
-    if (createParams.option !== option) {
+  const processStepOne = async (index: number) => {
+    if (createParams.option !== index) {
       setCreateParams({
         ...createParams,
-        option: option,
-        application: "",
+        option: index,
+        projectInfo: {},
         activeStep: 1,
       })
-      fetchCoinList()
-      //todo: fetch application list
+      setProjectDetailList(searchProjecByType(index))
     }
   }
 
-  const processStepTwo = async (application: string) => {
-    if (createParams.application !== application) {
+  const processStepTwo = async (projectInfo: any) => {
+    if (createParams.projectInfo.id !== projectInfo.id) {
       setCreateParams({
         ...createParams,
-        application: application,
+        projectInfo: projectInfo,
         activeStep: 2,
       })
     }
   }
 
-  const isOptionSelected = (option: string): boolean => {
+  const isOptionSelected = (option: number): boolean => {
     return option === createParams.option
   }
 
-  const isApplicationSelected = (application: string): boolean => {
-    return application === createParams.application
+  const isApplicationSelected = (projectId: number): boolean => {
+    return projectId === createParams.projectInfo.id
   }
 
   const HotBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -80,20 +88,13 @@ export default function Overview() {
     },
   }))
 
-  const optionList = [
-    {
-      logo: AILogo,
-      name: "AI Cloud",
-    },
-    {
-      logo: GpuMiningPool,
-      name: "GPU Mining Pool",
-    },
-  ]
+  useEffect(() => {
+    fetchProjectList()
+  }, [])
 
   return (
     <Box>
-      <Backdrop open={isCoinListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <Backdrop open={isProjectListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
       <Box className="w-[1000px] ml-auto mr-auto mt-6 mb-10">
@@ -116,14 +117,14 @@ export default function Overview() {
             <StepContent>
               <Box className="ml-[200px] mt-[-90px] mb-16">
                 <Box className="mb-2 grid grid-cols-2 gap-4">
-                  {optionList.map((item: any, index: number) => {
-                    const LogoComponent = item.logo
+                  {projectList.map((item: any, index: number) => {
+                    const LogoComponent = item.name == "AI Cloud" ? AILogo : GpuMiningPool
                     return (
                       <Paper
                         key={`option-${index}`}
-                        onClick={() => processStepOne(item.name)}
+                        onClick={() => processStepOne(index)}
                         className={`py-6 bg-transparent relative rounded-xl flex cursor-pointer overflow-hidden border-2 border-gray-600 ${
-                          isOptionSelected(item.name) ? "border-yellow-600" : "hover:border-yellow-600"
+                          isOptionSelected(index) ? "border-yellow-600" : "hover:border-yellow-600"
                         }`}
                       >
                         <Box className="ml-6 py-3 flex flex-row items-center w-full">
@@ -132,7 +133,7 @@ export default function Overview() {
                             {item.name}
                           </Typography>
                         </Box>
-                        {isOptionSelected(item.name) && (
+                        {isOptionSelected(index) && (
                           <div className="absolute top-0 left-0 w-full h-full bg-yellow-600 bg-opacity-20 flex justify-center items-center">
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
@@ -153,22 +154,24 @@ export default function Overview() {
             <StepContent>
               <Box className="ml-[200px] mt-[-90px]">
                 <Box className="mb-2 grid grid-cols-2 gap-4">
-                  {coinList.map((item: any, index: number) => {
+                  {projectDetailList.map((item: any, index: number) => {
                     return (
                       <Paper
                         key={`pool-${index}`}
-                        onClick={() => processStepTwo(item.name)}
+                        onClick={() => processStepTwo(item)}
                         className={`py-6 relative rounded-xl flex cursor-pointer bg-transparent overflow-hidden border-2 border-gray-600 ${
-                          isApplicationSelected(item.name) ? "border-yellow-600" : "hover:border-yellow-600"
+                          isApplicationSelected(item.id) ? "border-yellow-600" : "hover:border-yellow-600"
                         }`}
                       >
                         <Box className="ml-6 py-3 flex flex-row items-center w-full">
-                          <GpuMiningPool />
+                          <Avatar src={item.logo} sx={{ width: 50, height: 50 }} className="bg-gray-200/30">
+                            {item.name.slice(0, 1).toUpperCase()}
+                          </Avatar>
                           <Typography className="ml-2 font-extrabold" variant="h6">
                             {item.name}
                           </Typography>
                         </Box>
-                        {isApplicationSelected(item.name) && (
+                        {isApplicationSelected(item.id) && (
                           <div className="absolute top-0 left-0 w-full h-full bg-yellow-900 bg-opacity-20 flex justify-center items-center">
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
@@ -185,16 +188,27 @@ export default function Overview() {
         <Box className="flex justify-center mt-8">
           <Button
             color="success"
-            disabled={!(createParams.activeStep === 2 && createParams.option !== "" && createParams.application !== "")}
+            disabled={
+              !(createParams.activeStep === 2 && createParams.option !== -1 && createParams.projectInfo.id > 0) ||
+              isJoiningProject
+            }
             size="large"
             variant="contained"
             className="w-full py-2 text-xl font-extrabold mt-10 rounded-lg"
-            onClick={() => {
-              //todo: request api
-              router.push("/node-provider/supplier/list")
+            onClick={async () => {
+              joinProject(createParams.projectInfo).then(() => {
+                router.push("/node-provider/supplier/list")
+              })
             }}
           >
-            Launch Now
+            {isJoiningProject ? (
+              <Box className="flex gap-x-2">
+                <SvgSpinners12DotsScaleRotate fontSize={28}></SvgSpinners12DotsScaleRotate>
+                Lauching
+              </Box>
+            ) : (
+              "Launch Now"
+            )}
           </Button>
         </Box>
       </Box>

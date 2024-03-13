@@ -1,16 +1,21 @@
-import React, { useState } from "react"
-import { Switch, Box, Button, Paper } from "@mui/material"
+import React, { useEffect, useState } from "react"
+import { Switch, Box, Button } from "@mui/material"
+import { useProjects } from "@/app/api/projects"
+import { SvgSpinners12DotsScaleRotate } from "../Icons"
 
 function SupplierTypeSwitch() {
   const [checked, setChecked] = useState(false)
 
   const toggleChecked = () => setChecked((prev) => !prev)
 
-  const handleBoxClick = (event: any) => {
+  const handleBoxClick = (event: any, catalogId: string) => {
     if (event.target === event.currentTarget) {
       toggleChecked()
     }
+    fetchUserProjectList(catalogId)
   }
+
+  const { projectList, fetchUserProjectList } = useProjects()
 
   return (
     <Box
@@ -29,23 +34,20 @@ function SupplierTypeSwitch() {
         backgroundColor: "action.disabledBackground",
       }}
     >
-      <Box className="w-full flex">
-        <Button
-          size="large"
-          variant="text"
-          className="w-1/2 font-extrabold rounded-lg leading-8"
-          onClick={handleBoxClick}
-        >
-          AI Cloud
-        </Button>
-        <Button
-          size="large"
-          variant="text"
-          className="w-1/2 font-extrabold rounded-lg leading-8"
-          onClick={handleBoxClick}
-        >
-          Mining Pools
-        </Button>
+      <Box className="w-full flex justify-center">
+        {projectList.map((item: any, index: number) => (
+          <Button
+            key={`btn-${index}`}
+            size="large"
+            variant="text"
+            className="w-1/2 font-extrabold rounded-lg leading-8"
+            onClick={(e) => {
+              handleBoxClick(e, item.id)
+            }}
+          >
+            {item.name}
+          </Button>
+        ))}
       </Box>
       <Box
         sx={{
@@ -63,7 +65,7 @@ function SupplierTypeSwitch() {
         }}
         className="font-extrabold text-black"
       >
-        {!checked ? "AI Cloud" : "Mining Pools"}
+        {!checked ? projectList[0]?.name || "" : projectList[1]?.name || ""}
       </Box>
       <Switch
         checked={checked}

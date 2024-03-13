@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
     "@mui/material-nextjs": "^5.15.5",
+    "axios": "^1.6.7",
     "material-ui-confirm": "^3.0.10",
     "next": "14.0.4",
     "notistack": "^3.0.1",

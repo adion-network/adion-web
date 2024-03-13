@@ -22,7 +22,7 @@ export default function Overview() {
         </Link>
         <Box className="mt-4">
           <Link href="#">
-            <Button>How to access resources?</Button>
+            <Button className="underline">How to access resources?</Button>
           </Link>
         </Box>
       </Box>
