@@ -2,7 +2,7 @@ import { MaterialSymbolsDesktopAccessDisabled } from "@/components/Icons"
 import { Box, Button, Typography } from "@mui/material"
 import Link from "next/link"
 
-export default function Overview() {
+export default function NoProject() {
   return (
     <Box className="flex justify-center items-center min-h-[40rem]">
       <Box className="text-center">

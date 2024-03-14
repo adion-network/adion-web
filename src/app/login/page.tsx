@@ -2,7 +2,7 @@
 import { Box, Typography, TextField, Button } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import useProfile from "../api/profile"
+import useProfile from "@/contexts/profile"
 
 export default function Login() {
   const [username, setUsername] = useState("")

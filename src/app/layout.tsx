@@ -10,8 +10,8 @@ import { SnackbarProvider } from "notistack"
 import { ConfirmProvider } from "material-ui-confirm"
 import { CssBaseline } from "@mui/material"
 import { usePathname } from "next/navigation"
-import { ProjectProvider } from "./api/projects"
-import { UserProvider } from "./api/profile"
+import { ProjectProvider } from "@/contexts/projects"
+import { UserProvider } from "@/contexts/profile"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const path = usePathname()

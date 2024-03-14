@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import { useState } from "react"
 import { Switch, Box, Button } from "@mui/material"
-import { useProjects } from "@/app/api/projects"
-import { SvgSpinners12DotsScaleRotate } from "../Icons"
+import { useProjects } from "@/contexts/projects"
 
-function SupplierTypeSwitch() {
+const SupplierTypeSwitch = () => {
   const [checked, setChecked] = useState(false)
 
   const toggleChecked = () => setChecked((prev) => !prev)

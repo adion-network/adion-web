@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useState, createContext, useContext } from "react"
-import { ResData } from "./request"
+import { ResData } from "@/app/api/request"
 import { useRouter } from "next/navigation"
 import { enqueueSnackbar } from "notistack"
 
@@ -26,7 +26,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       if (res.code !== 200) {
         throw new Error("not profile found")
       }
-      console.log(res)
       const username = res.data.username
       setUserInfo({ isLogin: true, username: username })
     } catch (error) {
@@ -49,7 +48,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       if (res.code !== 200) {
         throw new Error(res.msg || "not login")
       }
-      router.push("/node-provider/overview")
+      router.push("/node-provider/supplier/list")
     } catch (error: any) {
       enqueueSnackbar(error.message.toString(), { variant: "error" })
     }

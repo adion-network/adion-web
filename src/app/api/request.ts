@@ -1,10 +1,26 @@
 "use server"
 
 import axios from "axios"
+import { cookies } from "next/headers"
+
+const getUserToken = () => {
+  const loginUser = cookies().get("user")
+  const userList = process.env.USER_LIST?.split("|") || []
+  const userFind = userList.find((user) => {
+    return user.startsWith(loginUser?.value + ",")
+  })
+
+  if (!userFind) {
+    return ""
+  }
+
+  const userDetail = userFind.split(",")
+  return userDetail[2] || ""
+}
 
 const headers = new Headers()
 headers.append("Content-Type", "application/json")
-headers.append("X-Auth-Token", process.env.API_KEY || "")
+headers.append("X-Auth-Token", getUserToken())
 
 const apiAddress = process.env.API_ADDRESS || "https://api-test.demeters.io"
 

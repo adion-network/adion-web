@@ -5,7 +5,10 @@ import { cookies } from "next/headers"
 
 export async function POST(req: Request) {
   try {
-    const userList = process.env.USER_LIST?.split("|")
+    const userList = process.env.USER_LIST?.split("|").map((userInfo) => {
+      const user = userInfo.split(",")
+      return user[0] + "," + user[1]
+    })
     const { password, username } = await req.json()
 
     if (userList?.includes(username + "," + password)) {

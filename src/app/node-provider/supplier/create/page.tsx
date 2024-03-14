@@ -16,7 +16,7 @@ import {
 import Badge, { BadgeProps } from "@mui/material/Badge"
 import { styled } from "@mui/material/styles"
 import { useEffect, useState } from "react"
-import { useProjects } from "@/app/api/projects"
+import { useProjects } from "@/contexts/projects"
 import Link from "next/link"
 import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
 import { useRouter } from "next/navigation"

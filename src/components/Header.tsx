@@ -8,7 +8,7 @@ import { KeyboardArrowDown } from "@mui/icons-material"
 import { styled } from "@mui/material/styles"
 import Menu, { MenuProps } from "@mui/material/Menu"
 import { useState, Fragment, useEffect } from "react"
-import useProfile from "@/app/api/profile"
+import useProfile from "@/contexts/profile"
 import { usePathname } from "next/navigation"
 
 const Header = () => {
