@@ -3,7 +3,7 @@ import { enqueueSnackbar } from "notistack"
 import { post, get, sendMessageToDiscord } from "@/app/api/request"
 import { useState, useCallback, createContext, useContext } from "react"
 import useProfile from "./profile"
-import moment from "moment"
+import { useRouter } from "next/navigation"
 
 const ProjectContext = createContext({} as any)
 
@@ -21,6 +21,9 @@ export const ProjectProvider = ({ children }: any) => {
   //user project list
   const [userProjectList, setUserProjectList] = useState<any[]>([])
   const [isUserProjectListFetching, setIsUserProjectListFetching] = useState(false)
+
+  //router
+  const router = useRouter()
 
   const fetchProjectList = useCallback(async () => {
     setIsProjectListFetching(true)
@@ -72,9 +75,10 @@ export const ProjectProvider = ({ children }: any) => {
         if (res.code === 200) {
           await fetchUserInfo()
           await sendMessageToDiscord(`
-User: ${userInfo.username} requested join to project: ${projectInfo.name}, projectId: ${projectInfo.id}
+User: ${userInfo.username} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
 Command: ${res.data}
           `)
+          router.push("/node-provider/supplier/list")
         } else {
           throw new Error(res.msg)
         }
@@ -87,7 +91,40 @@ Command: ${res.data}
     [userInfo]
   )
 
-  const fetchProjectNodes = useCallback(async (projectId: number) => {
+  const switchProject = useCallback(
+    async (fromProject: any, toProject: any) => {
+      try {
+        setIsJoiningProject(true)
+        if (!fromProject?.id || !toProject?.id) {
+          throw new Error("project id invaild")
+        }
+
+        const res = await post("/api/v1/user/project/switch/", {
+          dest_project_id: toProject.id,
+          src_project_id: fromProject.id,
+        })
+        if (res.code === 200) {
+          await fetchUserInfo()
+          await sendMessageToDiscord(`
+User: ${userInfo.username} requested to switch project: 
+  From project: ${fromProject.name}, Id: ${fromProject.id}
+  To project: ${toProject.name}, Id: ${toProject.id}
+Command: ${res.data}
+          `)
+          router.push("/node-provider/supplier/list")
+        } else {
+          throw new Error(res.msg)
+        }
+      } catch (error: any) {
+        enqueueSnackbar(error.message, { variant: "error" })
+      } finally {
+        setIsJoiningProject(false)
+      }
+    },
+    [userInfo]
+  )
+
+  const fetchProjectNodes = useCallback(async (projectId: number, filterStatus: string = "all") => {
     try {
       setIsProjectNodeFetching(true)
       if (!projectId) {
@@ -97,37 +134,39 @@ Command: ${res.data}
       if (!data) {
         setProjectNodeList([])
       } else {
-        setProjectNodeList(
-          data.map((node: any) => {
-            const gpuStatus = {
-              y: 0,
-              n: 0,
-            }
-            const gpuModel: { [key: string]: number } = {}
+        let result = data.map((node: any) => {
+          const gpuStatus = {
+            y: 0,
+            n: 0,
+          }
+          const gpuModel: { [key: string]: number } = {}
 
-            if (node.gpu) {
-              node.gpu.map((g: any) => {
-                g.status === "ok" ? gpuStatus.y++ : gpuStatus.n++
-                if (gpuModel[g.product] === undefined) {
-                  gpuModel[g.product] = 0
-                }
-                gpuModel[g.product]++
-              })
-            }
-            const currentTimeStamp = moment().unix()
-            const status = currentTimeStamp - node.heartbeat_at > 600 ? "Failed" : "Running"
-            return {
-              devideId: node.device_id,
-              ip: node.ip,
-              status: status,
-              gpuStatus: `Y:${gpuStatus.y} N:${gpuStatus.n}`,
-              gpuModel: Object.keys(gpuModel).map((k) => {
-                return { model: k, count: gpuModel[k] }
-              }),
-              region: node.geo,
-            }
+          if (node.gpu) {
+            node.gpu.map((g: any) => {
+              g.status === "ok" ? gpuStatus.y++ : gpuStatus.n++
+              if (gpuModel[g.product] === undefined) {
+                gpuModel[g.product] = 0
+              }
+              gpuModel[g.product]++
+            })
+          }
+          return {
+            devideId: node.device_id,
+            ip: node.ip,
+            status: node.status,
+            gpuStatus: `Y:${gpuStatus.y} N:${gpuStatus.n}`,
+            gpuModel: Object.keys(gpuModel).map((k) => {
+              return { model: k, count: gpuModel[k] }
+            }),
+            region: node.geo,
+          }
+        })
+        if (filterStatus !== "all") {
+          result = result.filter((item: any) => {
+            return item.status === filterStatus
           })
-        )
+        }
+        setProjectNodeList(result)
       }
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" })
@@ -145,6 +184,7 @@ Command: ${res.data}
         searchProjecByType,
         fetchProjectList,
         isProjectListFetching,
+        setIsProjectListFetching,
         isUserProjectListFetching,
         projectDetailList,
         joinProject,
@@ -157,6 +197,7 @@ Command: ${res.data}
         projectNodeList,
         isProjectNodeFetching,
         setProjectNodeList,
+        switchProject,
       }}
     >
       {children}

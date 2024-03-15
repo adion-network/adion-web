@@ -23,6 +23,7 @@ import {
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import NoProject from "@/components/node-provider/NoProject"
+import Link from "next/link"
 
 export default function List() {
   const {
@@ -43,6 +44,7 @@ export default function List() {
 
   const [isNodeListOpen, setIsNodeListOpen] = useState(false)
   const [currentNodeProjectId, setCurrentNodeProjectId] = useState(-1)
+  const [currentFilter, setCurrentFilter] = useState("all")
 
   const handleClickNodeList = async (open: boolean, projectId: number) => {
     if (isNodeListOpen && currentNodeProjectId !== projectId) {
@@ -57,6 +59,12 @@ export default function List() {
         setProjectNodeList([])
       }
     }
+    setCurrentFilter("all")
+  }
+
+  const handleChangeFilter = async (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+    setCurrentFilter(newAlignment)
+    fetchProjectNodes(currentNodeProjectId, newAlignment)
   }
 
   useEffect(() => {
@@ -121,9 +129,11 @@ export default function List() {
                     }}
                   />
                 </Box>
-                <Button>
-                  <UilExchange fontWeight={32} fontSize={26} />
-                </Button>
+                <Link href={`/node-provider/supplier/create?action=switch&from_project_id=${item.project.id}`}>
+                  <Button>
+                    <UilExchange fontWeight={32} fontSize={26} />
+                  </Button>
+                </Link>
               </Box>
               <Box className="flex justify-between gap-4 py-4">
                 <Paper
@@ -166,21 +176,26 @@ export default function List() {
               {isNodeListOpen && currentNodeProjectId === item.project.id && (
                 <Box className="flex flex-col">
                   <Box className="flex justify-start border-b border-stone-400">
-                    <ToggleButtonGroup value="show_all">
-                      <ToggleButton value="show_all" className="font-extrabold px-6">
+                    <ToggleButtonGroup
+                      exclusive
+                      value={currentFilter}
+                      onChange={handleChangeFilter}
+                      disabled={isProjectNodeFetching}
+                    >
+                      <ToggleButton value="all" className="font-extrabold px-6">
                         Show all
-                      </ToggleButton>
-                      <ToggleButton value="pending" className="font-extrabold px-6">
-                        <Circle className="text-yellow-600 text-sm mr-2" />
-                        Pending
                       </ToggleButton>
                       <ToggleButton value="running" className="font-extrabold px-6">
                         <Circle className="text-green-600 text-sm mr-2" />
                         Running
                       </ToggleButton>
+                      <ToggleButton value="pending" className="font-extrabold px-6">
+                        <Circle className="text-yellow-600 text-sm mr-2" />
+                        Pending
+                      </ToggleButton>
                       <ToggleButton value="failed" className="font-extrabold px-6">
                         <Circle className="text-red-600 text-sm mr-2" />
-                        Failed
+                        Offline
                       </ToggleButton>
                     </ToggleButtonGroup>
                   </Box>
@@ -234,15 +249,35 @@ export default function List() {
                                 {node.ip || "-"}
                               </TableCell>
                               <TableCell align="center" className="font-bold text-base">
-                                {node.status || "-"}
+                                {node.status === "running" && (
+                                  <Box className="items-center">
+                                    <Circle className="text-green-600 text-sm mr-1" />
+                                    Running
+                                  </Box>
+                                )}
+                                {node.status === "offline" && (
+                                  <Box className="items-center">
+                                    <Circle className="text-red-600 text-sm mr-1" />
+                                    Offline
+                                  </Box>
+                                )}
+                                {node.status === "pending" && (
+                                  <Box className="items-center">
+                                    <Circle className="text-yellow-600 text-sm mr-1" />
+                                    Pending
+                                  </Box>
+                                )}
                               </TableCell>
                               <TableCell align="center" className="font-bold text-base">
                                 {node.gpuStatus || "-"}
                               </TableCell>
                               <TableCell align="center" className="font-bold">
                                 {(node.gpuModel.length > 0 &&
-                                  node.gpuModel.map((model: any) => (
-                                    <Box className="flex items-center justify-center gap-x-1 bg-gray-600 py-2 rounded-lg">
+                                  node.gpuModel.map((model: any, i: number) => (
+                                    <Box
+                                      className="flex items-center justify-center gap-x-1 bg-gray-600 py-2 rounded-lg"
+                                      key={`gpu-node-model-${index}-${i}`}
+                                    >
                                       x{model.count} <GraphicsCard /> {model.model}
                                     </Box>
                                   ))) ||
@@ -260,9 +295,9 @@ export default function List() {
                 </Box>
               )}
 
-              {item.summary.node_total !== 0 && item.summary.cpu_total === 0 && item.summary.gpu_total === 0 && (
+              {item.summary.node_total === 0 && item.summary.cpu_total === 0 && item.summary.gpu_total === 0 && (
                 <Box className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex justify-center items-center rounded-xl flex-col backdrop-blur-[5px] border-2 border-opacity-80 border-gray-500">
-                  <SvgSpinnersBlocksScale fontSize={80} className="text-gray-500 mb-3" />{" "}
+                  <SvgSpinnersBlocksScale fontSize={80} className="text-gray-500 mb-3" />
                   <Typography variant="h6" className="font-extrabold text-gray-500">
                     Developing
                   </Typography>

@@ -39,7 +39,7 @@ export const get = async (url: string) => {
   })
   const resJson = await res.json()
   return {
-    code: res.status,
+    code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,
     data: resJson?.data,
   }
@@ -55,7 +55,7 @@ export const post = async (url: string, params: any) => {
 
   const resJson = await res.json()
   return {
-    code: res.status,
+    code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,
     data: resJson?.data,
   }

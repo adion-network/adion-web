@@ -1,5 +1,5 @@
 "use client"
-import { CheckCircleOutline, ArrowBackIosNew } from "@mui/icons-material"
+import { CheckCircleOutline, ArrowBackIosNew, ConstructionOutlined, Cancel } from "@mui/icons-material"
 import {
   Box,
   Button,
@@ -19,20 +19,23 @@ import { useEffect, useState } from "react"
 import { useProjects } from "@/contexts/projects"
 import Link from "next/link"
 import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function Overview() {
   const {
     projectList,
     fetchProjectList,
     isProjectListFetching,
+    setIsProjectListFetching,
     projectDetailList,
     setProjectDetailList,
     searchProjecByType,
     joinProject,
     isJoiningProject,
+    switchProject,
   } = useProjects()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const createParamsInit = {
     option: -1,
@@ -41,6 +44,12 @@ export default function Overview() {
   }
 
   const [createParams, setCreateParams] = useState(createParamsInit)
+  const [submitText, setSubmitText] = useState(["Launch Now", "Launching"])
+
+  //switch project
+  const [isSwitchUnchanged, setIsSwitchUnchanged] = useState(false)
+  const [isSwitchAction, setIsSwitchAction] = useState(false)
+  const [fromProject, setFromProject] = useState<any>({})
 
   const processStepOne = async (index: number) => {
     if (createParams.option !== index) {
@@ -89,8 +98,48 @@ export default function Overview() {
   }))
 
   useEffect(() => {
+    if (projectList.length > 0) {
+      return
+    }
     fetchProjectList()
   }, [])
+
+  useEffect(() => {
+    const processParams = () => {
+      setIsProjectListFetching(true)
+      const fromProjectId = Number(searchParams.get("from_project_id"))
+      for (let i = 0; i < projectList.length; i++) {
+        for (let j = 0; j < projectList[i].project.length; j++) {
+          const p = projectList[i].project[j]
+          if (p.id === fromProjectId) {
+            setProjectDetailList(searchProjecByType(i))
+            setCreateParams({
+              option: i,
+              activeStep: 2,
+              projectInfo: p,
+            })
+            setFromProject(p)
+            setIsSwitchUnchanged(true)
+          }
+        }
+      }
+      setIsProjectListFetching(false)
+    }
+    if (searchParams.get("action") === "switch" && projectList.length > 0) {
+      processParams()
+      setSubmitText(["Switch Now", "Switching"])
+      setIsSwitchAction(true)
+    }
+  }, [projectList])
+
+  useEffect(() => {
+    const fromProjectId = Number(searchParams.get("from_project_id"))
+    if (fromProjectId !== createParams.projectInfo.id) {
+      setIsSwitchUnchanged(false)
+    } else {
+      setIsSwitchUnchanged(true)
+    }
+  }, [createParams.projectInfo])
 
   return (
     <Box>
@@ -120,7 +169,8 @@ export default function Overview() {
                   {projectList.map((item: any, index: number) => {
                     const LogoComponent = item.name == "AI Cloud" ? AILogo : GpuMiningPool
                     return (
-                      <Paper
+                      <Button
+                        variant="outlined"
                         key={`option-${index}`}
                         onClick={() => processStepOne(index)}
                         className={`py-6 bg-transparent relative rounded-xl flex cursor-pointer overflow-hidden border-2 border-gray-600 ${
@@ -138,7 +188,7 @@ export default function Overview() {
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
                         )}
-                      </Paper>
+                      </Button>
                     )
                   })}
                 </Box>
@@ -156,8 +206,10 @@ export default function Overview() {
                 <Box className="mb-2 grid grid-cols-2 gap-4">
                   {projectDetailList.map((item: any, index: number) => {
                     return (
-                      <Paper
+                      <Button
                         key={`pool-${index}`}
+                        disabled={item.id === Number(searchParams.get("from_project_id"))}
+                        variant="outlined"
                         onClick={() => processStepTwo(item)}
                         className={`py-6 relative rounded-xl flex cursor-pointer bg-transparent overflow-hidden border-2 border-gray-600 ${
                           isApplicationSelected(item.id) ? "border-yellow-600" : "hover:border-yellow-600"
@@ -171,13 +223,18 @@ export default function Overview() {
                             {item.name}
                           </Typography>
                         </Box>
+                        {item.id === Number(searchParams.get("from_project_id")) && (
+                          <div className="absolute top-0 left-0 w-full h-full bg-red-900 bg-opacity-10 flex justify-center items-center">
+                            <Cancel className="absolute text-3xl right-0 bottom-0 text-red-500 opacity-20" />
+                          </div>
+                        )}
                         {isApplicationSelected(item.id) && (
                           <div className="absolute top-0 left-0 w-full h-full bg-yellow-900 bg-opacity-20 flex justify-center items-center">
                             <CheckCircleOutline className="absolute text-3xl right-0 bottom-0 text-yellow-600" />
                           </div>
                         )}
                         {item.is_hot && <HotBadge badgeContent="Hot"></HotBadge>}
-                      </Paper>
+                      </Button>
                     )
                   })}
                 </Box>
@@ -190,24 +247,27 @@ export default function Overview() {
             color="success"
             disabled={
               !(createParams.activeStep === 2 && createParams.option !== -1 && createParams.projectInfo.id > 0) ||
-              isJoiningProject
+              isJoiningProject ||
+              isSwitchUnchanged
             }
             size="large"
             variant="contained"
             className="w-full py-2 text-xl font-extrabold mt-10 rounded-lg"
             onClick={async () => {
-              joinProject(createParams.projectInfo).then(() => {
-                router.push("/node-provider/supplier/list")
-              })
+              if (isSwitchAction) {
+                await switchProject(fromProject, createParams.projectInfo)
+              } else {
+                await joinProject(createParams.projectInfo)
+              }
             }}
           >
             {isJoiningProject ? (
               <Box className="flex gap-x-2">
                 <SvgSpinners12DotsScaleRotate fontSize={28}></SvgSpinners12DotsScaleRotate>
-                Lauching
+                {submitText[1]}
               </Box>
             ) : (
-              "Launch Now"
+              submitText[0]
             )}
           </Button>
         </Box>
