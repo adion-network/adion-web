@@ -13,14 +13,15 @@ export const ProjectProvider = ({ children }: any) => {
   const [isProjectListFetching, setIsProjectListFetching] = useState(false)
   const [fetchingProjectListError, setFetchingProjectListError] = useState("")
   const [isJoiningProject, setIsJoiningProject] = useState(false)
-  const { userInfo, fetchUserInfo } = useProfile()
-  const [hasPorject, setHasProject] = useState(false)
+  const [hasPorject, setHasProject] = useState(true)
   const [isProjectNodeFetching, setIsProjectNodeFetching] = useState(false)
   const [projectNodeList, setProjectNodeList] = useState<any>([])
 
+  const { userInfo, fetchUserInfo } = useProfile()
   //user project list
   const [userProjectList, setUserProjectList] = useState<any[]>([])
   const [isUserProjectListFetching, setIsUserProjectListFetching] = useState(false)
+  const [isCheckingHasProject, setIsCheckingHasProject] = useState(false)
 
   //router
   const router = useRouter()
@@ -54,12 +55,19 @@ export const ProjectProvider = ({ children }: any) => {
   }, [])
 
   const isUserHasProject = useCallback(async (projectList: any) => {
-    for (let i = 0; i < projectList.length; i++) {
-      const { data } = await get("/api/v1/user/project/list/?catalog_id=" + projectList[i].id)
-      if (data.length > 0) {
-        setHasProject(true)
-        return
+    try {
+      setIsCheckingHasProject(true)
+      for (let i = 0; i < projectList.length; i++) {
+        const { data } = await get("/api/v1/user/project/list/?catalog_id=" + projectList[i].id)
+        if (data.length > 0) {
+          return
+        }
       }
+      setHasProject(false)
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsCheckingHasProject(false)
     }
   }, [])
 
@@ -198,6 +206,7 @@ Command: ${res.data}
         isProjectNodeFetching,
         setProjectNodeList,
         switchProject,
+        isCheckingHasProject,
       }}
     >
       {children}
