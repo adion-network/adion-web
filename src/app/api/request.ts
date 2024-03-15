@@ -13,14 +13,14 @@ const getUserToken = () => {
   if (!userFind) {
     return ""
   }
+  console.log(userFind)
 
   const userDetail = userFind.split(",")
   return userDetail[2] || ""
 }
 
 const headers = new Headers()
-headers.append("Content-Type", "application/json")
-headers.append("X-Auth-Token", getUserToken())
+headers.set("Content-Type", "application/json")
 
 const apiAddress = process.env.API_ADDRESS || "https://api-test.demeters.io"
 
@@ -33,6 +33,7 @@ export interface ResData {
 export const get = async (url: string) => {
   console.log(apiAddress + url)
   console.log(headers)
+  headers.set("X-Auth-Token", getUserToken())
   const res = await fetch(apiAddress + url, {
     method: "GET",
     headers: headers,
@@ -49,6 +50,7 @@ export const get = async (url: string) => {
 
 export const post = async (url: string, params: any) => {
   console.log(apiAddress + url)
+  headers.set("X-Auth-Token", getUserToken())
   const res = await fetch(apiAddress + url, {
     method: "POST",
     headers: headers,
