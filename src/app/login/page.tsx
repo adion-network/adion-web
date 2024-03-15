@@ -1,19 +1,19 @@
 "use client"
-import { Box, Typography, TextField, Button } from "@mui/material"
+import { Box, Typography, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import useProfile from "@/contexts/profile"
+import { LoadingButton } from "@mui/lab"
 
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
-  const { userInfo, fetchUserInfo, login } = useProfile()
+  const { userInfo, fetchUserInfo, login, isLoging } = useProfile()
 
   useEffect(() => {
     const processIsLogin = async () => {
       await fetchUserInfo()
-      console.log(userInfo)
       if (userInfo.isLogin) {
         router.push("/node-provider/supplier/list")
       }
@@ -56,15 +56,16 @@ export default function Login() {
           />
         </Box>
         <Box className="mt-16">
-          <Button
+          <LoadingButton
             variant="outlined"
             size="large"
             color="success"
+            loading={isLoging}
             onClick={handleSubmit}
             className="border-2 bg-violet-500 bg-opacity-20 hover:bg-opacity-30 border-violet-500/50 w-full font-extrabold text-lg h-14"
           >
             Sign In
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </Box>

@@ -14,11 +14,13 @@ const ProfileContext = createContext({
   fetchUserInfo: async (): Promise<void> => {},
   logout: async (): Promise<void> => {},
   login: async (_username: string, _password: string): Promise<void> => {},
+  isLoging: false,
 })
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
   const [userInfo, setUserInfo] = useState<any>(userProfileInit)
+  const [isLoging, setIsLoging] = useState(false)
 
   const fetchUserInfo = useCallback(async () => {
     try {
@@ -35,6 +37,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = useCallback(async (username: string, password: string) => {
     try {
+      setIsLoging(true)
       if (!username || !password) {
         throw new Error("username or password can not empty")
       }
@@ -51,6 +54,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       router.push("/node-provider/supplier/list")
     } catch (error: any) {
       enqueueSnackbar(error.message.toString(), { variant: "error" })
+    } finally {
+      setIsLoging(false)
     }
   }, [])
 
@@ -74,6 +79,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         fetchUserInfo,
         logout,
         login,
+        isLoging,
       }}
     >
       {children}

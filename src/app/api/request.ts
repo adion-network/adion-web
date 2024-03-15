@@ -32,12 +32,14 @@ export interface ResData {
 
 export const get = async (url: string) => {
   console.log(apiAddress + url)
+  console.log(headers)
   const res = await fetch(apiAddress + url, {
     method: "GET",
     headers: headers,
     cache: "no-cache",
   })
   const resJson = await res.json()
+  console.log(resJson)
   return {
     code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,
@@ -54,6 +56,7 @@ export const post = async (url: string, params: any) => {
   })
 
   const resJson = await res.json()
+  console.log(resJson)
   return {
     code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,
