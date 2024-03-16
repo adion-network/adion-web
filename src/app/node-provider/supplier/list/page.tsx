@@ -46,6 +46,7 @@ export default function List() {
   const [isNodeListOpen, setIsNodeListOpen] = useState(false)
   const [currentNodeProjectId, setCurrentNodeProjectId] = useState(-1)
   const [currentFilter, setCurrentFilter] = useState("all")
+  const [typeChecked, setTypeChecked] = useState(false)
 
   const handleClickNodeList = async (open: boolean, projectId: number) => {
     if (isNodeListOpen && currentNodeProjectId !== projectId) {
@@ -78,11 +79,23 @@ export default function List() {
   }, [])
 
   useEffect(() => {
+    const processChecked = async () => {
+      const result = await fetchUserProjectList(projectList[0].id)
+      if (result.length === 0) {
+        setTypeChecked(true)
+        fetchUserProjectList(projectList[1].id)
+      }
+    }
     if (projectList.length > 0) {
       isUserHasProject(projectList)
-      fetchUserProjectList(projectList[0].id)
+      processChecked()
     }
   }, [projectList])
+
+  const handleCheckType = () => {
+    typeChecked ? fetchUserProjectList(projectList[0].id) : fetchUserProjectList(projectList[1].id)
+    setTypeChecked(!typeChecked)
+  }
 
   return (
     (!hasPorject && (
@@ -99,7 +112,7 @@ export default function List() {
         </Backdrop>
         <Box className="flex justify-start items-center">
           <Box>
-            <SupplierTypeSwitch />
+            <SupplierTypeSwitch onChange={handleCheckType} checked={typeChecked} />
           </Box>
           <Box className="ml-4">
             <Button

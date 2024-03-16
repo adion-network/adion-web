@@ -13,7 +13,6 @@ const getUserToken = () => {
   if (!userFind) {
     return ""
   }
-  console.log(userFind)
 
   const userDetail = userFind.split(",")
   return userDetail[2] || ""
@@ -31,16 +30,17 @@ export interface ResData {
 }
 
 export const get = async (url: string) => {
-  console.log(apiAddress + url)
-  console.log(headers)
   headers.set("X-Auth-Token", getUserToken())
+  console.log(`GET: ${apiAddress + url}`)
+  console.log("Request Header: ", headers)
   const res = await fetch(apiAddress + url, {
     method: "GET",
     headers: headers,
     cache: "no-cache",
   })
   const resJson = await res.json()
-  console.log(resJson)
+  console.log("Response Header: ", res.headers)
+  console.log(`Response Content:  ${JSON.stringify(resJson)}`)
   return {
     code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,
@@ -49,8 +49,10 @@ export const get = async (url: string) => {
 }
 
 export const post = async (url: string, params: any) => {
-  console.log(apiAddress + url)
   headers.set("X-Auth-Token", getUserToken())
+  console.log(`POST: ${apiAddress + url}`)
+  console.log("Request Header: ", headers)
+  console.log("Request Body: ", JSON.stringify(params))
   const res = await fetch(apiAddress + url, {
     method: "POST",
     headers: headers,
@@ -58,7 +60,8 @@ export const post = async (url: string, params: any) => {
   })
 
   const resJson = await res.json()
-  console.log(resJson)
+  console.log("Response Header: ", res.headers)
+  console.log(`Response Content:  ${JSON.stringify(resJson)}`)
   return {
     code: (res.status !== 200 && res.status) || resJson.code !== 0 ? 400 : 200,
     msg: resJson.message,

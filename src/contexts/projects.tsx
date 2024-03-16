@@ -47,6 +47,7 @@ export const ProjectProvider = ({ children }: any) => {
     try {
       const { data } = await get("/api/v1/user/project/list/?catalog_id=" + catalogId)
       setUserProjectList(data)
+      return data
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" })
     } finally {

@@ -2,19 +2,13 @@ import { useState } from "react"
 import { Switch, Box, Button } from "@mui/material"
 import { useProjects } from "@/contexts/projects"
 
-const SupplierTypeSwitch = () => {
-  const [checked, setChecked] = useState(false)
+interface SupplierTypeSwitchProps {
+  onChange: () => void
+  checked: boolean
+}
 
-  const toggleChecked = () => setChecked((prev) => !prev)
-
-  const handleBoxClick = (event: any, catalogId: string) => {
-    if (event.target === event.currentTarget) {
-      toggleChecked()
-    }
-    fetchUserProjectList(catalogId)
-  }
-
-  const { projectList, fetchUserProjectList } = useProjects()
+const SupplierTypeSwitch: React.FC<SupplierTypeSwitchProps> = ({ onChange, checked }) => {
+  const { projectList } = useProjects()
 
   return (
     <Box
@@ -40,9 +34,7 @@ const SupplierTypeSwitch = () => {
             size="large"
             variant="text"
             className="w-1/2 font-extrabold rounded-lg leading-8"
-            onClick={(e) => {
-              handleBoxClick(e, item.id)
-            }}
+            onClick={onChange}
           >
             {item.name}
           </Button>
@@ -68,7 +60,7 @@ const SupplierTypeSwitch = () => {
       </Box>
       <Switch
         checked={checked}
-        onChange={toggleChecked}
+        onChange={onChange}
         sx={{
           opacity: 0,
           position: "absolute",
