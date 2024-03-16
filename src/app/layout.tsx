@@ -25,13 +25,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ConfirmProvider>
               <ThemeProvider theme={darkTheme}>
                 <CssBaseline />
-                <UserProvider>
-                  {path !== "/login" && <Header />}
-                  <ProjectProvider>
+                <ProjectProvider>
+                  <UserProvider>
+                    {path !== "/login" && <Header />}
                     {children}
                     <ProgressBar height="3px" color={purple[900]} options={{ showSpinner: false }} shallowRouting />
-                  </ProjectProvider>
-                </UserProvider>
+                  </UserProvider>
+                </ProjectProvider>
               </ThemeProvider>
             </ConfirmProvider>
           </SnackbarProvider>

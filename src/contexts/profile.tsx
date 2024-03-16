@@ -3,6 +3,7 @@ import { useCallback, useState, createContext, useContext } from "react"
 import { ResData } from "@/app/api/request"
 import { useRouter } from "next/navigation"
 import { enqueueSnackbar } from "notistack"
+import { useProjects } from "./projects"
 
 const userProfileInit = {
   isLogin: false,
@@ -15,12 +16,16 @@ const ProfileContext = createContext({
   logout: async (): Promise<void> => {},
   login: async (_username: string, _password: string): Promise<void> => {},
   isLoging: false,
+  isLogouting: false,
 })
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
   const [userInfo, setUserInfo] = useState<any>(userProfileInit)
   const [isLoging, setIsLoging] = useState(false)
+  const [isLogouting, setIsLogouting] = useState(false)
+
+  const { clearProjectData } = useProjects()
 
   const fetchUserInfo = useCallback(async () => {
     try {
@@ -61,7 +66,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = useCallback(async () => {
     try {
+      setIsLogouting(true)
       const res: ResData = await (await fetch("/api/logout", { method: "POST" })).json()
+      clearProjectData()
       if (res.code !== 200) {
         throw new Error("not login")
       }
@@ -69,6 +76,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       router.push("/login")
     } catch (error: any) {
       enqueueSnackbar(error.message.toString(), { variant: "error" })
+    } finally {
+      setIsLogouting(false)
     }
   }, [])
 
@@ -80,6 +89,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         logout,
         login,
         isLoging,
+        isLogouting,
       }}
     >
       {children}

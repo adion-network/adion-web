@@ -1,7 +1,7 @@
 "use client"
 
 import Button from "@mui/material/Button"
-import { Avatar, Box, MenuItem } from "@mui/material"
+import { Avatar, Box, MenuItem, Backdrop, CircularProgress } from "@mui/material"
 import Link from "next/link"
 import { CryptocurrencyColorIotx, FluentSettingsCogMultiple24Regular } from "./Icons"
 import { KeyboardArrowDown } from "@mui/icons-material"
@@ -16,7 +16,7 @@ const Header = () => {
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const userMenuopen = Boolean(userAnchorEl)
-  const { userInfo, fetchUserInfo, logout } = useProfile()
+  const { userInfo, fetchUserInfo, logout, isLogouting } = useProfile()
   const path = usePathname()
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,6 +64,9 @@ const Header = () => {
 
   return (
     <Box className="h-[80px]">
+      <Backdrop open={isLogouting} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <CircularProgress />
+      </Backdrop>
       <Box className="h-full flex justify-between items-center mx-20">
         <Box className="flex justify-between items-center">
           <CryptocurrencyColorIotx fontSize={50}></CryptocurrencyColorIotx>

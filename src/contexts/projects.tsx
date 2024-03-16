@@ -184,6 +184,14 @@ Command: ${res.data}
     }
   }, [])
 
+  const clearProjectData = useCallback(() => {
+    setHasProject(true)
+    setProjectList([])
+    setUserProjectList([])
+    setProjectDetailList([])
+    setProjectNodeList([])
+  }, [])
+
   return (
     <ProjectContext.Provider
       value={{
@@ -208,6 +216,7 @@ Command: ${res.data}
         setProjectNodeList,
         switchProject,
         isCheckingHasProject,
+        clearProjectData,
       }}
     >
       {children}
