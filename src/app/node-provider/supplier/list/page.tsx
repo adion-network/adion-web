@@ -328,7 +328,7 @@ export default function List() {
                                 {(node.gpuModel.length > 0 &&
                                   node.gpuModel.map((model: any, i: number) => (
                                     <Box
-                                      className="flex items-center justify-center gap-x-1 bg-gray-600 py-2 rounded-lg"
+                                      className="flex items-center justify-center gap-x-1 bg-gray-600 py-2 rounded-lg mb-1"
                                       key={`gpu-node-model-${index}-${i}`}
                                     >
                                       x{model.count} <GraphicsCard /> {model.model}

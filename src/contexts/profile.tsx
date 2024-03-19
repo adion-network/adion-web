@@ -27,7 +27,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { clearProjectData } = useProjects()
 
-  const fetchUserInfo = useCallback(async () => {
+  const fetchUserInfo = async () => {
     try {
       const res: ResData = await (await fetch("/api/login", { method: "GET" })).json()
       if (res.code !== 200) {
@@ -43,7 +43,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       setUserInfo({ isLogin: false, username: "" })
     }
-  }, [])
+  }
 
   const login = useCallback(async (username: string, password: string) => {
     try {
