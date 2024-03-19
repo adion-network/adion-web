@@ -91,8 +91,8 @@ export default function Overview() {
       textAlign: "center",
       lineHeight: "20px",
       borderRadius: 0,
-      right: -15,
-      top: 17,
+      right: -37,
+      top: -25,
       padding: "0px 30px 0px 30px",
     },
   }))
