@@ -1,5 +1,5 @@
 "use client"
-import { CheckCircleOutline, ArrowBackIosNew, ConstructionOutlined, Cancel } from "@mui/icons-material"
+import { CheckCircleOutline, ArrowBackIosNew, Cancel } from "@mui/icons-material"
 import {
   Box,
   Button,
@@ -8,7 +8,6 @@ import {
   Step,
   StepLabel,
   StepContent,
-  Paper,
   CircularProgress,
   Backdrop,
   Avatar,
@@ -17,6 +16,8 @@ import Badge, { BadgeProps } from "@mui/material/Badge"
 import { styled } from "@mui/material/styles"
 import { useEffect, useState } from "react"
 import { useProjects } from "@/contexts/projects"
+import useProfile from "@/contexts/profile"
+
 import Link from "next/link"
 import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -50,6 +51,9 @@ export default function Overview() {
   const [isSwitchUnchanged, setIsSwitchUnchanged] = useState(false)
   const [isSwitchAction, setIsSwitchAction] = useState(false)
   const [fromProject, setFromProject] = useState<any>({})
+
+  //user profile
+  const { userInfo } = useProfile()
 
   const processStepOne = async (index: number) => {
     if (createParams.option !== index) {
@@ -255,9 +259,9 @@ export default function Overview() {
             className="w-full py-2 text-xl font-extrabold mt-10 rounded-lg"
             onClick={async () => {
               if (isSwitchAction) {
-                await switchProject(fromProject, createParams.projectInfo)
+                await switchProject(fromProject, createParams.projectInfo, userInfo.username)
               } else {
-                await joinProject(createParams.projectInfo)
+                await joinProject(createParams.projectInfo, userInfo.username)
               }
             }}
           >

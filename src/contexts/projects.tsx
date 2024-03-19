@@ -72,66 +72,58 @@ export const ProjectProvider = ({ children }: any) => {
     }
   }, [])
 
-  const joinProject = useCallback(
-    async (projectInfo: any) => {
-      try {
-        setIsJoiningProject(true)
-        if (!projectInfo?.id) {
-          throw new Error("project id invaild")
-        }
+  const joinProject = async (projectInfo: any, user: string) => {
+    try {
+      setIsJoiningProject(true)
+      if (!projectInfo?.id) {
+        throw new Error("project id invaild")
+      }
 
-        const res = await post("/api/v1/user/project/join", { project_id: projectInfo.id })
-        if (res.code === 200) {
-          const _userInfo = await fetchUserInfo()
-          await sendMessageToDiscord(`
-User: ${_userInfo.username} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
+      const res = await post("/api/v1/user/project/join", { project_id: projectInfo.id })
+      if (res.code === 200) {
+        await sendMessageToDiscord(`
+User: ${user} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
 Command: ${res.data}
           `)
-          router.push("/node-provider/supplier/list")
-        } else {
-          throw new Error(res.msg)
-        }
-      } catch (error: any) {
-        enqueueSnackbar(error.message, { variant: "error" })
-      } finally {
-        setIsJoiningProject(false)
+        router.push("/node-provider/supplier/list")
+      } else {
+        throw new Error(res.msg)
       }
-    },
-    [userInfo]
-  )
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsJoiningProject(false)
+    }
+  }
 
-  const switchProject = useCallback(
-    async (fromProject: any, toProject: any) => {
-      try {
-        setIsJoiningProject(true)
-        if (!fromProject?.id || !toProject?.id) {
-          throw new Error("project id invaild")
-        }
+  const switchProject = async (fromProject: any, toProject: any, user: String) => {
+    try {
+      setIsJoiningProject(true)
+      if (!fromProject?.id || !toProject?.id) {
+        throw new Error("project id invaild")
+      }
 
-        const res = await post("/api/v1/user/project/switch/", {
-          dest_project_id: toProject.id,
-          src_project_id: fromProject.id,
-        })
-        if (res.code === 200) {
-          const _userInfo = await fetchUserInfo()
-          await sendMessageToDiscord(`
-User: ${_userInfo.username} requested to switch project: 
+      const res = await post("/api/v1/user/project/switch/", {
+        dest_project_id: toProject.id,
+        src_project_id: fromProject.id,
+      })
+      if (res.code === 200) {
+        await sendMessageToDiscord(`
+User: ${user} requested to switch project: 
   From project: ${fromProject.name}, Id: ${fromProject.id}
   To project: ${toProject.name}, Id: ${toProject.id}
 Command: ${res.data}
           `)
-          router.push("/node-provider/supplier/list")
-        } else {
-          throw new Error(res.msg)
-        }
-      } catch (error: any) {
-        enqueueSnackbar(error.message, { variant: "error" })
-      } finally {
-        setIsJoiningProject(false)
+        router.push("/node-provider/supplier/list")
+      } else {
+        throw new Error(res.msg)
       }
-    },
-    [userInfo]
-  )
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsJoiningProject(false)
+    }
+  }
 
   const fetchProjectNodes = useCallback(async (projectId: number, filterStatus: string = "all") => {
     try {
