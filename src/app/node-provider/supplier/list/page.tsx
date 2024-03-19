@@ -317,7 +317,7 @@ export default function List() {
                               <TableCell align="center">
                                 {(
                                   <Box className="space-x-1 flex justify-center">
-                                    <GraphicsCardStatus color="success"></GraphicsCardStatus>
+                                    <GraphicsCardStatus className="text-green-600"></GraphicsCardStatus>
                                     <Typography className="font-bold text-base">{node.gpuStatus.y}</Typography>
                                     <GraphicsCardStatus color="disabled"></GraphicsCardStatus>
                                     <Typography className="font-bold text-base">{node.gpuStatus.n}</Typography>
