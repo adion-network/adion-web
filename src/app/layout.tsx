@@ -8,7 +8,6 @@ import { darkTheme } from "@/app/theme"
 import Header from "@/components/Header"
 import { SnackbarProvider } from "notistack"
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
-import { ConfirmProvider } from "material-ui-confirm"
 import { CssBaseline } from "@mui/material"
 import { usePathname } from "next/navigation"
 import { ProjectProvider } from "@/contexts/projects"
@@ -22,18 +21,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AppRouterCacheProvider>
           <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }} autoHideDuration={3000}>
-            <ConfirmProvider>
-              <ThemeProvider theme={darkTheme}>
-                <CssBaseline />
-                <ProjectProvider>
-                  <UserProvider>
-                    {path !== "/login" && path !== "/" && <Header />}
-                    {children}
-                    <ProgressBar height="3px" color={purple[900]} options={{ showSpinner: false }} shallowRouting />
-                  </UserProvider>
-                </ProjectProvider>
-              </ThemeProvider>
-            </ConfirmProvider>
+            <ThemeProvider theme={darkTheme}>
+              <CssBaseline />
+              <ProjectProvider>
+                <UserProvider>
+                  {path !== "/login" && path !== "/" && <Header />}
+                  {children}
+                  <ProgressBar height="3px" color={purple[900]} options={{ showSpinner: false }} shallowRouting />
+                </UserProvider>
+              </ProjectProvider>
+            </ThemeProvider>
           </SnackbarProvider>
         </AppRouterCacheProvider>
       </body>

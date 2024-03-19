@@ -1,4 +1,6 @@
 import { Box, Button, Typography } from "@mui/material"
+import { NvidaLogo } from "@/components/Icons"
+import { NorthEast } from "@mui/icons-material"
 import Link from "next/link"
 
 export default function Home() {
@@ -12,13 +14,45 @@ export default function Home() {
             </Button>
           </Link>
         </Box>
-        <Box className="bg-[url('/images/home/1.jpg')] bg-cover bg-no-repeat h-full bg-top min-w-[1080px]">
-          <Typography variant="h4" className=" mt-10 ml-20">
+        <Box className="bg-[url('/images/home/1.jpg')] bg-cover bg-no-repeat h-full bg-top min-w-[1440px] pl-20">
+          <Typography variant="h3" className="w-[700px] mt-32 font-extrabold">
             Building the Future's AI/Blockchain Compute Network
           </Typography>
+          <Typography variant="h6" className="w-[700px] mt-10 font-extrabold">
+            Aggregate global GPU resources via Demeters.ai's decentralized platform, achieving deployment, scheduling,
+            switching, and monitoring with full-stack services. Maximize resource efficiency and revenue growth
+            effortlessly.
+          </Typography>
+          <Link href="/login">
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              className="text-md mt-10 font-extrabold"
+              startIcon={<NorthEast />}
+            >
+              Start Now
+            </Button>
+          </Link>
         </Box>
       </Box>
-      <Box className="h-screen snap-start flex justify-center items-center bg-red-500">第二屏</Box>
+      <Box className="h-screen snap-start px-10 pt-32">
+        <Box className="flex justify-between">
+          <Box>
+            <Typography variant="h4" className="w-2/3 font-extrabold">
+              Full control of your AI infrastructure
+            </Typography>
+            <Typography variant="subtitle1" className="w-2/3 mt-8 font-extrabold">
+              Leverage global high-performance servers with DMOS (Demeter Cloud Operating System) for effortless
+              resource management. Experience smart control through an intuitive dashboard, seamless cloud-native
+              integrations, and extensive API. Simplified. Swift. Smart.
+            </Typography>
+          </Box>
+          <Box>
+            <NvidaLogo></NvidaLogo>
+          </Box>
+        </Box>
+      </Box>
       <Box className="h-screen snap-start flex justify-center items-center bg-green-500">第三屏</Box>
     </Box>
   )

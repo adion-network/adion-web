@@ -29,11 +29,14 @@ import {
   TableFooter,
   TablePagination,
   Tooltip,
+  createSvgIcon,
 } from "@mui/material"
 import { useRouter } from "next/navigation"
 import { Fragment, useEffect, useMemo, useState } from "react"
 import NoProject from "@/components/node-provider/NoProject"
 import Link from "next/link"
+
+const GraphicsCardStatusIcon = createSvgIcon(GraphicsCardStatus({}), "GraphicsCardStatusIcon")
 
 export default function List() {
   const {
@@ -317,9 +320,9 @@ export default function List() {
                               <TableCell align="center">
                                 {(
                                   <Box className="space-x-1 flex justify-center">
-                                    <GraphicsCardStatus className="text-green-600"></GraphicsCardStatus>
+                                    <GraphicsCardStatusIcon className="text-green-600"></GraphicsCardStatusIcon>
                                     <Typography className="font-bold text-base">{node.gpuStatus.y}</Typography>
-                                    <GraphicsCardStatus color="disabled"></GraphicsCardStatus>
+                                    <GraphicsCardStatusIcon color="disabled"></GraphicsCardStatusIcon>
                                     <Typography className="font-bold text-base">{node.gpuStatus.n}</Typography>
                                   </Box>
                                 ) || "-"}
