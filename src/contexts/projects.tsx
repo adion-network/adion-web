@@ -82,9 +82,9 @@ export const ProjectProvider = ({ children }: any) => {
 
         const res = await post("/api/v1/user/project/join", { project_id: projectInfo.id })
         if (res.code === 200) {
-          await fetchUserInfo()
+          const _userInfo = await fetchUserInfo()
           await sendMessageToDiscord(`
-User: ${userInfo.username} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
+User: ${_userInfo.username} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
 Command: ${res.data}
           `)
           router.push("/node-provider/supplier/list")

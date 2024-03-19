@@ -9,12 +9,12 @@ export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
-  const { userInfo, fetchUserInfo, login, isLoging } = useProfile()
+  const { fetchUserInfo, login, isLoging } = useProfile()
 
   useEffect(() => {
     const processIsLogin = async () => {
-      await fetchUserInfo()
-      if (userInfo.isLogin) {
+      const _userInfo = await fetchUserInfo()
+      if (_userInfo.isLogin) {
         router.push("/node-provider/supplier/list")
       }
     }
