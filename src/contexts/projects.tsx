@@ -163,7 +163,7 @@ Command: ${res.data}
             devideId: node.device_id,
             ip: node.ip,
             status: node.status,
-            gpuStatus: `Y:${gpuStatus.y} N:${gpuStatus.n}`,
+            gpuStatus: { y: gpuStatus.y, n: gpuStatus.n },
             gpuModel: Object.keys(gpuModel).map((k) => {
               return { model: k, count: gpuModel[k] }
             }),

@@ -3,12 +3,13 @@ import { useProjects } from "@/contexts/projects"
 import {
   ClickMouse,
   GraphicsCard,
+  GraphicsCardStatus,
   SvgSpinners12DotsScaleRotate,
   SvgSpinnersBlocksScale,
   UilExchange,
 } from "@/components/Icons"
 import SupplierTypeSwitch from "@/components/node-provider/SupplierTypeSwitch"
-import { Add, Circle, KeyboardArrowDown } from "@mui/icons-material"
+import { Circle, KeyboardArrowDown } from "@mui/icons-material"
 import {
   Avatar,
   Box,
@@ -42,8 +43,6 @@ export default function List() {
     isUserProjectListFetching,
     fetchProjectList,
     fetchUserProjectList,
-    hasPorject,
-    isUserHasProject,
     isCheckingHasProject,
     fetchProjectNodes,
     projectNodeList,
@@ -163,7 +162,7 @@ export default function List() {
             <Box className="flex relative flex-col gap-4" key={`node-${index}`}>
               <Box className="flex justify-between border-b border-stone-400 items-center">
                 <Box className="py-3 px-4 flex justify-between rounded-t-lg gap-2 items-center bg-gray-100 bg-opacity-15 w-1/5">
-                  <Avatar src={item.project.icon}>{item.project.name.slice(0, 1).toUpperCase()}</Avatar>
+                  <Avatar src={item.project.logo}>{item.project.name.slice(0, 1).toUpperCase()}</Avatar>
                   <Typography className="ml-2 text-lg font-extrabold">{item.project.name}</Typography>
                   <KeyboardArrowDown
                     className={`cursor-pointer transition-transform ${
@@ -315,8 +314,15 @@ export default function List() {
                                   </Box>
                                 )}
                               </TableCell>
-                              <TableCell align="center" className="font-bold text-base">
-                                {node.gpuStatus || "-"}
+                              <TableCell align="center">
+                                {(
+                                  <Box className="space-x-1 flex justify-center">
+                                    <GraphicsCardStatus color="success"></GraphicsCardStatus>
+                                    <Typography className="font-bold text-base">{node.gpuStatus.y}</Typography>
+                                    <GraphicsCardStatus color="disabled"></GraphicsCardStatus>
+                                    <Typography className="font-bold text-base">{node.gpuStatus.n}</Typography>
+                                  </Box>
+                                ) || "-"}
                               </TableCell>
                               <TableCell align="center" className="font-bold">
                                 {(node.gpuModel.length > 0 &&
