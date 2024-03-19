@@ -148,19 +148,19 @@ export default function Overview() {
       </Backdrop>
       <Box className="w-[1000px] ml-auto mr-auto mt-6 mb-10">
         <Box className="mb-4">
-          <Link href="/node-provider/overview">
+          <Link href="/node-provider/supplier/list">
             <Button variant="text" className="px-0 text-gray-400">
               <ArrowBackIosNew fontSize="small" className="mr-2" />
               Go Back
             </Button>
           </Link>
         </Box>
-        <Typography variant="h5">Add New Supplier</Typography>
+        <Typography variant="h5">Edit Device</Typography>
         <Stepper className="mt-3" activeStep={createParams.activeStep} orientation="vertical">
           <Step key="0" expanded>
             <StepLabel className="w-[200px] flex-col justify-start items-start">
               <Typography variant="h6" className="text-gray-400 mt-2 text-wrap">
-                Please select your preferred mode?
+                Preferred mode:
               </Typography>
             </StepLabel>
             <StepContent>
@@ -198,7 +198,7 @@ export default function Overview() {
           <Step key="1" active={createParams.activeStep === 1} expanded={createParams.activeStep > 1}>
             <StepLabel className="w-[200px] flex-col justify-start items-start">
               <Typography variant="h6" className="text-gray-400 mt-2">
-                Please select your favorite project?
+                Favorite project:
               </Typography>
             </StepLabel>
             <StepContent>

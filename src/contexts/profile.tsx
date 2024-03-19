@@ -12,7 +12,7 @@ const userProfileInit = {
 
 const ProfileContext = createContext({
   userInfo: userProfileInit,
-  fetchUserInfo: async (): Promise<void> => {},
+  fetchUserInfo: async (): Promise<any> => {},
   logout: async (): Promise<void> => {},
   login: async (_username: string, _password: string): Promise<void> => {},
   isLoging: false,
@@ -34,7 +34,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error("not profile found")
       }
       const username = res.data.username
-      setUserInfo({ isLogin: true, username: username })
+      const profile = {
+        isLogin: true,
+        username: username,
+      }
+      setUserInfo(profile)
+      return profile
     } catch (error) {
       setUserInfo({ isLogin: false, username: "" })
     }

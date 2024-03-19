@@ -113,9 +113,9 @@ Command: ${res.data}
           src_project_id: fromProject.id,
         })
         if (res.code === 200) {
-          await fetchUserInfo()
+          const _userInfo = await fetchUserInfo()
           await sendMessageToDiscord(`
-User: ${userInfo.username} requested to switch project: 
+User: ${_userInfo.username} requested to switch project: 
   From project: ${fromProject.name}, Id: ${fromProject.id}
   To project: ${toProject.name}, Id: ${toProject.id}
 Command: ${res.data}

@@ -72,26 +72,11 @@ const Header = () => {
           <CryptocurrencyColorIotx fontSize={50}></CryptocurrencyColorIotx>
           <Box className="ml-10 w-full flex items-center">
             <Box>
-              <Link href="/">
+              <Link href="/node-provider/supplier/list">
                 <Button variant="text" className="text-xl font-extrabold">
                   Node Provider
                 </Button>
               </Link>
-            </Box>
-            <Box className="cursor-pointer">
-              <Button onClick={handleOpenMenu}>
-                <KeyboardArrowDown></KeyboardArrowDown>
-              </Button>
-              <StyledMenu open={open} anchorEl={anchorEl} onClose={handleCloseMenu}>
-                <MenuItem>
-                  <Link href="/supplier">
-                    <Box className=" flex items-center text-lg px-4 py-2 gap-3">
-                      <FluentSettingsCogMultiple24Regular fontSize={20} />
-                      Supplier
-                    </Box>
-                  </Link>
-                </MenuItem>
-              </StyledMenu>
             </Box>
           </Box>
         </Box>

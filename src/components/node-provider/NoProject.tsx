@@ -10,14 +10,14 @@ export default function NoProject() {
           <MaterialSymbolsDesktopAccessDisabled fontSize={72} />
         </Box>
         <Box className="mt-4">
-          <Typography variant="h5">We cannot see any of your Worker information</Typography>
+          <Typography variant="h5">No Worker data detected. </Typography>
           <Typography variant="subtitle1" className="mt-2">
-            It seems that you do not have any resources associated with Demeters.io
+            You seem to have no resources linked to Demeters.ai.
           </Typography>
         </Box>
         <Link href="/node-provider/supplier/create">
           <Button variant="contained" color="success" size="large" className="text-lg font-extrabold mt-6 px-6 py-3">
-            Add Supplier
+            Connect New Device
           </Button>
         </Link>
         <Box className="mt-4">
