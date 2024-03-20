@@ -381,13 +381,6 @@ export default function Home() {
                 <IcBaselineDiscord fontSize={42} color="black"></IcBaselineDiscord>
               </Box>
             </Box>
-
-            <Box className="flex justify-center gap-x-2 px-10">
-              <Email></Email>Contact Us:{" "}
-              <Link href="mailto:support@demeters.ai" className="underline">
-                support@demeters.ai
-              </Link>
-            </Box>
           </Box>
           <Box className="w-1/3">
             <Box className="text-center space-y-16">
