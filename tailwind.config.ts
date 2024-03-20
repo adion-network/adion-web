@@ -13,6 +13,9 @@ const config: Config = {
         none: "none",
         blur: "blur(2px)",
       },
+      boxShadow: {
+        halo: "0px 0px 15px 15px rgba(0, 0, 0, 0.5)",
+      },
     },
   },
   plugins: [require("tailwindcss-filters")],
