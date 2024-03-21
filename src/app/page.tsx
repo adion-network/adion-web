@@ -27,14 +27,14 @@ import { Fragment } from "react"
 export default function Home() {
   return (
     <Fragment>
-      <Box className="h-16 bg-[#1A1A1A] w-full flex justify-end py-3 px-20">
+      <Box className="absolute h-16 bg-[#1A1A1A] bg-opacity-50 w-full flex justify-end py-3 px-20 backdrop-blur z-10">
         <Link href="/login">
           <Button variant="outlined" className="border-2 rounded-lg">
             Sign In
           </Button>
         </Link>
       </Box>
-      <Box className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-none bg-black">
+      <Box className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-none">
         <Box className="h-screen snap-start flex flex-col justify-start">
           <Box className="bg-[url('/images/home/1.png')] bg-cover bg-no-repeat h-full bg-top min-w-[1280px]">
             <Box className="w-1/2 top-[15%] gap-y-10 left-[10%] flex flex-col relative justify-start">
@@ -60,7 +60,7 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
+        <Box className="h-screen snap-start pt-24 pb-32">
           <Box className="flex flex-col relative justify-center left-[10%] top-[10%] w-4/5 h-full gap-y-32">
             <Box className="flex justify-between gap-y-10 items-center">
               <Box className="w-2/3 space-y-10">
@@ -82,8 +82,8 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
-          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full pt-16 space-y-10">
+        <Box className="h-screen snap-start pt-40 pb-32">
+          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full space-y-10">
             <Box className="flex justify-between items-center">
               <Box className="w-1/2 space-y-5">
                 <Box className="ml-4 inline-flex rounded-full bg-green-500 shadow-halo shadow-green-500">
@@ -122,8 +122,8 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
-          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full pt-16 space-y-10">
+        <Box className="h-screen snap-start pt-16 pb-32">
+          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full space-y-10">
             <Box className="flex justify-between items-center">
               <Box className="w-1/2 space-y-5">
                 <Box className="ml-4 inline-flex rounded-full  bg-purple-500 shadow-halo shadow-purple-500">
@@ -160,8 +160,8 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
-          <Box className="flex justify-center items-center mx-auto w-4/5 h-full pt-24 space-y-4">
+        <Box className="h-screen snap-start pt-24 pb-32">
+          <Box className="flex justify-center items-center mx-auto w-4/5 h-full space-y-4">
             <Box className="w-3/5 space-y-4">
               <Box className="ml-4 inline-flex rounded-full bg-sky-600 shadow-halo shadow-sky-600">
                 <PuzzleIcon></PuzzleIcon>
@@ -229,8 +229,8 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
-          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full pt-16 space-y-4">
+        <Box className="h-screen snap-start pt-44 pb-32">
+          <Box className="flex flex-col justify-center mx-auto w-4/5 h-full space-y-4">
             <Box className="w-4/5 space-y-2">
               <Typography variant="h4" className="font-extrabold">
                 Exploring DFIL: Connecting the future of decentralized computing and storage.
@@ -339,7 +339,7 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box className="h-screen snap-start pb-32">
+        <Box className="h-screen snap-start pt-32 pb-32">
           <Box className="flex flex-col justify-center mx-auto w-4/5 h-1/3 pt-16 space-y-10">
             <Box className="w-full space-y-8">
               <Typography variant="h3" className="font-extrabold">

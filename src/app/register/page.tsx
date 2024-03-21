@@ -78,7 +78,7 @@ export default function Register() {
             OK
           </Button>
           <Link href="/">
-            <Button size="large" variant="text" className=" underline text-green-700">
+            <Button size="large" variant="text" className="underline text-green-700">
               Return To Home Page
             </Button>
           </Link>
