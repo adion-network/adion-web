@@ -106,8 +106,8 @@ export default function Register() {
             </Typography>
             <Typography variant="body1" className="text-gray-900">
               We typically contact you between Monday and Friday, from 8:00 AM to 4:30 PM. If you currently do not meet
-              our requirements, that's okay. In the future, when we expand our eligible Node Providers, we will reach
-              out to you.
+              our requirements, that&apos;s okay. In the future, when we expand our eligible Node Providers, we will
+              reach out to you.
             </Typography>
             <Typography variant="body1" className="underline text-green-600 cursor-pointer">
               Contact Us<ArrowRightAlt></ArrowRightAlt>

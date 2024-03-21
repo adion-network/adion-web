@@ -37,12 +37,12 @@ export default function Home() {
         <Box className="bg-[url('/images/home/1.png')] bg-cover bg-no-repeat h-full bg-top min-w-[1440px]">
           <Box className="w-1/2 top-[15%] gap-y-10 left-[10%] flex flex-col relative justify-start">
             <Typography variant="h3" className="font-extrabold">
-              Building the Future's AI/Blockchain Compute Network
+              Building the Future&apos;s AI/Blockchain Compute Network
             </Typography>
             <Typography variant="h6" className="font-extrabold">
-              Aggregate global GPU resources via Demeters.ai's decentralized platform, achieving deployment, scheduling,
-              switching, and monitoring with full-stack services. Maximize resource efficiency and revenue growth
-              effortlessly.
+              Aggregate global GPU resources via Demeters.ai&apos;s decentralized platform, achieving deployment,
+              scheduling, switching, and monitoring with full-stack services. Maximize resource efficiency and revenue
+              growth effortlessly.
             </Typography>
             <Link href="/register" className="w-[180px]">
               <Button
@@ -298,9 +298,9 @@ export default function Home() {
                     Transparency & Fairness: Built on Trust.
                   </Typography>
                   <Typography variant="body1" className="text-gray-300">
-                    Demeters, constructed on Cosmos' technology stack and integrated with Cosmos' communication
-                    protocols and consensus mechanisms via FVM, serves as a bridge to Filecoin, upgrading the Filecoin
-                    network's development capabilities.
+                    Demeters, constructed on Cosmos&apos; technology stack and integrated with Cosmos&apos;
+                    communication protocols and consensus mechanisms via FVM, serves as a bridge to Filecoin, upgrading
+                    the Filecoin network&apos;s development capabilities.
                   </Typography>
                 </Box>
               </Box>
@@ -344,8 +344,8 @@ export default function Home() {
               Begin Your Journey with Demeters.ai?
             </Typography>
             <Typography variant="subtitle1" className="font-extrabold text-gray-300">
-              Join our innovative decentralized computing service platform tailored for node providers. We're dedicated
-              to maximizing resource utilization and accelerating revenue growth for every partner.
+              Join our innovative decentralized computing service platform tailored for node providers. We&apos;re
+              dedicated to maximizing resource utilization and accelerating revenue growth for every partner.
             </Typography>
             <Link href="/register">
               <Button
