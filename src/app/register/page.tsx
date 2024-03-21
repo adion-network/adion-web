@@ -165,16 +165,20 @@ export default function Register() {
               <Typography component={"li"}>Ubuntu 22.04</Typography>
               <Typography component={"li"}>Have access to the internet</Typography>
               <Typography component={"li"}>Static public IP support</Typography>
-              <Typography component={"li"}>
-                Internet download speeds exceed 1 GBps, upload speeds exceed 500 Mbps, and latency is less than 30
-                milliseconds.
-              </Typography>
-              <Typography component={"li"}>
-                Test your internet speed here:{" "}
-                <Link href="https://www.speedtest.net" target="_blank" className="underline">
-                  https://www.speedtest.net
-                </Link>
-              </Typography>
+              {model === "AI Cloud" && (
+                <Fragment>
+                  <Typography component={"li"}>
+                    Internet download speeds exceed 1 GBps, upload speeds exceed 500 Mbps, and latency is less than 30
+                    milliseconds.
+                  </Typography>
+                  <Typography component={"li"}>
+                    Test your internet speed here:{" "}
+                    <Link href="https://www.speedtest.net" target="_blank" className="underline">
+                      https://www.speedtest.net
+                    </Link>
+                  </Typography>
+                </Fragment>
+              )}
             </Box>
           </Box>
           <Box className="space-y-2">
@@ -182,23 +186,39 @@ export default function Register() {
               Hardware Requirements:
             </Typography>
             <Box component={"ul"} className="list-disc text-gray-300 ml-4 space-y-1 font-semibold">
-              <Typography component={"li"}>At least 24 GPUs</Typography>
-              <Typography component={"li"}>NVIDIA GeForce RTX 30xx and RTX 40xx series or higher</Typography>
-              <Typography component={"li"}>
-                Option 1: At least 6 servers with 4 GPUs and at least 8GB VRAM per GPU.
-              </Typography>
-              <Typography component={"li"}>
-                Option 2: At least 3 servers with 8 GPUs and at least 24GB VRAM per GPU.
-              </Typography>
-              <Typography component={"li"}>At least 32 vCPUs</Typography>
-              <Typography component={"li"}>
-                The memory size should be at least equal to the total virtual memory (vRAM) of all GPUs + 4GB for system
-                operations.
-              </Typography>
-              <Typography component={"li"}>
-                1TB or greater memory recommended for eight GPU configurations of 80GB vRAM.
-              </Typography>
-              <Typography component={"li"}>Requires at least 1 TB of SSD storage, 2 TB is preferred.</Typography>
+              {(model === "AI Cloud" && (
+                <Fragment>
+                  <Typography component={"li"}>At least 24 GPUs</Typography>
+                  <Typography component={"li"}>NVIDIA GeForce RTX 30xx and RTX 40xx series or higher</Typography>
+                  <Typography component={"li"}>
+                    Option 1: At least 6 servers with 4 GPUs and at least 8GB VRAM per GPU.
+                  </Typography>
+                  <Typography component={"li"}>
+                    Option 2: At least 3 servers with 8 GPUs and at least 24GB VRAM per GPU.
+                  </Typography>
+                  <Typography component={"li"}>At least 32 vCPUs</Typography>
+                  <Typography component={"li"}>
+                    The memory size should be at least equal to the total virtual memory (vRAM) of all GPUs + 4GB for
+                    system operations.
+                  </Typography>
+                  <Typography component={"li"}>
+                    1TB or greater memory recommended for eight GPU configurations of 80GB vRAM.
+                  </Typography>
+                  <Typography component={"li"}>Requires at least 1 TB of SSD storage, 2 TB is preferred.</Typography>
+                </Fragment>
+              )) || (
+                <Fragment>
+                  <Typography component={"li"}>Each machine should have at least 8 GiB or more of memory.</Typography>
+                  <Typography component={"li"}>
+                    Each machine should have at least 100 GB of available disk space.
+                  </Typography>
+                  <Typography component={"li"}>There should be a minimum of 24 GPUs.</Typography>
+                  <Typography component={"li"}>
+                    NVIDIA GeForce RTX 30 series or higher is required (if multiple GPUs are present in each system,
+                    they should all be of the same model).
+                  </Typography>
+                </Fragment>
+              )}
             </Box>
           </Box>
           <Button
