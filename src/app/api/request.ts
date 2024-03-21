@@ -87,7 +87,7 @@ export const sendMessageToDiscord = async (message: string): Promise<ResData> =>
       }
     )
 
-    if (discordResponse.status === 200) {
+    if (discordResponse.status === 200 || discordResponse.status === 204) {
       return {
         code: 200,
         msg: "",

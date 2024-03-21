@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CssBaseline />
               <ProjectProvider>
                 <UserProvider>
-                  {path !== "/login" && path !== "/" && <Header />}
+                  {path !== "/login" && path !== "/" && path !== "/register" && <Header />}
                   {children}
                   <ProgressBar height="3px" color={purple[900]} options={{ showSpinner: false }} shallowRouting />
                 </UserProvider>

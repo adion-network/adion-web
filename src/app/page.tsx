@@ -13,7 +13,7 @@ import {
   MdiTelegram,
   IcBaselineDiscord,
 } from "@/components/Icons"
-import { Email, NorthEast } from "@mui/icons-material"
+import { NorthEast } from "@mui/icons-material"
 import Link from "next/link"
 import Image from "next/image"
 import constructionPic from "@/../public/images/home/2.png"
@@ -44,12 +44,12 @@ export default function Home() {
               switching, and monitoring with full-stack services. Maximize resource efficiency and revenue growth
               effortlessly.
             </Typography>
-            <Link href="/login">
+            <Link href="/register" className="w-[180px]">
               <Button
                 variant="contained"
                 color="success"
                 size="large"
-                className="text-md mt-10 font-extrabold"
+                className="w-full text-md mt-10 font-extrabold py-3 text-base"
                 startIcon={<NorthEast />}
               >
                 Start Now
@@ -347,12 +347,12 @@ export default function Home() {
               Join our innovative decentralized computing service platform tailored for node providers. We're dedicated
               to maximizing resource utilization and accelerating revenue growth for every partner.
             </Typography>
-            <Link href="/login">
+            <Link href="/register">
               <Button
                 variant="contained"
                 color="success"
                 size="large"
-                className="text-md mt-10 font-extrabold"
+                className="w-[180px] text-md mt-10 font-extrabold py-3 text-base"
                 startIcon={<NorthEast />}
               >
                 Start Now
