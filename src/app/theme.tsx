@@ -1,14 +1,14 @@
 "use client"
 
 import { grey } from "@mui/material/colors"
-import { createTheme } from "@mui/material/styles"
+import { createTheme, responsiveFontSizes } from "@mui/material/styles"
 import { usePathname } from "next/navigation"
 
 export function DarkTheme() {
   const pathName = usePathname()
   const noBg = ["/", "/register"]
 
-  return createTheme({
+  let theme = createTheme({
     typography: {
       fontFamily: [
         "-apple-system",
@@ -92,4 +92,6 @@ export function DarkTheme() {
       },
     },
   })
+
+  return responsiveFontSizes(theme)
 }
