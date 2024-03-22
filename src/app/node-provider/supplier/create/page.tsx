@@ -159,7 +159,7 @@ export default function Overview() {
             </Button>
           </Link>
         </Box>
-        <Typography variant="h5">Edit Device</Typography>
+        <Typography variant="h5">{(isSwitchAction && "Edit Device") || "Add New Device"}</Typography>
         <Stepper className="mt-3" activeStep={createParams.activeStep} orientation="vertical">
           <Step key="0" expanded>
             <StepLabel className="w-[200px] flex-col justify-start items-start">
