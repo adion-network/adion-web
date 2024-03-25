@@ -3,7 +3,7 @@
 import Button from "@mui/material/Button"
 import { Avatar, Box, MenuItem, Backdrop, CircularProgress } from "@mui/material"
 import Link from "next/link"
-import { CryptocurrencyColorIotx } from "./Icons"
+import { LogoIcon } from "./Icons"
 import { styled } from "@mui/material/styles"
 import Menu, { MenuProps } from "@mui/material/Menu"
 import { useState, Fragment, useEffect } from "react"
@@ -11,20 +11,10 @@ import useProfile from "@/contexts/profile"
 import { usePathname } from "next/navigation"
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
   const userMenuopen = Boolean(userAnchorEl)
   const { userInfo, fetchUserInfo, logout, isLogouting } = useProfile()
   const path = usePathname()
-
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null)
-  }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setUserAnchorEl(event.currentTarget)
@@ -68,11 +58,10 @@ const Header = () => {
       </Backdrop>
       <Box className="h-full flex justify-between items-center mx-20">
         <Box className="flex justify-between items-center">
-          <CryptocurrencyColorIotx fontSize={50}></CryptocurrencyColorIotx>
           <Box className="ml-10 w-full flex items-center">
             <Box>
               <Link href="/node-provider/supplier/list">
-                <Button variant="text" className="text-xl font-extrabold">
+                <Button startIcon={<LogoIcon className="text-3xl" />} variant="text" className="text-xl font-extrabold">
                   Node Provider
                 </Button>
               </Link>

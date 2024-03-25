@@ -2,7 +2,7 @@
 import "./globals.css"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
 import { ThemeProvider } from "@mui/material/styles"
-import { DarkTheme } from "@/app/theme"
+import { darkTheme } from "@/app/theme"
 
 //components
 import Header from "@/components/Header"
@@ -18,10 +18,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const path = usePathname()
   return (
     <html lang="en">
+      <head>
+        <title>Demeters.ai</title>
+        <style>
+          {path === "/login" || path.startsWith("/node-provider")
+            ? "body {  background-image: radial-gradient(circle 500px at center, rgb(59, 24, 78, 0.95), rgb(12, 10, 42, 0.95));}"
+            : ""}
+        </style>
+      </head>
       <body>
         <AppRouterCacheProvider>
           <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }} autoHideDuration={3000}>
-            <ThemeProvider theme={DarkTheme}>
+            <ThemeProvider theme={darkTheme}>
               <CssBaseline />
               <ProjectProvider>
                 <UserProvider>
