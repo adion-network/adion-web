@@ -110,7 +110,7 @@ export default function Home() {
             isScroll ? "bg-gray-200 bg-opacity-10 border-b border-gray-800" : "bg-black bg-opacity-10"
           }  w-full z-10 backdrop-blur-md`}
         >
-          <Box className="mx-auto relative flex justify-between items-center w-4/5">
+          <Box className="mx-auto relative flex justify-between items-center md:w-4/5 2xl:w-2/3">
             <Link href="/">
               <Box className="flex gap-2 items-center">
                 <LogoIcon className="text-4xl"></LogoIcon>
@@ -125,42 +125,44 @@ export default function Home() {
           </Box>
         </Box>
         <Box className="h-screen scrollable-container overflow-y-scroll snap-y snap-mandatory">
-          <Box className="h-screen snap-start flex flex-col justify-start">
-            <Box ref={myRef} className="bg-cover bg-no-repeat h-full bg-top min-w-[1280px]">
-              <Box className="w-1/2 top-[15%] gap-y-10 left-[10%] flex flex-col relative justify-start">
-                <Typography variant="h3" className="font-extrabold animate__animated animate__slideInDown">
-                  Building the Future&apos;s AI/Blockchain Compute Network
-                </Typography>
-                <Typography variant="body1" className="text-gray-300 animate__animated animate__fadeIn">
-                  Aggregate global GPU resources via Demeters.ai&apos;s decentralized platform, achieving deployment,
-                  scheduling, switching, and monitoring with full-stack services. Maximize resource efficiency and
-                  revenue growth effortlessly.
-                </Typography>
-                <Link href="/register" className="w-[180px] animate__animated animate__fadeIn">
-                  <Button
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    className="w-full text-md mt-10 font-extrabold py-3 text-base"
-                    startIcon={<NorthEast />}
-                  >
-                    Start Now
-                  </Button>
-                </Link>
+          <Box className="h-screen snap-start">
+            <Box ref={myRef} className="bg-cover bg-no-repeat">
+              <Box className="2xl:w-2/3 md:w-4/5 mx-auto">
+                <Box className="w-1/2 h-full min-h-screen py-32 flex-col flex justify-start space-y-6">
+                  <Typography className="2xl:text-5xl md:text-4xl font-extrabold animate__animated animate__slideInDown">
+                    Building the Future&apos;s AI/Blockchain Compute Network
+                  </Typography>
+                  <Typography className="2xl:text-xl md:text-md text-gray-300 animate__animated animate__fadeIn">
+                    Aggregate global GPU resources via Demeters.ai&apos;s decentralized platform, achieving deployment,
+                    scheduling, switching, and monitoring with full-stack services. Maximize resource efficiency and
+                    revenue growth effortlessly.
+                  </Typography>
+                  <Link href="/register" className="w-[180px] animate__animated animate__fadeIn">
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="large"
+                      className="w-full text-md mt-10 font-extrabold py-3 text-base"
+                      startIcon={<NorthEast />}
+                    >
+                      Start Now
+                    </Button>
+                  </Link>
+                </Box>
               </Box>
             </Box>
           </Box>
-          <Box className="h-screen snap-start pt-24 pb-32">
-            <Box className="flex flex-col justify-center mx-auto w-4/5 max-w-7xl h-full gap-y-32">
+          <Box className="h-screen snap-start py-32">
+            <Box className="flex flex-col justify-center mx-auto md:w-4/5 2xl:w-2/3 h-full gap-y-32">
               <Box className="flex justify-between gap-y-10 items-center">
                 <Box className="w-2/3 space-y-10">
-                  <Typography variant="h4" className="font-extrabold">
-                    <AnimationOnScroll animateIn="animate__fadeInLeft" scrollableParentSelector=".scrollable-container">
+                  <AnimationOnScroll animateIn="animate__fadeInLeft" scrollableParentSelector=".scrollable-container">
+                    <Typography className="2xl:text-4xl md:text-3xl font-extrabold">
                       Full control of your AI infrastructure
-                    </AnimationOnScroll>
-                  </Typography>
+                    </Typography>
+                  </AnimationOnScroll>
                   <AnimationOnScroll animateIn="animate__fadeInRight" scrollableParentSelector=".scrollable-container">
-                    <Typography variant="body1" className="text-gray-300">
+                    <Typography className="2xl:text-xl md:text-base text-gray-300">
                       Leverage global high-performance servers with DMOS (Demeter Cloud Operating System) for effortless
                       resource management. Experience smart control through an intuitive dashboard, seamless
                       cloud-native integrations, and extensive API. Simplified. Swift. Smart.
@@ -171,29 +173,29 @@ export default function Home() {
                   <NvidaLogo />
                 </Box>
               </Box>
-              <AnimationOnScroll
-                animateIn="animate__zoomIn"
-                duration={1}
-                scrollableParentSelector=".scrollable-container"
-              >
-                <Box className="transition min-w-[1000px] w-full">
-                  <DemeterConstruction></DemeterConstruction>
-                </Box>
-              </AnimationOnScroll>
+              <Box className="transition">
+                <AnimationOnScroll
+                  animateIn="animate__zoomIn"
+                  duration={1}
+                  scrollableParentSelector=".scrollable-container"
+                >
+                  <DemeterConstruction style={{ width: "100%" }}></DemeterConstruction>
+                </AnimationOnScroll>
+              </Box>
             </Box>
           </Box>
           <Box className="h-screen snap-start section pt-40 pb-32">
-            <Box className="flex flex-col justify-center mx-auto w-4/5 max-w-7xl h-full space-y-10">
+            <Box className="flex flex-col justify-center mx-auto md:w-4/5 2xl:w-2/3 h-full space-y-10">
               <Box className="flex justify-between items-center">
                 <Box className="w-1/2 space-y-5">
                   <Box className="ml-4 inline-flex rounded-full bg-green-500 shadow-halo shadow-green-500">
                     <ConfigIcon></ConfigIcon>
                   </Box>
                   <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
-                    <Typography variant="h4" className="font-extrabold">
+                    <Typography className="2xl:text-4xl md:text-3xl font-extrabold">
                       Professional. Worry-Free. 24/7.
                     </Typography>
-                    <Typography variant="body1" className="text-gray-300 ">
+                    <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
                       Experience global, full-stack SRE operational management—including overseas data center equipment
                       setup and 24/7 technical support. Ensure optimal maintenance of hardware resources, freeing you
                       from technical concerns and maintenance worries.
@@ -217,10 +219,10 @@ export default function Home() {
                     scrollableParentSelector=".scrollable-container"
                     duration={1.5}
                   >
-                    <Typography variant="h4" className="font-extrabold">
+                    <Typography className="2xl:text-4xl md:text-3xl font-extrabold">
                       DMOS Cloud OS: Resource Mastery.
                     </Typography>
-                    <Typography variant="body1" className="text-gray-300 ">
+                    <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
                       Harness DMOS Cloud Operating System for remote, visual management of all hardware resources within
                       cluster nodes. Features customizable projects, versatile single-card task management, earnings
                       insights, and withdrawals—maximizing resource utilization efficiently.
@@ -231,17 +233,17 @@ export default function Home() {
             </Box>
           </Box>
           <Box className="h-screen snap-start section pt-16 pb-32">
-            <Box className="flex flex-col justify-center mx-auto w-4/5 max-w-7xl h-full space-y-10">
+            <Box className="flex flex-col justify-center mx-auto md:w-4/5 2xl:w-2/3 h-full space-y-10">
               <Box className="flex justify-between items-center">
                 <Box className="w-1/2 space-y-5">
                   <Box className="ml-4 inline-flex rounded-full  bg-purple-500 shadow-halo shadow-purple-500">
                     <PodwiseLogo></PodwiseLogo>
                   </Box>
                   <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
-                    <Typography variant="h4" className="font-extrabold">
+                    <Typography className="2xl:text-4xl md:text-3xl font-extrabold">
                       Podwise Rental Service: Expand Horizons.
                     </Typography>
-                    <Typography variant="body1" className="text-gray-300 ">
+                    <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
                       Connect to Podwise for diverse GPU cluster rental services—bare metal, AI acceleration, GPU
                       container cloud, and more. Broaden the application scenarios and market reach of your hardware
                       resources.
@@ -265,10 +267,10 @@ export default function Home() {
                     scrollableParentSelector=".scrollable-container"
                     duration={1.5}
                   >
-                    <Typography variant="h4" className="font-extrabold">
+                    <Typography variant="h4" className="2xl:text-4xl md:text-3xl font-extrabold">
                       Global Project Access: Unlock Potential.
                     </Typography>
-                    <Typography variant="body1" className="text-gray-300 ">
+                    <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
                       Clients connect through the Demeter.Ai network for smart access to global GPU project pools and
                       GPU POW mining pools. Enjoy project task profits, airdrop rewards, and mainnet Token incentives.
                     </Typography>
@@ -278,13 +280,13 @@ export default function Home() {
             </Box>
           </Box>
           <Box className="h-screen snap-start section pt-24 pb-32">
-            <Box className="flex justify-center items-center mx-auto max-w-7xl w-4/5 h-full space-y-4">
-              <Box className="w-3/5 space-y-4">
+            <Box className="flex justify-center items-center mx-auto md:w-4/5 2xl:w-2/3 h-full space-y-4">
+              <Box className="w-3/5 md:space-y-4 2xl:space-y-8">
                 <Box className="ml-4 inline-flex rounded-full bg-sky-600 shadow-halo shadow-sky-600">
                   <PuzzleIcon></PuzzleIcon>
                 </Box>
                 <AnimationOnScroll animateIn="animate__flipInX" scrollableParentSelector=".scrollable-container">
-                  <Typography variant="h4" className="font-extrabold">
+                  <Typography className="2xl:text-4xl md:text-2xl font-extrabold">
                     AI R&D Acceleration: Streamline Development.
                   </Typography>
                 </AnimationOnScroll>
@@ -293,7 +295,7 @@ export default function Home() {
                   duration={0.5}
                   scrollableParentSelector=".scrollable-container"
                 >
-                  <Typography variant="body1" className="text-gray-300 ">
+                  <Typography className="2xl:text-xl md:text-base text-gray-300 ">
                     Harness advanced ML Tools and Platforms to fast-track AI project cycles—from model training to
                     inference acceleration.
                   </Typography>
@@ -303,12 +305,12 @@ export default function Home() {
                   duration={1}
                   scrollableParentSelector=".scrollable-container"
                 >
-                  <Typography variant="h6" className="font-extrabold">
+                  <Typography className="2xl:text-3xl md:text-xl font-extrabold">
                     ML Tools: Integrated AI Development Toolkit
                   </Typography>
-                  <Box component={"ul"} className="space-y-1 list-disc ml-4">
+                  <Box component={"ul"} className="space-y-1 list-disc ml-4 mt-2">
                     <Box component={"li"}>
-                      <Typography variant="body1" className="">
+                      <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
                         <Box component={"span"} className="font-extrabold">
                           Versatile Framework Support:{" "}
                         </Box>
@@ -316,7 +318,7 @@ export default function Home() {
                       </Typography>
                     </Box>
                     <Box component={"li"}>
-                      <Typography variant="body1" className="">
+                      <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
                         <Box component={"span"} className="font-extrabold">
                           Comprehensive Tool Integration:{" "}
                         </Box>
@@ -330,12 +332,12 @@ export default function Home() {
                   duration={1.5}
                   scrollableParentSelector=".scrollable-container"
                 >
-                  <Typography variant="h6" className="font-extrabold">
+                  <Typography className="2xl:text-3xl md:text-xl font-extrabold">
                     ML Platform: Unified Machine Learning Platform
                   </Typography>
-                  <Box component={"ul"} className="space-y-1 list-disc ml-4">
+                  <Box component={"ul"} className="space-y-1 list-disc ml-4 mt-2">
                     <Box component={"li"}>
-                      <Typography variant="body1" className="">
+                      <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
                         <Box component={"span"} className="font-extrabold">
                           Kubeflow Integration:{" "}
                         </Box>
@@ -343,7 +345,7 @@ export default function Home() {
                       </Typography>
                     </Box>
                     <Box component={"li"}>
-                      <Typography variant="body1" className="">
+                      <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
                         <Box component={"span"} className="font-extrabold">
                           KServe Functionality:{" "}
                         </Box>
@@ -351,7 +353,7 @@ export default function Home() {
                       </Typography>
                     </Box>
                     <Box component={"li"}>
-                      <Typography variant="body1" className="">
+                      <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
                         <Box component={"span"} className="font-extrabold">
                           KubeRay Capabilities:{" "}
                         </Box>
@@ -373,13 +375,13 @@ export default function Home() {
             </Box>
           </Box>
           <Box className="h-screen snap-start section pt-44 pb-32">
-            <Box className="flex flex-col justify-center mx-auto max-w-7xl w-4/5 h-full space-y-4">
-              <Box className="w-4/5 space-y-2">
+            <Box className="flex flex-col justify-center mx-auto md:w-4/5 2xl:w-2/3 h-full space-y-4">
+              <Box className="w-4/5">
                 <AnimationOnScroll animateIn="animate__zoomIn" scrollableParentSelector=".scrollable-container">
-                  <Typography variant="h5" className="font-extrabold">
+                  <Typography variant="h5" className="2xl:text-3xl md:text-xl font-extrabold">
                     Exploring DFIL: Connecting the future of decentralized computing and storage.
                   </Typography>
-                  <Typography variant="body1" className="text-gray-300">
+                  <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
                     DFIL is a revolutionary cross-chain bridge built between the Demeter and Filecoin ecosystems. It
                     combines cutting-edge IBC protocol and FVM technology to create a pioneering platform for
                     cross-chain asset transfer and remote computation.
@@ -387,21 +389,22 @@ export default function Home() {
                 </AnimationOnScroll>
               </Box>
               <Box className="flex justify-between">
-                <Box className="w-1/3 space-y-2">
+                <Box className="w-1/3">
                   <AnimationOnScroll
                     animateIn="animate__slideInLeft"
                     scrollableParentSelector=".scrollable-container"
+                    className="space-y-2"
                     duration={1}
                   >
                     <Box className="gap-x-1 flex">
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           One-Stop Solution: Seamless Filecoin Integration.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           DFIL enables single-call execution for temporary computational needs and offers a hassle-free
                           node encapsulation service for those interested in Filecoin projects without the means for
                           software and hardware maintenance.
@@ -412,11 +415,11 @@ export default function Home() {
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           Cross-Chain Connectivity: Enhancing Interoperability.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           Facilitate direct token transfers between Demeters and Filecoin ecosystems via the IBC
                           protocol or settle tasks through smart contracts, simplifying cross-chain transactions.
                         </Typography>
@@ -426,11 +429,11 @@ export default function Home() {
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           Computational Power Dispatch: Flexible & Reliable.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           DFIL meets all computational demands, from sudden spikes to consistent support, with its
                           remote computing task service.
                         </Typography>
@@ -446,17 +449,18 @@ export default function Home() {
                   <AnimationOnScroll
                     animateIn="animate__slideInRight"
                     scrollableParentSelector=".scrollable-container"
+                    className="space-y-2"
                     duration={1}
                   >
                     <Box className="gap-x-1 flex">
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           Transparency & Fairness: Built on Trust.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           Demeters, constructed on Cosmos&apos; technology stack and integrated with Cosmos&apos;
                           communication protocols and consensus mechanisms via FVM, serves as a bridge to Filecoin,
                           upgrading the Filecoin network&apos;s development capabilities.
@@ -467,11 +471,11 @@ export default function Home() {
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           Storage Incentivization: Expanding the Filecoin Network.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           As encapsulation costs decrease and computational resources are optimized, more data is
                           motivated to be stored on the Filecoin network, enhancing its value and fostering the growth
                           of the decentralized storage ecosystem.
@@ -482,11 +486,11 @@ export default function Home() {
                       <Box>
                         <ChainIcon fontSize={25} />
                       </Box>
-                      <Box className="space-y-1">
-                        <Typography variant="subtitle1" className="font-bold">
+                      <Box className="2xl:space-y-4 md:space-y-1">
+                        <Typography className="2xl:text-2xl md:text-base font-bold">
                           Resource Optimization: Maximizing Utility.
                         </Typography>
-                        <Typography variant="body2" className="text-gray-300 ">
+                        <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
                           DFIL offers a platform for Filecoin miners to market idle computational resources, providing
                           computational power to users or projects and generating additional income.
                         </Typography>
@@ -498,7 +502,7 @@ export default function Home() {
             </Box>
           </Box>
           <Box className="h-screen snap-start section pt-32 pb-32">
-            <Box className="flex flex-col justify-center mx-auto w-4/5 max-w-7xl h-1/3 pt-16 space-y-10">
+            <Box className="flex flex-col justify-center mx-auto md:w-4/5 2xl:w-2/3 h-1/3 pt-16 space-y-10">
               <Box className="w-full space-y-8">
                 <Typography variant="h3" className="font-extrabold">
                   Begin Your Journey with Demeters.ai?
@@ -521,7 +525,7 @@ export default function Home() {
               </Box>
             </Box>
             <Box className="w-full h-2/3 mt-32 bg-[#1A1A1A] py-20">
-              <Box className="flex justify-center mx-auto max-w-7xl">
+              <Box className="flex mx-auto md:w-4/5 2xl:w-2/3">
                 <Box className="w-1/3 flex-col justify-center space-y-8">
                   <Box className="text-center">
                     <Typography variant="h5" className="font-extrabold">
