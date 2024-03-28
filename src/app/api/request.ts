@@ -21,7 +21,7 @@ const getUserToken = () => {
 const headers = new Headers()
 headers.set("Content-Type", "application/json")
 
-const apiAddress = process.env.API_ADDRESS || "https://api-test.demeters.io"
+const apiAddress = process.env.API_ADDRESS || ""
 
 export interface ResData {
   msg: string | null
