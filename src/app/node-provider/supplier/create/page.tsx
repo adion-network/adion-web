@@ -20,7 +20,8 @@ import useProfile from "@/contexts/profile"
 
 import Link from "next/link"
 import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
+import Header from "@/components/Header"
 
 export default function Overview() {
   const {
@@ -35,7 +36,6 @@ export default function Overview() {
     isJoiningProject,
     switchProject,
   } = useProjects()
-  const router = useRouter()
   const searchParams = useSearchParams()
 
   const createParamsInit = {
@@ -147,6 +147,7 @@ export default function Overview() {
 
   return (
     <Box>
+      <Header />
       <Backdrop open={isProjectListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>

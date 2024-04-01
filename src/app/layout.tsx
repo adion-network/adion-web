@@ -5,7 +5,6 @@ import { ThemeProvider } from "@mui/material/styles"
 import { darkTheme } from "@/app/theme"
 
 //components
-import Header from "@/components/Header"
 import { SnackbarProvider } from "notistack"
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
 import { CssBaseline } from "@mui/material"
@@ -33,7 +32,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CssBaseline />
               <ProjectProvider>
                 <UserProvider>
-                  {path !== "/login" && path !== "/" && path !== "/register" && <Header />}
                   {children}
                   <ProgressBar height="1px" color={blue[600]} options={{ showSpinner: false }} shallowRouting />
                 </UserProvider>
