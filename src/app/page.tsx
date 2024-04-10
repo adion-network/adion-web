@@ -35,6 +35,8 @@ import dmosPic from "@/../public/images/home/dmos.svg"
 import whyUsPic from "@/../public/images/home/why_us.svg"
 import stepsPic from "@/../public/images/home/steps.svg"
 import mapPic from "@/../public/images/home/map.svg"
+import RainbowBg from "@/components/RainbowBg"
+import Typewriter from "typewriter-effect"
 
 const NextIcon = () => {
   return (
@@ -117,7 +119,7 @@ export default function Home() {
             <Link href="/cloud">
               <Typography className="font-bold text-gray-400 text-xl">Cloud</Typography>
             </Link>
-            <Link href="#">
+            <Link href="#dmos">
               <Typography className="font-bold text-gray-400 text-xl">DMOS</Typography>
             </Link>
             <Link href="#">
@@ -137,39 +139,53 @@ export default function Home() {
         </Box>
       </Box>
       <Box className="h-screen scrollable-container overflow-y-scroll snap-y snap-mandatory">
+        <RainbowBg />
         <Box id="instruction" ref={myRef} className="h-screen snap-start">
-          <Box component={"div"} className="bg-[#1A1A1A] bg-opacity-50 backdrop-blur-[1px]">
+          <Box component={"div"} className="bg-[#1A1A1A] bg-opacity-50">
             <Box className="2xl:w-2/3 md:w-4/5 mx-auto">
               <Box className="min-h-screen flex-col flex items-center justify-center gap-y-16">
                 <Typography className="2xl:text-7xl md:text-6xl md:leading-snug 2xl:leading-snug text-center font-extrabold animate__animated animate__slideInDown">
                   Aggregating Global{" "}
                   <Box
                     component={"span"}
-                    className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-lime-400"
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-[#60D28D] to-green-600"
                   >
                     GPU
                   </Box>{" "}
                   Resources to Accelerate{" "}
                   <Box
                     component={"span"}
-                    className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-lime-400"
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-[#60D28D] to-green-600"
                   >
                     AI
                   </Box>{" "}
                   Innovation
                 </Typography>
-                <Typography className="font-sans antialiased 2xl:text-3xl md:text-xl text-center animate__animated animate__fadeIn">
-                  Infinite Network,Flexible Switching,Decentralized AI
-                </Typography>
+                <Box className="font-sans antialiased 2xl:text-3xl md:text-xl text-center">
+                  <Typewriter
+                    onInit={(typewriter) => {
+                      typewriter
+                        .typeString("Infinite Network,")
+                        .pauseFor(300)
+                        .typeString("Flexible Switching, ")
+                        .pauseFor(300)
+                        .typeString("Decentralized AI")
+                        .start()
+                    }}
+                    options={{
+                      delay: 40,
+                    }}
+                  />
+                </Box>
                 <Box className="flex gap-x-6 animate__animated animate__fadeIn animate__delay-1s">
                   <Button variant="contained" color="success" className="rounded-full w-80" href="/cloud">
-                    <Box className="flex flex-col text-nowrap">
+                    <Box className="flex flex-col text-nowrap text-center">
                       <Typography className=" text-gray-800 font-bold text-2xl">Node Provider</Typography>
                       <Typography className=" text-gray-800">Supply GPU Power</Typography>
                     </Box>
                   </Button>
                   <Button variant="outlined" className="rounded-full w-80 border-2 border-white">
-                    <Box className="flex flex-col text-nowrap">
+                    <Box className="flex flex-col text-nowrap text-center">
                       <Typography className="font-bold text-2xl">Application Node</Typography>
                       <Typography className="">Become an APP Innovator</Typography>
                     </Box>
@@ -526,11 +542,11 @@ export default function Home() {
               </Box>
             </Box>
             <Box className="w-1/5">
-              <Box className="text-center space-y-8">
+              <Box className="text-left space-y-8">
                 <Typography variant="h5" className="font-extrabold">
                   Main
                 </Typography>
-                <Box className="flex flex-col gap-y-5">
+                <Box className="flex flex-col gap-y-4">
                   <Link href="#instruction" className="hover:text-gray-400">
                     <Typography variant="body1">Introduction</Typography>
                   </Link>
@@ -556,11 +572,11 @@ export default function Home() {
               </Box>
             </Box>
             <Box className="w-1/5">
-              <Box className="text-center space-y-8">
+              <Box className="text-left space-y-8">
                 <Typography variant="h5" className="font-extrabold">
                   Menu
                 </Typography>
-                <Box className="space-y-5">
+                <Box className="space-y-4">
                   <Link href="/cloud" className="hover:text-gray-400">
                     <Typography variant="body1">Cloud</Typography>
                   </Link>
@@ -571,11 +587,11 @@ export default function Home() {
               </Box>
             </Box>
             <Box className="w-1/5">
-              <Box className="text-center space-y-8">
+              <Box className="text-left space-y-8">
                 <Typography variant="h5" className="font-extrabold">
                   Documents
                 </Typography>
-                <Box className="space-y-5">
+                <Box className="space-y-4">
                   <Typography variant="body1">Terms of use</Typography>
                   <Typography variant="body1">Privacy Policy</Typography>
                 </Box>

@@ -547,8 +547,8 @@ export default function Home() {
                     </Box>
                   </Box>
                 </Box>
-                <Box className="w-1/3">
-                  <Box className="text-center space-y-8">
+                <Box className="flex justify-center w-1/3">
+                  <Box className="space-y-8">
                     <Typography variant="h5" className="font-extrabold">
                       Main
                     </Typography>
@@ -559,8 +559,8 @@ export default function Home() {
                     </Box>
                   </Box>
                 </Box>
-                <Box className="w-1/3">
-                  <Box className="text-center space-y-8">
+                <Box className="flex justify-center w-1/3">
+                  <Box className="space-y-8">
                     <Typography variant="h5" className="font-extrabold">
                       Documents
                     </Typography>
