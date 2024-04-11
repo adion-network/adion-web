@@ -794,7 +794,7 @@ export const ResourceIcon = createSvgIcon(
 
 export const DoubleQuotationMarkLeftIcon = createSvgIcon(
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_3295_47950)">
+    <g clipPath="url(#clip0_3295_47950)">
       <path
         d="M35.7445 32.5133C35.7445 13.35 51.816 2.04167 62.1016 0V11.3083C56.4766 13.0367 49.7264 21.8317 49.406 31.4133H62.1016V43.3333C62.1016 52.5383 54.5933 60 45.3307 60H35.7445V32.5133ZM1.72656 32.5133C1.72656 13.35 17.7981 2.04167 28.0836 0V11.3083C22.4587 13.0367 15.7084 21.8317 15.3881 31.4133H27.9226V43.3333C27.9226 52.5383 20.4143 60 11.1518 60H1.72656V32.5133Z"
         fill="#60D18D"
@@ -811,7 +811,7 @@ export const DoubleQuotationMarkLeftIcon = createSvgIcon(
 
 export const DoubleQuotationMarkRightIcon = createSvgIcon(
   <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_3295_47952)">
+    <g clipPath="url(#clip0_3295_47952)">
       <path
         d="M26.2945 27.4867C26.2945 46.65 10.2231 57.9583 -0.0625 60V48.6917C5.56244 46.9633 12.3127 38.1683 12.633 28.5867L-0.0625 28.5867L-0.0625 16.6667C-0.0625 7.46167 7.4458 0 16.7083 0H26.2945L26.2945 27.4867ZM60.3125 27.4867C60.3125 46.65 44.241 57.9583 33.9555 60V48.6917C39.5804 46.9633 46.3307 38.1683 46.651 28.5867L34.1165 28.5867V16.6667C34.1165 7.46167 41.6248 0 50.8873 0H60.3125L60.3125 27.4867Z"
         fill="#60D18D"
@@ -828,7 +828,7 @@ export const DoubleQuotationMarkRightIcon = createSvgIcon(
 
 export const ScheduleIcon = createSvgIcon(
   <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_3310_2321)">
+    <g clipPath="url(#clip0_3310_2321)">
       <path
         d="M42.7083 50H7.29167C3.22917 50 0 46.7708 0 42.7083V7.29167C0 3.22917 3.22917 0 7.29167 0H42.7083C46.7708 0 50 3.22917 50 7.29167V42.7083C50 46.7708 46.7708 50 42.7083 50ZM7.29167 4.16667C5.52083 4.16667 4.16667 5.52083 4.16667 7.29167V42.7083C4.16667 44.4792 5.52083 45.8333 7.29167 45.8333H42.7083C44.4792 45.8333 45.8333 44.4792 45.8333 42.7083V7.29167C45.8333 5.52083 44.4792 4.16667 42.7083 4.16667H7.29167Z"
         fill="#60D28D"

@@ -17,9 +17,7 @@ import {
 } from "@/components/Icons"
 import { Box, Button, Typography } from "@mui/material"
 import Link from "next/link"
-import { useState, useEffect, useRef } from "react"
-import * as THREE from "three"
-import net from "vanta/dist/vanta.net.min"
+import { useState, useEffect } from "react"
 import "animate.css"
 import { AnimationOnScroll } from "react-animation-on-scroll"
 import Image from "next/image"
@@ -37,6 +35,7 @@ import stepsPic from "@/../public/images/home/steps.svg"
 import mapPic from "@/../public/images/home/map.svg"
 import RainbowBg from "@/components/RainbowBg"
 import Typewriter from "typewriter-effect"
+import TorusOfCubesBg from "@/components/TorusOfCubesBg"
 
 const NextIcon = () => {
   return (
@@ -60,8 +59,6 @@ const NextIcon = () => {
 
 export default function Home() {
   const [isScroll, setIsScroll] = useState(false)
-  const [vantaNetEffect, setVantaNetEffect] = useState<any>(0)
-  const myRef = useRef(null)
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true, capture: true })
@@ -73,33 +70,6 @@ export default function Home() {
   const handleScroll = (e: any) => {
     setIsScroll(Boolean(e.target.scrollTop))
   }
-
-  useEffect(() => {
-    if (!vantaNetEffect) {
-      setVantaNetEffect(
-        net({
-          el: myRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          fullWidth: true,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0x3fafff,
-          backgroundColor: "#041729",
-          points: 8.0,
-          maxDistance: 25.0,
-          spacing: 20.0,
-        })
-      )
-    }
-    return () => {
-      if (vantaNetEffect) vantaNetEffect.destroy()
-    }
-  }, [vantaNetEffect])
 
   return (
     <Box>
@@ -139,12 +109,12 @@ export default function Home() {
         </Box>
       </Box>
       <Box className="h-screen scrollable-container overflow-y-scroll snap-y snap-mandatory">
-        <RainbowBg />
-        <Box id="instruction" ref={myRef} className="h-screen snap-start">
-          <Box component={"div"} className="bg-[#1A1A1A] bg-opacity-50">
-            <Box className="2xl:w-2/3 md:w-4/5 mx-auto">
+        <Box id="instruction" className="relative h-screen snap-start">
+          <TorusOfCubesBg />
+          <Box component={"div"} className="bg-[#1A1A1A] bg-opacity-70 z-10">
+            <Box className="w-4/5 2xl:w-2/3 md:w-4/5 mx-auto">
               <Box className="min-h-screen flex-col flex items-center justify-center gap-y-16">
-                <Typography className="2xl:text-7xl md:text-6xl md:leading-snug 2xl:leading-snug text-center font-extrabold animate__animated animate__slideInDown">
+                <Typography className="text-3xl 2xl:text-7xl md:text-6xl md:leading-snug 2xl:leading-snug text-center font-extrabold animate__animated animate__slideInDown">
                   Aggregating Global{" "}
                   <Box
                     component={"span"}
@@ -161,33 +131,24 @@ export default function Home() {
                   </Box>{" "}
                   Innovation
                 </Typography>
-                <Box className="font-sans antialiased 2xl:text-3xl md:text-xl text-center">
+                <Box className="text-sm font-sans antialiased 2xl:text-4xl md:text-xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-yellow-300">
                   <Typewriter
-                    onInit={(typewriter) => {
-                      typewriter
-                        .typeString("Infinite Network,")
-                        .pauseFor(300)
-                        .typeString("Flexible Switching, ")
-                        .pauseFor(300)
-                        .typeString("Decentralized AI")
-                        .start()
-                    }}
                     options={{
+                      strings: ["Infinite Network", "Flexible Switching", "Decentralized AI"],
                       delay: 40,
+                      deleteSpeed: 40,
+                      autoStart: true,
+                      loop: true,
+                      cursor: "|",
+                      cursorClassName: "text-yellow-300 animate-[Typewriter-cursor_1s_ease-in-out_infinite]",
                     }}
                   />
                 </Box>
                 <Box className="flex gap-x-6 animate__animated animate__fadeIn animate__delay-1s">
                   <Button variant="contained" color="success" className="rounded-full w-80" href="/cloud">
                     <Box className="flex flex-col text-nowrap text-center">
-                      <Typography className=" text-gray-800 font-bold text-2xl">Node Provider</Typography>
+                      <Typography className=" text-gray-800 font-bold text-2xl">Get Start</Typography>
                       <Typography className=" text-gray-800">Supply GPU Power</Typography>
-                    </Box>
-                  </Button>
-                  <Button variant="outlined" className="rounded-full w-80 border-2 border-white">
-                    <Box className="flex flex-col text-nowrap text-center">
-                      <Typography className="font-bold text-2xl">Application Node</Typography>
-                      <Typography className="">Become an APP Innovator</Typography>
                     </Box>
                   </Button>
                 </Box>
@@ -195,7 +156,10 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box id="cloud" className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box id="cloud" className="relative h-screen snap-start 2xl:pt-32 md:pt-28">
+          <Box className={`${isScroll ? "fixed" : "absolute"} -z-20 top-0 left-0`}>
+            <RainbowBg />
+          </Box>
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Box className="flex justify-center space-x-2 items-center">

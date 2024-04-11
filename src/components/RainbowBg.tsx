@@ -37,7 +37,7 @@ const RainbowBg = () => {
 
       void main(void) {
           vec2 q = gl_FragCoord.xy / resolution.xy;
-          vec2 p = -1.0 + 2.0 * q;
+          vec2 p = -0.0 + 2.0 * q;
           p.x *= resolution.x / resolution.y;
 
           float v = p.x + cos(time + p.y);
@@ -60,7 +60,7 @@ const RainbowBg = () => {
       return program
     }
 
-    function initGraphics() {
+    function render() {
       var width = canvas.width
       var height = canvas.height
       gl.viewport(0, 0, width, height)
@@ -78,19 +78,15 @@ const RainbowBg = () => {
       ut = gl.getUniformLocation(program, "time")
       var resolution = new Float32Array([canvas.width, canvas.height])
       gl.uniform2fv(gl.getUniformLocation(program, "resolution"), resolution)
-    }
 
-    function render() {
       gl.uniform1f(ut, (Date.now() - st) / 1000)
       gl.drawArrays(gl.TRIANGLE_FAN, 0, 4)
       requestAnimationFrame(render)
     }
-
-    initGraphics()
     render()
   }, [])
 
-  return <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, zIndex: -1 }} />
+  return <canvas ref={canvasRef} />
 }
 
 export default RainbowBg
