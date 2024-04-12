@@ -15,7 +15,7 @@ import {
   ScheduleIcon,
   ToolsIcon,
 } from "@/components/Icons"
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Button, Typography, Menu, MenuItem, Divider } from "@mui/material"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import "animate.css"
@@ -36,6 +36,7 @@ import mapPic from "@/../public/images/home/map.svg"
 import RainbowBg from "@/components/RainbowBg"
 import Typewriter from "typewriter-effect"
 import TorusOfCubesBg from "@/components/TorusOfCubesBg"
+import { Menu as MenuIcon } from "@mui/icons-material"
 
 const NextIcon = () => {
   return (
@@ -60,6 +61,15 @@ const NextIcon = () => {
 export default function Home() {
   const [isScroll, setIsScroll] = useState(false)
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true, capture: true })
     return () => {
@@ -71,6 +81,21 @@ export default function Home() {
     setIsScroll(Boolean(e.target.scrollTop))
   }
 
+  const headerUrl = [
+    {
+      name: "Cloud",
+      href: "/cloud",
+    },
+    {
+      name: "DMOS",
+      href: "#dmos",
+    },
+    {
+      name: "Explorer",
+      href: "#",
+    },
+  ]
+
   return (
     <Box>
       <Box
@@ -78,7 +103,7 @@ export default function Home() {
           isScroll ? "bg-gray-200 bg-opacity-10 border-b border-gray-800" : "bg-[#1A1A1A]"
         }  w-full z-10 backdrop-blur-md`}
       >
-        <Box className="mx-auto relative flex justify-between items-center md:w-4/5 2xl:w-2/3">
+        <Box className="hidden md:flex mx-auto relative justify-between items-center w-4/5 2xl:w-2/3">
           <Box className="flex items-end gap-x-10">
             <Link href="/">
               <Box className="flex gap-2 items-center">
@@ -86,15 +111,11 @@ export default function Home() {
                 <Typography className="text-2xl font-extrabold text-gray-200">Demeters.ai</Typography>
               </Box>
             </Link>
-            <Link href="/cloud">
-              <Typography className="font-bold text-gray-400 text-xl">Cloud</Typography>
-            </Link>
-            <Link href="#dmos">
-              <Typography className="font-bold text-gray-400 text-xl">DMOS</Typography>
-            </Link>
-            <Link href="#">
-              <Typography className="font-bold text-gray-400 text-xl">Explorer</Typography>
-            </Link>
+            {headerUrl.map((link: any, index: number) => (
+              <Link href={link.href} key={`menu-${index}`}>
+                <Typography className="font-bold text-gray-400 text-xl">{link.name}</Typography>
+              </Link>
+            ))}
           </Box>
           <Box className="flex gap-x-10 items-center">
             <Link href="#">
@@ -104,6 +125,41 @@ export default function Home() {
               <Button variant="outlined" className="border-2 rounded-lg">
                 Sign In
               </Button>
+            </Link>
+          </Box>
+        </Box>
+        <Box className="md:hidden items-center flex mx-auto justify-center w-screen relative px-2">
+          <Button className="absolute left-2" variant="outlined" onClick={handleMenuClick}>
+            <MenuIcon />
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {headerUrl.map((link: any, index: number) => (
+              <MenuItem key={`mobile-menu-${index}`}>
+                <Link href={link.href}>{link.name}</Link>
+              </MenuItem>
+            ))}
+            <Divider></Divider>
+            <MenuItem>
+              <Link href="/login">Sign In</Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="#">Docs</Link>
+            </MenuItem>
+          </Menu>
+          <Box className="flex items-end gap-x-10">
+            <Link href="/">
+              <Box className="flex gap-2 items-center">
+                <LogoIcon className="text-2xl"></LogoIcon>
+                <Typography className="text-xl font-extrabold text-gray-200">Demeters.ai</Typography>
+              </Box>
             </Link>
           </Box>
         </Box>
@@ -156,7 +212,7 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box id="cloud" className="relative h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box id="cloud" className="relative h-screen snap-start pt-28 2xl:pt-32">
           <Box className={`${isScroll ? "fixed" : "absolute"} -z-20 top-0 left-0`}>
             <RainbowBg />
           </Box>
@@ -177,12 +233,12 @@ export default function Home() {
               duration={1}
               scrollableParentSelector=".scrollable-container"
             >
-              <Image className="2xl:h-[60vh] md:h-[55vh] w-full" src={layersPic} alt="demeters-layers"></Image>
+              <Image className="2xl:h-[60vh] h-[55vh] w-full" src={layersPic} alt="demeters-layers"></Image>
             </AnimationOnScroll>
             <NextIcon />
           </Box>
         </Box>
-        <Box className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box className="h-screen snap-start 2xl:pt-32 pt-28">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
             <Box className="flex flex-col items-center text-center justify-between">
               <Box className="flex items-center gap-x-2">
@@ -195,14 +251,14 @@ export default function Home() {
                 <Image
                   alt="demeters_construction"
                   src={constructionPic}
-                  className="2xl:h-[70vh] md:h-[65vh] w-full"
+                  className="2xl:h-[70vh] h-[65vh] w-full"
                 ></Image>
               </AnimationOnScroll>
             </Box>
             <NextIcon />
           </Box>
         </Box>
-        <Box id="chain" className="h-screen snap-start 2xl:pt-28 md:pt-24">
+        <Box id="chain" className="h-screen snap-start 2xl:pt-28 pt-24">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Box className="flex justify-center space-x-2 items-center">
@@ -215,35 +271,46 @@ export default function Home() {
                 Building the Infinite Application Chain
               </Typography>
             </AnimationOnScroll>
-            <Box className="flex flex-col justify-between w-full mt-4">
-              <Box className="flex flex-row justify-center items-center">
-                <Box className="w-1/3 px-20">
+            <Box className="flex flex-col justify-between w-full mt-4 gap-y-4">
+              <Box className="flex md:flex-row flex-col justify-center items-center">
+                <Box className="md:w-1/3 md:px-20 w-1/5 overflow-y-auto">
                   <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
                     <Image src={chain1Pic} alt="chain1"></Image>
                   </AnimationOnScroll>
                 </Box>
-                <Box className="w-2/3 flex flex-col justify-start text-left px-20">
+                <Box className="md:w-2/3 flex flex-col justify-start text-left md:px-20 px-5">
                   <AnimationOnScroll
                     animateIn="animate__fadeInRight"
                     duration={0.5}
                     scrollableParentSelector=".scrollable-container"
                   >
-                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2">Global Connectivity</Typography>
-                    <Typography className="md:text-base 2xl:text-lg text-gray-400">
+                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2 text-center md:text-left">
+                      Global Connectivity
+                    </Typography>
+                    <Typography className="md:text-base 2xl:text-lg text-gray-400 text-sm">
                       Aggregating global GPU computing power to provide seamless cross-chain computational services for
                       AI and blockchain applications, complete with a flexible switching mechanism.
                     </Typography>
                   </AnimationOnScroll>
                 </Box>
               </Box>
-              <Box className="flex flex-row justify-center items-center">
-                <Box className="w-2/3 flex flex-col justify-start text-left gap-y-2 px-20">
+              <Box className="flex md:flex-row-reverse flex-col justify-center items-center">
+                <Box className="md:w-1/3 md:px-20 w-1/5 overflow-y-auto">
+                  <AnimationOnScroll
+                    animateIn="animate__fadeIn"
+                    duration={1.5}
+                    scrollableParentSelector=".scrollable-container"
+                  >
+                    <Image src={chain2Pic} alt="chain2" className="md:max-w-full"></Image>
+                  </AnimationOnScroll>
+                </Box>
+                <Box className="md:w-2/3 flex flex-col justify-start text-left md:px-20 px-5">
                   <AnimationOnScroll
                     animateIn="animate__fadeInLeft"
                     duration={1}
                     scrollableParentSelector=".scrollable-container"
                   >
-                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2">
+                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2 text-center md:text-left">
                       Decentralized Architecture
                     </Typography>
                     <Typography className="md:text-base 2xl:text-lg text-gray-400">
@@ -254,32 +321,25 @@ export default function Home() {
                     </Typography>
                   </AnimationOnScroll>
                 </Box>
-                <Box className="w-1/3 px-20">
-                  <AnimationOnScroll
-                    animateIn="animate__fadeIn"
-                    duration={1.5}
-                    scrollableParentSelector=".scrollable-container"
-                  >
-                    <Image src={chain2Pic} alt="chain1"></Image>
-                  </AnimationOnScroll>
-                </Box>
               </Box>
             </Box>
             <NextIcon />
           </Box>
         </Box>
-        <Box className="h-screen snap-start 2xl:pt-28 md:pt-24">
+        <Box className="h-screen snap-start 2xl:pt-28 pt-24">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
-            <Box className="flex flex-col justify-between w-full max-h-[75vh] gap-y-4">
-              <Box className="h-1/3 flex flex-row justify-center items-center">
-                <Box className="w-1/3 p-24">
+            <Box className="flex flex-col justify-between w-full md:max-h-[75vh] gap-y-4">
+              <Box className="md:h-1/3 flex md:flex-row flex-col justify-center items-center">
+                <Box className="md:w-1/3 md:px-24 w-1/5 overflow-y-auto">
                   <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
                     <Image src={chain3Pic} alt="chain3"></Image>
                   </AnimationOnScroll>
                 </Box>
-                <Box className="w-2/3 flex flex-col justify-start text-left px-20">
+                <Box className="md:w-2/3 flex flex-col justify-start text-left md:px-20 px-5">
                   <AnimationOnScroll animateIn="animate__fadeInRight" scrollableParentSelector=".scrollable-container">
-                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2">Security and Privacy</Typography>
+                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2 text-center md:text-left">
+                      Security and Privacy
+                    </Typography>
                     <Typography className="md:text-base 2xl:text-lg text-gray-400">
                       Employing zk-SNARKs encryption technology ensures data security and user privacy, creating a
                       trusted computing environment.
@@ -287,23 +347,8 @@ export default function Home() {
                   </AnimationOnScroll>
                 </Box>
               </Box>
-              <Box className="h-1/3 flex flex-row justify-center items-center">
-                <Box className="w-2/3 flex flex-col justify-start text-left gap-y-2 px-20">
-                  <AnimationOnScroll
-                    animateIn="animate__fadeInLeft"
-                    duration={0.5}
-                    scrollableParentSelector=".scrollable-container"
-                  >
-                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2">Low Barrier to Entry</Typography>
-                    <Typography className="md:text-base 2xl:text-lg text-gray-400">
-                      Cloud services enable the free construction of computing frameworks and models as applications, as
-                      simple as playing with LEGO bricks. Simplifying the process of joining the decentralized computing
-                      network and encouraging wider participation with a rewarding mechanism, it facilitates the
-                      effortless creation of a personalized AI computing factory.
-                    </Typography>
-                  </AnimationOnScroll>
-                </Box>
-                <Box className="w-1/3 p-24">
+              <Box className="md:h-1/3 flex md:flex-row-reverse flex-col justify-center items-center">
+                <Box className="md:w-1/3 md:px-24 w-1/5 overflow-y-auto">
                   <AnimationOnScroll
                     animateIn="animate__fadeIn"
                     duration={0.5}
@@ -312,9 +357,26 @@ export default function Home() {
                     <Image src={chain4Pic} alt="chain4"></Image>
                   </AnimationOnScroll>
                 </Box>
+                <Box className="md:w-2/3 flex flex-col justify-start text-left md:px-20 px-5">
+                  <AnimationOnScroll
+                    animateIn="animate__fadeInLeft"
+                    duration={0.5}
+                    scrollableParentSelector=".scrollable-container"
+                  >
+                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2 text-center md:text-left">
+                      Low Barrier to Entry
+                    </Typography>
+                    <Typography className="md:text-base 2xl:text-lg text-gray-400">
+                      Cloud services enable the free construction of computing frameworks and models as applications, as
+                      simple as playing with LEGO bricks. Simplifying the process of joining the decentralized computing
+                      network and encouraging wider participation with a rewarding mechanism, it facilitates the
+                      effortless creation of a personalized AI computing factory.
+                    </Typography>
+                  </AnimationOnScroll>
+                </Box>
               </Box>
-              <Box className="h-1/3 flex flex-row justify-center items-center">
-                <Box className="w-1/3 p-24">
+              <Box className="md:h-1/3 flex md:flex-row flex-col justify-center items-center">
+                <Box className="md:w-1/3 md:px-24 w-1/5 overflow-y-auto">
                   <AnimationOnScroll
                     animateIn="animate__fadeIn"
                     duration={1}
@@ -323,13 +385,15 @@ export default function Home() {
                     <Image src={chain5Pic} alt="chain5"></Image>
                   </AnimationOnScroll>
                 </Box>
-                <Box className="w-2/3 flex flex-col justify-start text-left gap-y-2 px-20">
+                <Box className="md:w-2/3 flex flex-col justify-start text-left md:px-20 px-5">
                   <AnimationOnScroll
                     animateIn="animate__fadeInRight"
                     duration={1}
                     scrollableParentSelector=".scrollable-container"
                   >
-                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2">Community Governance</Typography>
+                    <Typography className="font-bold md:text-2xl 2xl:text-3xl pb-2 text-center md:text-left">
+                      Community Governance
+                    </Typography>
                     <Typography className="md:text-base 2xl:text-lg text-gray-400">
                       Advocacy for community governance energizes the ecosystem and fosters innovation through a token
                       economy and governance model.
@@ -341,7 +405,7 @@ export default function Home() {
             <NextIcon />
           </Box>
         </Box>
-        <Box id="dmos" className="h-screen snap-start 2xl:pt-28 md:pt-24">
+        <Box id="dmos" className="h-screen snap-start 2xl:pt-28 pt-24">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center min-h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Box className="flex justify-center space-x-2 items-center">
@@ -354,7 +418,7 @@ export default function Home() {
                 Demeter Cloud Operating System
               </Typography>
             </AnimationOnScroll>
-            <Box className="flex flex-col space-y-4 md:w-2/3 h-1/5">
+            <Box className="flex flex-col space-y-4 md:w-2/3">
               <AnimationOnScroll
                 animateIn="animate__fadeIn"
                 duration={1}
@@ -362,38 +426,40 @@ export default function Home() {
               >
                 <Image className="2xl:h-[50vh] md:h-[45vh] w-full" src={dmosPic} alt="dmos-construction"></Image>
               </AnimationOnScroll>
-              <Box className="grid grid-cols-3 gap-4">
+              <Box className="grid md:grid-cols-3 grid-cols-2 gap-4 px-5">
                 <Box className="flex items-center text-left gap-x-2">
                   <MonitorIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
                     Comprehensive Resource Monitoring
                   </Typography>
                 </Box>
                 <Box className="flex items-center text-left gap-x-2">
                   <MeterIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
                     Optimized Concurrency Performance
                   </Typography>
                 </Box>
                 <Box className="flex items-center text-left gap-x-2">
                   <ConvertIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
                     Seamless Application Switching
                   </Typography>
                 </Box>
                 <Box className="flex items-center text-left gap-x-2">
                   <ScheduleIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
                     Flexible Resource Scheduling
                   </Typography>
                 </Box>
                 <Box className="flex items-center text-left gap-x-2">
                   <ToolsIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">AI Frameworks and Tools</Typography>
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
+                    AI Frameworks and Tools
+                  </Typography>
                 </Box>
                 <Box className="flex items-center text-left gap-x-2">
                   <ResourceIcon className="text-4xl" />
-                  <Typography className="font-semibold md:text-sm 2xl:text-base">
+                  <Typography className="font-semibold md:text-sm text-xs 2xl:text-base">
                     Heterogeneous Resource Compatibility
                   </Typography>
                 </Box>
@@ -402,7 +468,7 @@ export default function Home() {
             <NextIcon />
           </Box>
         </Box>
-        <Box id="why-us" className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box id="why-us" className="h-screen snap-start 2xl:pt-32 pt-28">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Why US?</Typography>
@@ -413,7 +479,7 @@ export default function Home() {
             <NextIcon />
           </Box>
         </Box>
-        <Box id="vision" className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box id="vision" className="h-screen snap-start 2xl:pt-32 pt-28">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Vision</Typography>
@@ -442,7 +508,7 @@ export default function Home() {
             <NextIcon />
           </Box>
         </Box>
-        <Box id="plan" className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box id="plan" className="h-screen snap-start 2xl:pt-32 pt-28">
           <Box className="flex flex-col justify-between mx-auto text-center h-full items-center">
             <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
               <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Master Plan</Typography>
@@ -453,26 +519,28 @@ export default function Home() {
             <NextIcon />
           </Box>
         </Box>
-        <Box className="h-screen snap-start 2xl:pt-32 md:pt-28">
+        <Box className="h-screen snap-start 2xl:pt-32 pt-28">
           <Box className="flex flex-col justify-between mx-auto md:w-4/5 2xl:w-2/3 text-center h-full items-center">
-            <Box className="flex flex-row grow shrink space-x-10 px-32 items-center">
-              <Box className="text-left space-y-16 w-1/2">
+            <Box className="flex md:flex-row flex-col-reverse md:grow shrink md:space-x-10 md:px-32 px-5 items-center">
+              <Box className="md:text-left text-center md:space-y-16 space-y-6 md:w-1/2">
                 <AnimationOnScroll animateIn="animate__fadeIn" scrollableParentSelector=".scrollable-container">
-                  <Typography className="2xl:text-4xl md:text-3xl font-semibold">Ready to Get Started?</Typography>
+                  <Typography className="2xl:text-4xl md:text-3xl text-2xl font-semibold md:text-left text-center">
+                    Ready to Get Started?
+                  </Typography>
                 </AnimationOnScroll>
-                <Typography className="2xl:text-lg md:text-base text-gray-400">
+                <Typography className="2xl:text-lg md:text-base text-gray-400 text-left">
                   In the rapidly evolving world of AI, Web3, and the metaverse, if you&apos;re eager to stand at the
                   forefront of technology, embrace the opportunities of the AI era, Demeter.AI invites you to join us in
                   shaping the future.
                 </Typography>
                 <Button variant="contained" color="success" className="rounded-full w-52" href="/cloud">
                   <Box className="flex flex-col text-nowrap">
-                    <Typography className=" text-gray-800 font-bold md:text-lg 2xl:text-xl">Node Provider</Typography>
-                    <Typography className=" text-gray-800 md:text-xs 2xl:text-sm">Supply GPU Power</Typography>
+                    <Typography className=" text-gray-800 font-bold text-lg 2xl:text-xl">Node Provider</Typography>
+                    <Typography className=" text-gray-800 text-xs 2xl:text-sm">Supply GPU Power</Typography>
                   </Box>
                 </Button>
               </Box>
-              <Box className="flex flex-col w-1/2 space-y-4">
+              <Box className="flex flex-col md:w-1/2 space-y-4 mb-10">
                 <Typography className="2xl:text-xl md:text-lg font-serif text-[#B9CEB8]">
                   Boost Your GPU,Launch,Earn
                 </Typography>
@@ -483,8 +551,8 @@ export default function Home() {
           </Box>
         </Box>
         <Box className="h-screen snap-start section pt-32 pb-32 items-center flex">
-          <Box className="flex justify-center mx-auto md:w-4/5 2xl:w-2/3">
-            <Box className="w-2/5 flex-col justify-center space-y-8">
+          <Box className="grid md:grid-cols-5 grid-cols-2 gap-8 md:gap-0 justify-center mx-auto md:w-4/5 2xl:w-2/3">
+            <Box className="col-span-2 flex-col justify-center space-y-8">
               <Box className="text-center">
                 <Typography variant="h5" className="font-extrabold text-gray-400 items-center">
                   <LogoIcon className="text-3xl" /> Demeters.ai
@@ -505,12 +573,12 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
-            <Box className="w-1/5">
-              <Box className="text-left space-y-8">
+            <Box className="">
+              <Box className="text-left md:space-y-8 space-y-4">
                 <Typography variant="h5" className="font-extrabold">
                   Main
                 </Typography>
-                <Box className="flex flex-col gap-y-4">
+                <Box className="flex flex-col md:gap-y-4 gap-y-2">
                   <Link href="#instruction" className="hover:text-gray-400">
                     <Typography variant="body1">Introduction</Typography>
                   </Link>
@@ -535,12 +603,12 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
-            <Box className="w-1/5">
-              <Box className="text-left space-y-8">
+            <Box className="">
+              <Box className="text-left md:space-y-8 space-y-4">
                 <Typography variant="h5" className="font-extrabold">
                   Menu
                 </Typography>
-                <Box className="space-y-4">
+                <Box className="md:space-y-4 space-y-2">
                   <Link href="/cloud" className="hover:text-gray-400">
                     <Typography variant="body1">Cloud</Typography>
                   </Link>
@@ -550,12 +618,12 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
-            <Box className="w-1/5">
-              <Box className="text-left space-y-8">
+            <Box className="">
+              <Box className="text-left md:space-y-8 space-y-4">
                 <Typography variant="h5" className="font-extrabold">
                   Documents
                 </Typography>
-                <Box className="space-y-4">
+                <Box className="md:space-y-4 space-y-2">
                   <Typography variant="body1">Terms of use</Typography>
                   <Typography variant="body1">Privacy Policy</Typography>
                 </Box>
