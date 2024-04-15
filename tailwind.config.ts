@@ -16,6 +16,10 @@ const config: Config = {
       boxShadow: {
         halo: "0px 0px 15px 15px rgba(0, 0, 0, 0.5)",
       },
+      colors: {
+        "logo-from": "#0066FF",
+        "logo-to": "#00CCFF",
+      },
     },
   },
   plugins: [require("tailwindcss-filters")],

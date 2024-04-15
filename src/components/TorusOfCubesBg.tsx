@@ -99,7 +99,7 @@ const TorusOfCubesBg = () => {
     requestAnimationFrame(render)
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute -z-10" />
+  return <canvas ref={canvasRef} className="fixed -z-10" />
 }
 
 export default TorusOfCubesBg
