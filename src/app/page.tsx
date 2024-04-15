@@ -225,7 +225,7 @@ export default function Home() {
                 >
                   <Typography className="text-white font-semibold text-xl 2xl:text-2xl">Get Started</Typography>
                 </Button>
-                <Link href="#" className="text-gray-400 2xl:text-xl md:text-lg text-base">
+                <Link href="#" className="text-gray-400 2xl:text-xl md:text-lg text-base hover:text-white">
                   Read more <NorthEast className="2xl:text-lg md:text-base text-sm" />
                 </Link>
               </Box>

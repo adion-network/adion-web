@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <title>Demeters.ai</title>
+        <title>Adion Network</title>
         <style>
           {path === "/login" || path.startsWith("/node-provider")
             ? "body {  background-image: radial-gradient(circle 500px at center, rgb(59, 24, 78, 0.95), rgb(12, 10, 42, 0.95));}"
