@@ -82,7 +82,7 @@ export default function Home() {
     },
     {
       name: "Roadmap",
-      href: "#roadmap",
+      href: "#plan",
     },
     {
       name: "Node Provider",
@@ -204,7 +204,7 @@ export default function Home() {
                 </Box>{" "}
                 Innovation
               </Typography>
-              <Box className="text-sm font-sans antialiased 2xl:text-4xl md:text-xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-logo-from to-logo-to">
+              <Box className="text-sm font-sans antialiased 2xl:text-4xl md:text-3xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-logo-from to-logo-to">
                 <Typewriter
                   options={{
                     strings: ["Infinite Network", "Flexible Switching", "Decentralized AI"],
@@ -220,7 +220,7 @@ export default function Home() {
               <Box className="flex md:flex-row flex-col gap-y-2 gap-x-6 items-center animate__animated animate__fadeIn animate__delay-1s">
                 <Button
                   variant="contained"
-                  className="rounded-2xl px-20 bg-gradient-to-t from-logo-from to-logo-to py-3 hover:from-logo-to hover:to-logo-from hover:opacity-70"
+                  className="rounded-2xl px-16 bg-logo-from hover:opacity-80 py-2 2xl:py-3"
                   href="/cloud"
                 >
                   <Typography className="text-white font-semibold text-xl 2xl:text-2xl">Get Started</Typography>
@@ -239,13 +239,13 @@ export default function Home() {
             <LogoIcon className="md:mr-4 mr-1 md:text-8xl md:w-40 text-xl w-20" /> | Cloud
           </Box>
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Aggregation, Schedule, Trade</Typography>
-          <Box className="w-full mt-8 bg-gray-300 border-2 border-gray-600 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 px-2 py-2 rounded-xl">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 px-2 py-2 rounded-xl">
             <Image src={layersPic} className="w-full" alt="demeters-layers"></Image>
           </Box>
           <Box className="mt-5 w-8">
             <NextIcon />
           </Box>
-          <Box className="w-full mt-8 bg-gray-300 border-2 border-gray-600 bg-opacity-10 backdrop-blur-md md:px-20 md:py-5 px-2 py-2 rounded-xl">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-5 px-2 py-2 rounded-xl">
             <Box className="flex justify-center items-center py-2">
               <RobotIcon className="2xl:text-5xl md:text-4xl text-base" />
               <Typography className="2xl:text-3xl md:text-2xl text-sm font-bold items-center">
@@ -294,44 +294,44 @@ export default function Home() {
             <LogoIcon className="md:mr-4 mr-1 md:text-8xl md:w-40 text-xl w-20" /> | DMOS
           </Box>
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">
-            Demeter Cloud Operating System
+            Distributed Cloud Operating System
           </Typography>
-          <Box className="w-full mt-8 bg-gray-300 border-2 border-gray-600 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 rounded-xl ">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 rounded-xl ">
             <Image src={dmosPic} className="w-full" alt="dmos-construction"></Image>
             <Box className="grid md:grid-cols-3 grid-cols-2 gap-4 md:px-20 mt-5">
-              <Box className="flex flex-col items-center md:text-left text-center gap-y-2">
+              <Box className="flex flex-col items-center text-center gap-y-2">
                 <MonitorIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   Comprehensive Resource Monitoring
                 </Typography>
               </Box>
-              <Box className="flex flex-col items-center md:text-left tect-center gap-y-2">
+              <Box className="flex flex-col items-center tect-center gap-y-2">
                 <MeterIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   Optimized Concurrency Performance
                 </Typography>
               </Box>
-              <Box className="flex flex-col items-center md:text-left tect-center gap-y-2">
+              <Box className="flex flex-col items-center tect-center gap-y-2">
                 <ConvertIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   Seamless Application Switching
                 </Typography>
               </Box>
-              <Box className="flex flex-col items-center md:text-left tect-center gap-y-2">
+              <Box className="flex flex-col items-center tect-center gap-y-2">
                 <ScheduleIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   Flex flex-colible Resource Scheduling
                 </Typography>
               </Box>
-              <Box className="flex flex-col items-center md:text-left tect-center gap-y-2">
+              <Box className="flex flex-col items-center tect-center gap-y-2">
                 <ToolsIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   AI Frameworks and Tools
                 </Typography>
               </Box>
-              <Box className="flex flex-col items-center md:text-left tect-center gap-y-2">
+              <Box className="flex flex-col items-center tect-center gap-y-2">
                 <ResourceIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl">
+                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
                   Heterogeneous Resource Compatibility
                 </Typography>
               </Box>
@@ -381,12 +381,12 @@ export default function Home() {
               </Typography>
               <Typography className="2xl:text-xl md:text-lg text-gray-400 text-left">
                 In the rapidly evolving world of AI, Web3, and the metaverse, if you&apos;re eager to stand at the
-                forefront of technology, embrace the opportunities of the AI era, Demeter.AI invites you to join us in
+                forefront of technology, embrace the opportunities of the AI era, Adion.AI invites you to join us in
                 shaping the future.
               </Typography>
               <Button
                 variant="contained"
-                className="rounded-full px-10 bg-gradient-to-t from-logo-from to-logo-to hover:from-logo-to hover:to-logo-from hover:opacity-80 py-2"
+                className="rounded-full px-10 bg-logo-from hover:opacity-80 py-2"
                 href="/cloud"
               >
                 <Box className="flex flex-col text-nowrap text-center">
