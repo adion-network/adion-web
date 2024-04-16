@@ -6,6 +6,7 @@ import {
   DoubleQuotationMarkRightIcon,
   IcBaselineDiscord,
   LogoIcon,
+  MdiGithub,
   MdiTelegram,
   MdiTwitter,
   MeterIcon,
@@ -239,17 +240,17 @@ export default function Home() {
             <LogoIcon className="md:mr-4 mr-1 md:text-8xl md:w-40 text-xl w-20" /> | Cloud
           </Box>
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Aggregation, Schedule, Trade</Typography>
-          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 px-2 py-2 rounded-xl">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-24 2xl:px-32 md:py-10 px-2 py-2 rounded-xl">
             <Image src={layersPic} className="w-full" alt="demeters-layers"></Image>
           </Box>
           <Box className="mt-5 w-8">
             <NextIcon />
           </Box>
-          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-5 px-2 py-2 rounded-xl">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 2xl:px-28 md:py-5 px-2 py-2 rounded-xl">
             <Box className="flex justify-center items-center py-2">
               <RobotIcon className="2xl:text-5xl md:text-4xl text-base" />
               <Typography className="2xl:text-3xl md:text-2xl text-sm font-bold items-center">
-                Adion Intelligent Scheduling
+                ADion Intelligent Scheduling
               </Typography>
             </Box>
             <Image alt="demeters_construction" src={constructionPic} className="w-full py-5"></Image>
@@ -296,7 +297,7 @@ export default function Home() {
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">
             Distributed Cloud Operating System
           </Typography>
-          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-20 md:py-10 rounded-xl ">
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-24 2xl:px-32 md:py-10 rounded-xl ">
             <Image src={dmosPic} className="w-full" alt="dmos-construction"></Image>
             <Box className="grid md:grid-cols-3 grid-cols-2 gap-4 md:px-20 mt-5">
               <Box className="flex flex-col items-center text-center gap-y-2">
@@ -377,33 +378,36 @@ export default function Home() {
           <Box className="flex md:flex-row md:justify-between flex-col-reverse md:grow shrink md:space-x-10 md:px-20 px-5 items-center">
             <Box className="md:text-left text-center md:space-y-16 space-y-6 md:w-1/2">
               <Typography className="2xl:text-5xl md:text-4xl text-3xl font-semibold md:text-left text-center bg-clip-text text-transparent bg-gradient-to-t from-logo-from to-logo-to">
-                Ready to Get Started?
+                Ready to start?
               </Typography>
-              <Typography className="2xl:text-xl md:text-lg text-gray-400 text-left">
-                In the rapidly evolving world of AI, Web3, and the metaverse, if you&apos;re eager to stand at the
-                forefront of technology, embrace the opportunities of the AI era, Adion.AI invites you to join us in
-                shaping the future.
+              <Typography className="2xl:text-2xl md:text-xl text-gray-400 text-left">
+                Step into the future with ADion.
+                <br />
+                In a world where AI, Web3, and the metaverse are reshaping reality, we offer you a front-row seat to
+                innovation. Embrace the movement of the AI and join us in defining what comes next. Let's shape the
+                future together.
               </Typography>
               <Button
-                variant="contained"
-                className="rounded-full px-10 bg-logo-from hover:opacity-80 py-2"
+                variant="text"
+                className="transition duration-300 px-0 hover:scale-110 ease-in-out hover:bg-transparent"
                 href="/cloud"
               >
                 <Box className="flex flex-col text-nowrap text-center">
-                  <Typography className=" text-white font-bold text-lg 2xl:text-xl">Node Provider</Typography>
-                  <Typography className=" text-white text-xs 2xl:text-sm">Supply GPU Power</Typography>
+                  <Typography className=" text-white font-bold text-lg 2xl:text-xl">
+                    Boost Your GPU,Launch,Earn <NorthEast />
+                  </Typography>
                 </Box>
               </Button>
             </Box>
             <Box className="flex flex-col md:w-1/2 space-y-4 mb-10">
-              <Typography className="2xl:text-2xl md:text-xl font-serif bg-clip-text text-transparent bg-gradient-to-t from-logo-from to-logo-to opacity-80">
-                Boost Your GPU,Launch,Earn
-              </Typography>
               <Image src={mapPic} className="w-full" alt="world-map"></Image>
             </Box>
           </Box>
         </Box>
-        <Box id="contact-us" className="flex md:flex-row md:justify-between flex-col text-center space-y-10 py-32">
+        <Box
+          id="contact-us"
+          className="flex md:flex-row md:justify-between flex-col text-center space-y-10 py-32 md:px-20"
+        >
           <Box className="md:w-1/3 flex-col justify-center space-y-8">
             <Box className="text-center">
               <LogoIcon className="text-8xl w-40" />
@@ -420,6 +424,9 @@ export default function Home() {
               </Box>
               <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
                 <IcBaselineDiscord fontSize={32} color="black"></IcBaselineDiscord>
+              </Box>
+              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
+                <MdiGithub fontSize={32} color="black"></MdiGithub>
               </Box>
             </Box>
           </Box>
