@@ -22,6 +22,7 @@ FROM node:19.4-alpine3.17
 WORKDIR /home/node/app 
 
 # COPY production dependencies and code
+COPY /data/adion/gpu-project-fe-test/.env /home/node/app/
 COPY --from=build /home/node/app/.next /home/node/app/.next
 COPY --from=build /home/node/app/node_modules /home/node/app/node_modules
 COPY --from=build /home/node/app/public /home/node/app/public
