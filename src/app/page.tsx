@@ -384,7 +384,7 @@ export default function Home() {
                 Step into the future with ADion.
                 <br />
                 In a world where AI, Web3, and the metaverse are reshaping reality, we offer you a front-row seat to
-                innovation. Embrace the movement of the AI and join us in defining what comes next. Let's shape the
+                innovation. Embrace the movement of the AI and join us in defining what comes next. Let&apos;s shape the
                 future together.
               </Typography>
               <Button
