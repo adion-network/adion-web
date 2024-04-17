@@ -70,8 +70,8 @@ export default function Home() {
     <Box component={"div"}>
       <Box component={"div"} className="bg-black bg-opacity-50">
         <Header menu={headerUrl} />
-        <Box ref={myRef} className="flex h-screen items-center">
-          <Box className="w-4/5 2xl:w-2/3 h-1/2 mx-auto md:items-start items-center ">
+        <Box ref={myRef} className="h-screen">
+          <Box className="w-4/5 2xl:w-2/3 h-full mx-auto md:items-start items-center flex flex-col justify-center">
             <Box className="flex-col md:w-2/3 flex justify-start space-y-8">
               <Typography className="2xl:text-5xl md:text-4xl text-2xl md:text-left font-extrabold animate__animated animate__fadeIn">
                 Building the Future&apos;s AI/Blockchain Compute Network
@@ -148,7 +148,7 @@ export default function Home() {
               <Box className="ml-4 inline-flex rounded-full bg-orange-300 shadow-halo shadow-orange-300">
                 <StackIcon></StackIcon>
               </Box>
-              <AnimationOnScroll animateIn="animate__fadeIn" duration={1.5}>
+              <AnimationOnScroll animateIn="animate__fadeIn">
                 <Typography className="2xl:text-4xl md:text-3xl text-xl font-extrabold">
                   DMOS Cloud OS: Resource Mastery.
                 </Typography>
@@ -187,7 +187,7 @@ export default function Home() {
               <Box className="ml-4 inline-flex rounded-full bg-teal-500 shadow-halo shadow-teal-500">
                 <LinkIcon></LinkIcon>
               </Box>
-              <AnimationOnScroll animateIn="animate__fadeIn" duration={1.5}>
+              <AnimationOnScroll animateIn="animate__fadeIn">
                 <Typography className="2xl:text-4xl md:text-3xl text-xl font-extrabold">
                   Global Project Access: Unlock Potential.
                 </Typography>
@@ -237,7 +237,7 @@ export default function Home() {
                   </Box>
                 </Box>
               </AnimationOnScroll>
-              <AnimationOnScroll animateIn="animate__fadeIn" duration={1.5}>
+              <AnimationOnScroll animateIn="animate__fadeIn">
                 <Typography className="2xl:text-3xl md:text-xl text-lg font-extrabold">
                   ML Platform: Unified Machine Learning Platform
                 </Typography>
