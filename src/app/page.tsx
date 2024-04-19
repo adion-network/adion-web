@@ -1,25 +1,14 @@
 "use client"
 import {
-  BiYoutube,
   ConvertIcon,
   DoubleQuotationMarkLeftIcon,
-  DoubleQuotationMarkRightIcon,
   EarthConvert,
   FlowerIcon,
-  IcBaselineDiscord,
   LogoIcon,
-  MdiGithub,
-  MdiTelegram,
-  MdiTwitter,
-  MeterIcon,
-  MonitorIcon,
-  ResourceIcon,
   RobotIcon,
   Rocket,
-  ScheduleIcon,
-  ToolsIcon,
 } from "@/components/Icons"
-import { Box, Button, IconButton, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import Link from "next/link"
 import "animate.css"
 import { AnimationOnScroll } from "react-animation-on-scroll"
@@ -33,13 +22,13 @@ import chain3Pic from "@/../public/images/home/chain3.svg"
 import chain4Pic from "@/../public/images/home/chain4.svg"
 import chain5Pic from "@/../public/images/home/chain5.svg"
 import dmosPic from "@/../public/images/home/dmos.svg"
-import whyUsPic from "@/../public/images/home/why_us.svg"
 import stepsPic from "@/../public/images/home/steps.svg"
 import mapPic from "@/../public/images/home/map.svg"
 import Typewriter from "typewriter-effect"
 import TorusOfCubesBg from "@/components/TorusOfCubesBg"
 import { NorthEast } from "@mui/icons-material"
 import Header from "@/components/home/Header"
+import Footer from "@/components/home/Footer"
 
 const NextIcon = () => {
   return (
@@ -340,75 +329,7 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
-        <Box
-          id="contact-us"
-          className="flex md:flex-row md:justify-between flex-col text-center space-y-10 py-32 md:px-20"
-        >
-          <Box className="md:w-1/3 flex-col justify-center space-y-8">
-            <Box className="text-center">
-              <LogoIcon className="text-8xl w-40" />
-            </Box>
-            <Box className="flex justify-center gap-x-5 px-10">
-              <IconButton
-                className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200"
-                href="https://twitter.com/AdionNetwork"
-                target="_blank"
-              >
-                <MdiTwitter fontSize={32} color="black"></MdiTwitter>
-              </IconButton>
-              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                <BiYoutube fontSize={32} color="black"></BiYoutube>
-              </Box>
-              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                <MdiTelegram fontSize={32} color="black"></MdiTelegram>
-              </Box>
-              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                <IcBaselineDiscord fontSize={32} color="black"></IcBaselineDiscord>
-              </Box>
-              <IconButton
-                className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200"
-                href="https://github.com/adion-network"
-                target="_blank"
-              >
-                <MdiGithub fontSize={32} color="black"></MdiGithub>
-              </IconButton>
-            </Box>
-          </Box>
-          <Box className="md:w-2/3 flex flex-row md:justify-end">
-            <Box className="flex flex-col text-left md:space-y-8 space-y-4 px-10 w-1/2">
-              <Typography variant="h5" className="font-extrabold">
-                Main
-              </Typography>
-              <Box className="flex flex-col md:gap-y-4 gap-y-2">
-                <Link href="/" className="hover:text-gray-400">
-                  <Typography variant="body1">Home</Typography>
-                </Link>
-                <Link href="#contact-us" className="hover:text-gray-400">
-                  <Typography variant="body1">About us</Typography>
-                </Link>
-                <Link href="#" className="hover:text-gray-400">
-                  <Typography variant="body1">Terms of Use</Typography>
-                </Link>
-                <Link href="#" className="hover:text-gray-400">
-                  <Typography variant="body1">Privacy Policy</Typography>
-                </Link>
-              </Box>
-            </Box>
-            <Box className="text-left md:space-y-8 space-y-4 px-10">
-              <Typography variant="h5" className="font-extrabold">
-                Menu
-              </Typography>
-              <Box className="flex flex-col md:gap-y-4 gap-y-2">
-                <Link href="/cloud" className="hover:text-gray-400">
-                  <Typography variant="body1">Cloud</Typography>
-                </Link>
-                <Typography variant="body1">Chain</Typography>
-                <Typography variant="body1">Dmos</Typography>
-                <Typography variant="body1">Docs</Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+        <Footer />
       </Box>
     </Box>
   )

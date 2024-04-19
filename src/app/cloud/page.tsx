@@ -9,10 +9,6 @@ import {
   WorldMap,
   PuzzleIcon,
   ChainIcon,
-  MdiTwitter,
-  BiYoutube,
-  MdiTelegram,
-  IcBaselineDiscord,
   DemeterConstruction,
 } from "@/components/Icons"
 import { NorthEast } from "@mui/icons-material"
@@ -29,6 +25,7 @@ import * as THREE from "three"
 import "animate.css"
 import { AnimationOnScroll } from "react-animation-on-scroll"
 import Header from "@/components/home/Header"
+import Footer from "@/components/home/Footer"
 
 export default function Home() {
   const [vantaEffect, setVantaEffect] = useState<any>(0)
@@ -66,6 +63,33 @@ export default function Home() {
     },
   ]
 
+  const explorEfil = [
+    {
+      title: "One-Stop Solution: Seamless Filecoin Integration.",
+      desc: "DFIL enables single-call execution for temporary computational needs and offers a hassle-free node encapsulation service for those interested in Filecoin projects without the means for software and hardware maintenance.",
+    },
+    {
+      title: "Transparency & Fairness: Built on Trust.",
+      desc: "ADion, constructed on Cosmos' technology stack and integrated with Cosmos' communication protocols and consensus mechanisms via FVM, serves as a bridge to Filecoin, upgrading the Filecoin network's development capabilities.",
+    },
+    {
+      title: "Cross-Chain Connectivity: Enhancing Interoperability.",
+      desc: "Facilitate direct token transfers between ADion and Filecoin ecosystems via the IBC protocol or settle tasks through smart contracts, simplifying cross-chain transactions.",
+    },
+    {
+      title: "Storage Incentivization: Expanding the Filecoin Network.",
+      desc: "As encapsulation costs decrease and computational resources are optimized, more data is motivated to be stored on the Filecoin network, enhancing its value and fostering the growth of the decentralized storage ecosystem.",
+    },
+    {
+      title: "Computational Power Dispatch: Flexible & Reliable.",
+      desc: "DFIL meets all computational demands, from sudden spikes to consistent support, with its remote computing task service.",
+    },
+    {
+      title: "Resource Optimization: Maximizing Utility.",
+      desc: "DFIL offers a platform for Filecoin miners to market idle computational resources, providing computational power to users or projects and generating additional income.",
+    },
+  ]
+
   return (
     <Box component={"div"}>
       <Box component={"div"} className="bg-black bg-opacity-50">
@@ -77,7 +101,7 @@ export default function Home() {
                 Building the Future&apos;s AI/Blockchain Compute Network
               </Typography>
               <Typography className="2xl:text-xl md:text-md text-gray-300 animate__animated animate__fadeIn">
-                Aggregate global GPU resources via Demeters.ai&apos;s decentralized platform, achieving deployment,
+                Aggregate global GPU resources via ADion.ai&apos;s decentralized platform, achieving deployment,
                 scheduling, switching, and monitoring with full-stack services. Maximize resource efficiency and revenue
                 growth effortlessly.
               </Typography>
@@ -105,7 +129,7 @@ export default function Home() {
               </AnimationOnScroll>
               <AnimationOnScroll animateIn="animate__fadeIn">
                 <Typography className="2xl:text-xl md:text-base text-gray-300">
-                  Leverage global high-performance servers with DMOS (Demeter Cloud Operating System) for effortless
+                  Leverage global high-performance servers with <b>DMOS(the cloud operating system)</b> for effortless
                   resource management. Experience smart control through an intuitive dashboard, seamless cloud-native
                   integrations, and extensive API. Simplified. Swift. Smart.
                 </Typography>
@@ -192,44 +216,44 @@ export default function Home() {
                   Global Project Access: Unlock Potential.
                 </Typography>
                 <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
-                  Clients connect through the Demeter.Ai network for smart access to global GPU project pools and GPU
-                  POW mining pools. Enjoy project task profits, airdrop rewards, and mainnet Token incentives.
+                  Clients connect through the ADion.Ai network for smart access to global GPU project pools and GPU POW
+                  mining pools. Enjoy project task profits, airdrop rewards, and mainnet Token incentives.
                 </Typography>
               </AnimationOnScroll>
             </Box>
           </Box>
-          <Box className="flex md:flex-row flex-col justify-center items-center mx-auto space-y-4">
+          <Box className="flex md:flex-row flex-col justify-center items-center mx-auto space-y-4 md:mt-16 mt-4">
             <Box className="md:w-3/5 md:space-y-4 space-y-2 2xl:space-y-8">
               <Box className="ml-4 inline-flex rounded-full bg-sky-600 shadow-halo shadow-sky-600">
                 <PuzzleIcon></PuzzleIcon>
               </Box>
               <AnimationOnScroll animateIn="animate__fadeIn">
-                <Typography className="2xl:text-4xl md:text-2xl text-xl font-extrabold">
+                <Typography className="2xl:text-3xl md:text-xl text-lg font-extrabold">
                   AI R&D Acceleration: Streamline Development.
                 </Typography>
               </AnimationOnScroll>
               <AnimationOnScroll animateIn="animate__fadeIn" duration={0.5}>
-                <Typography className="2xl:text-xl md:text-base text-gray-300 ">
+                <Typography className="2xl:text-lg text-sm text-gray-300 ">
                   Harness advanced ML Tools and Platforms to fast-track AI project cycles—from model training to
                   inference acceleration.
                 </Typography>
               </AnimationOnScroll>
               <AnimationOnScroll animateIn="animate__fadeIn">
-                <Typography className="2xl:text-3xl md:text-xl text-lg font-extrabold">
+                <Typography className="2xl:text-2xl md:text-xl text-lg font-extrabold">
                   ML Tools: Integrated AI Development Toolkit
                 </Typography>
                 <Box component={"ul"} className="space-y-1 list-disc ml-4 mt-2">
                   <Box component={"li"}>
-                    <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
-                      <Box component={"span"} className="font-extrabold">
+                    <Typography variant="body1" className="2xl:text-lg text-sm text-gray-300">
+                      <Box component={"span"} className="font-semibold">
                         Versatile Framework Support:{" "}
                       </Box>
                       Incorporates TensorFlow, Caffe, PyTorch, and more, meeting diverse development needs.
                     </Typography>
                   </Box>
                   <Box component={"li"}>
-                    <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
-                      <Box component={"span"} className="font-extrabold">
+                    <Typography variant="body1" className="2xl:text-lg text-sm text-gray-300">
+                      <Box component={"span"} className="font-semibold">
                         Comprehensive Tool Integration:{" "}
                       </Box>
                       Features distributed training and model visualization for rapid deployment of large-scale tasks.
@@ -238,12 +262,12 @@ export default function Home() {
                 </Box>
               </AnimationOnScroll>
               <AnimationOnScroll animateIn="animate__fadeIn">
-                <Typography className="2xl:text-3xl md:text-xl text-lg font-extrabold">
+                <Typography className="2xl:text-2xl md:text-xl text-lg font-extrabold">
                   ML Platform: Unified Machine Learning Platform
                 </Typography>
                 <Box component={"ul"} className="space-y-1 list-disc ml-4 mt-2">
                   <Box component={"li"}>
-                    <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
+                    <Typography variant="body1" className="2xl:text-lg text-sm text-gray-300">
                       <Box component={"span"} className="font-extrabold">
                         Kubeflow Integration:{" "}
                       </Box>
@@ -251,7 +275,7 @@ export default function Home() {
                     </Typography>
                   </Box>
                   <Box component={"li"}>
-                    <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
+                    <Typography variant="body1" className="2xl:text-lg text-sm text-gray-300">
                       <Box component={"span"} className="font-extrabold">
                         KServe Functionality:{" "}
                       </Box>
@@ -259,7 +283,7 @@ export default function Home() {
                     </Typography>
                   </Box>
                   <Box component={"li"}>
-                    <Typography variant="body1" className="2xl:text-xl md:text-base text-gray-300">
+                    <Typography variant="body1" className="2xl:text-lg text-sm text-gray-300">
                       <Box component={"span"} className="font-extrabold">
                         KubeRay Capabilities:{" "}
                       </Box>
@@ -275,124 +299,67 @@ export default function Home() {
               </AnimationOnScroll>
             </Box>
           </Box>
-          <Box className="flex flex-col justify-center md:items-start items-center mx-auto h-full space-y-4">
-            <Box className="md:w-full">
+          <Box className="flex flex-col justify-center md:items-start items-center mx-auto md:mt-16 mt-5 space-y-4">
+            <Box className="md:w-4/5 md:py-8 w-full">
               <AnimationOnScroll animateIn="animate__fadeIn">
-                <Typography variant="h5" className="2xl:text-3xl md:text-xl font-extrabold">
+                <Typography variant="h5" className="2xl:text-4xl md:text-3xl text-lg font-extrabold">
                   Exploring DFIL: Connecting the future of decentralized computing and storage.
                 </Typography>
-                <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2">
-                  DFIL is a revolutionary cross-chain bridge built between the Demeter and Filecoin ecosystems. It
+                <Typography className="2xl:text-xl md:text-base text-gray-300 mt-2 md:mt-8">
+                  DFIL is a revolutionary cross-chain bridge built between the ADion and Filecoin ecosystems. It
                   combines cutting-edge IBC protocol and FVM technology to create a pioneering platform for cross-chain
                   asset transfer and remote computation.
                 </Typography>
               </AnimationOnScroll>
             </Box>
-            <Box className="flex md:flex-row flex-col md:items-start items-center justify-between">
-              <Box className="md:w-1/3">
-                <AnimationOnScroll animateIn="animate__fadeIn" className="space-y-2">
+            <Box className="grid md:grid-rows-3 grid-rows-1 md:grid-flow-col 2xl:gap-8 gap-4 flex-col">
+              {explorEfil.slice(0, 3).map((item: any, index: number) => (
+                <AnimationOnScroll
+                  key={`explor-efil-${index}`}
+                  animateIn="animate__fadeIn"
+                  className="md:space-y-8 space-y-4"
+                >
                   <Box className="gap-x-1 flex">
                     <Box>
                       <ChainIcon fontSize={25} />
                     </Box>
                     <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        One-Stop Solution: Seamless Filecoin Integration.
-                      </Typography>
+                      <Typography className="2xl:text-2xl md:text-base font-bold">{item.title}</Typography>
                       <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        DFIL enables single-call execution for temporary computational needs and offers a hassle-free
-                        node encapsulation service for those interested in Filecoin projects without the means for
-                        software and hardware maintenance.
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box className="gap-x-1 flex">
-                    <Box>
-                      <ChainIcon fontSize={25} />
-                    </Box>
-                    <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        Cross-Chain Connectivity: Enhancing Interoperability.
-                      </Typography>
-                      <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        Facilitate direct token transfers between Demeters and Filecoin ecosystems via the IBC protocol
-                        or settle tasks through smart contracts, simplifying cross-chain transactions.
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box className="gap-x-1 flex">
-                    <Box>
-                      <ChainIcon fontSize={25} />
-                    </Box>
-                    <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        Computational Power Dispatch: Flexible & Reliable.
-                      </Typography>
-                      <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        DFIL meets all computational demands, from sudden spikes to consistent support, with its remote
-                        computing task service.
+                        {item.desc}
                       </Typography>
                     </Box>
                   </Box>
                 </AnimationOnScroll>
+              ))}
+              <Box className="row-span-3 h-full flex items-center justify-center">
+                <Image src={dFilPic} alt="dfil-icon"></Image>
               </Box>
-              <Box className="flex w-1/3 space-y-1 justify-center items-center">
-                <Image src={dFilPic} alt="dfil-icon" width={400}></Image>
-              </Box>
-              <Box className="md:w-1/3 space-y-1">
-                <AnimationOnScroll animateIn="animate__fadeIn" className="space-y-2">
+              {explorEfil.slice(-3).map((item: any, index: number) => (
+                <AnimationOnScroll
+                  key={`explor-efil-${index}`}
+                  animateIn="animate__fadeIn"
+                  className="md:space-y-8 space-y-4"
+                >
                   <Box className="gap-x-1 flex">
                     <Box>
                       <ChainIcon fontSize={25} />
                     </Box>
                     <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        Transparency & Fairness: Built on Trust.
-                      </Typography>
+                      <Typography className="2xl:text-2xl md:text-base font-bold">{item.title}</Typography>
                       <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        Demeters, constructed on Cosmos&apos; technology stack and integrated with Cosmos&apos;
-                        communication protocols and consensus mechanisms via FVM, serves as a bridge to Filecoin,
-                        upgrading the Filecoin network&apos;s development capabilities.
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box className="gap-x-1 flex">
-                    <Box>
-                      <ChainIcon fontSize={25} />
-                    </Box>
-                    <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        Storage Incentivization: Expanding the Filecoin Network.
-                      </Typography>
-                      <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        As encapsulation costs decrease and computational resources are optimized, more data is
-                        motivated to be stored on the Filecoin network, enhancing its value and fostering the growth of
-                        the decentralized storage ecosystem.
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box className="gap-x-1 flex">
-                    <Box>
-                      <ChainIcon fontSize={25} />
-                    </Box>
-                    <Box className="2xl:space-y-4 md:space-y-1">
-                      <Typography className="2xl:text-2xl md:text-base font-bold">
-                        Resource Optimization: Maximizing Utility.
-                      </Typography>
-                      <Typography variant="body2" className="2xl:text-lg md:text-sm text-gray-300 ">
-                        DFIL offers a platform for Filecoin miners to market idle computational resources, providing
-                        computational power to users or projects and generating additional income.
+                        {item.desc}
                       </Typography>
                     </Box>
                   </Box>
                 </AnimationOnScroll>
-              </Box>
+              ))}
             </Box>
           </Box>
           <Box className="flex flex-col justify-center mx-auto pt-16 space-y-10">
             <Box className="w-full space-y-8">
               <Typography variant="h3" className="font-extrabold">
-                Begin Your Journey with Demeters.ai?
+                Begin Your Journey with Adion.ai?
               </Typography>
               <Typography variant="subtitle1" className="text-gray-300">
                 Join our innovative decentralized computing service platform tailored for node providers. We&apos;re
@@ -411,57 +378,7 @@ export default function Home() {
               </Link>
             </Box>
           </Box>
-        </Box>
-        <Box className="w-full mt-32 bg-[#1A1A1A] py-20">
-          <Box className="flex md:flex-row w-full flex-col md:space-y-0 space-y-8 mx-auto md:w-4/5 2xl:w-2/3">
-            <Box className="md:w-1/3 w-full flex-col justify-center space-y-8">
-              <Box className="text-center">
-                <Typography variant="h5" className="font-extrabold">
-                  Demeters.ai
-                </Typography>
-              </Box>
-              <Box className="flex justify-center gap-x-5 px-10">
-                <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                  <MdiTwitter fontSize={32} color="black"></MdiTwitter>
-                </Box>
-                <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                  <BiYoutube fontSize={32} color="black"></BiYoutube>
-                </Box>
-                <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                  <MdiTelegram fontSize={32} color="black"></MdiTelegram>
-                </Box>
-                <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
-                  <IcBaselineDiscord fontSize={32} color="black"></IcBaselineDiscord>
-                </Box>
-              </Box>
-            </Box>
-            <Box className="md:w-2/3 w-full flex flex-row justify-between">
-              <Box className="flex justify-center w-1/2">
-                <Box className="space-y-8">
-                  <Typography variant="h5" className="font-extrabold">
-                    Main
-                  </Typography>
-                  <Box className="space-y-6">
-                    <Typography variant="body1">Introduction</Typography>
-                    <Typography variant="body1">Architecture</Typography>
-                    <Typography variant="body1">DFIL Features</Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="flex justify-center w-1/2">
-                <Box className="space-y-8">
-                  <Typography variant="h5" className="font-extrabold">
-                    Documents
-                  </Typography>
-                  <Box className="space-y-6">
-                    <Typography variant="body1">Terms of use</Typography>
-                    <Typography variant="body1">Privacy Policy</Typography>
-                    <Typography variant="body1">Docs</Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
+          <Footer />
         </Box>
       </Box>
     </Box>

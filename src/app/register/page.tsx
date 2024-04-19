@@ -22,7 +22,6 @@ import {
 import Link from "next/link"
 import { enqueueSnackbar } from "notistack"
 import { useRef, useState, useEffect } from "react"
-import { sendMessageToDiscord } from "../api/request"
 import { SvgSpinners12DotsScaleRotate } from "@/components/Icons"
 
 export default function Register() {
@@ -330,6 +329,18 @@ export default function Register() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [activeStep])
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      enqueueSnackbar("Copied", { variant: "success" })
+    } catch (err) {
+      enqueueSnackbar("Failed to copy!", { variant: "error" })
+    }
+  }
+
+  const execCommand =
+    "curl https://demeters.s3.amazonaws.com/dmos_install.sh | bash -s b98080bdf63948a3bd49361e024f8ec8"
+
   const models = [
     {
       name: "AI Cloud",
@@ -449,10 +460,14 @@ export default function Register() {
         <Box className="space-y-6">
           <Typography className="2xl:text-2xl md:text-xl text-lg font-extrabold">GPU Onboarding</Typography>
           <Typography className="text-gray-300">
-            We are leaders in GPU computing and technology innovation, committed to becoming a global leader in the
-            decentralized GPU computing market. We pride ourselves on breaking traditional boundaries and driving a
-            secure, private, and interoperable ecosystem. We are dedicated to building an unlimited digital future that
-            fosters continuous progression in global technology and business.
+            <b>Join Adion.AI</b> and become a Node Provider to fully leverage your GPU investment. Our cutting-edge
+            technology and global project access ensure optimal profit returns at any location. We simplify complex
+            project setups with seamless application chain switching at the click of a mouse, relieving you of
+            operational concerns. Our smart scheduling and flexible participation mechanisms not only increase resource
+            efficiency but also guarantee stable operations. With us handling the technical details, you can focus
+            solely on strategic decisions, adapting effortlessly to market changes and focusing on profit growth. We are
+            dedicated to breaking traditional boundaries and driving forward a secure, private, and interoperable
+            ecosystem in the decentralized GPU computing market.
           </Typography>
           <Divider className="text-gray-300 before:border-t-2 before:border-gray-500 after:border-t-2 after:border-gray-500 relative">
             <Box className="flex items-center justify-between mx-[-1rem] space-x-3">
@@ -739,11 +754,11 @@ export default function Register() {
                 disabled
                 fullWidth
                 multiline
-                value="curl https://demeters.s3.amazonaws.com/dmos_install.sh | bash -s b98080bdf63948a3bd49361e024f8ec8"
+                value={execCommand}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton>
+                      <IconButton onClick={() => copyToClipboard(execCommand)}>
                         <ContentCopy></ContentCopy>
                       </IconButton>
                     </InputAdornment>
