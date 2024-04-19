@@ -1,9 +1,11 @@
 "use client"
-import { Box, Typography, TextField } from "@mui/material"
+import { Box, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import useProfile from "@/contexts/profile"
 import { LoadingButton } from "@mui/lab"
+import { LogoIconWithDotAi } from "@/components/Icons"
+import Link from "next/link"
 
 export default function Login() {
   const [username, setUsername] = useState("")
@@ -27,18 +29,17 @@ export default function Login() {
   }
   return (
     <Box className="min-h-screen bg-transparent flex items-center justify-center">
-      <Box
-        component="form"
-        className="bg-white/10 backdrop-blur-[1px] border border-gray-200 border-opacity-20 shadow-lg p-16 rounded-lg max-w-lg w-full"
-      >
-        <Typography variant="h4" className="mb-4 text-center font-extrabold text-gray-300/50">
-          LOGIN
-        </Typography>
-        <Box className="space-y-10">
+      <Box component="form" className="bg-[#333] p-16 space-y-4 rounded-3xl max-w-lg w-full">
+        <Box className="flex flex-col w-full text-center py-2 space-y-4">
+          <LogoIconWithDotAi className="text-6xl w-full mx-auto" />
+          <Typography className="2xl:text-4xl text-3xl font-bold">Welcome</Typography>
+          <Typography>Create an account to start exploring Cloud Portal</Typography>
+        </Box>
+        <Box className="space-y-4">
           <TextField
             fullWidth
-            label="Username"
-            variant="standard"
+            label="Email address"
+            variant="outlined"
             value={username}
             required
             onChange={(e) => setUsername(e.target.value)}
@@ -48,21 +49,28 @@ export default function Login() {
             fullWidth
             label="Password"
             type="password"
-            variant="standard"
+            variant="outlined"
             value={password}
             required
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full"
+            className="w-full border-blue-500"
           />
+        </Box>
+        <Box className="flex flex-row py-2">
+          <Typography>
+            Looking for an GPU onboarding?{" "}
+            <Link href="/register" className="hover:opacity-80 text-logo-to font-semibold">
+              Sign up here!
+            </Link>
+          </Typography>
         </Box>
         <Box className="mt-16">
           <LoadingButton
             variant="outlined"
             size="large"
-            color="success"
             loading={isLoging}
             onClick={handleSubmit}
-            className="border-2 bg-violet-500 bg-opacity-20 hover:bg-opacity-30 border-violet-500/50 w-full font-extrabold text-lg h-14"
+            className="bg-logo-to hover:bg-opacity-80 w-full border-none rounded-2xl font-extrabold text-lg h-14"
           >
             Sign In
           </LoadingButton>

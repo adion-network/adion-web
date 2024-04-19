@@ -39,18 +39,43 @@ export const darkTheme = responsiveFontSizes(
           },
         },
       },
-      MuiTextField: {
+      MuiInputLabel: {
         styleOverrides: {
           root: {
-            "& label": {
-              color: "#A0AAB4",
-              fontWeight: "bold",
+            "&.Mui-focused": {
+              color: "#00CCFF",
             },
+          },
+        },
+      },
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            "&.Mui-checked": {
+              color: "#00CCFF",
+            },
+          },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
             "& label.Mui-focused": {
-              color: "#A0AAB4",
+              color: "#00CCFF",
             },
-            "& .MuiInput-underline:after": {
+            "&.MuiInput-underline:after": {
               borderBottomColor: "#B2BAC2",
+            },
+            "&.MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderRadius: "0.75rem",
+              },
+              "&:hover fieldset": {
+                borderColor: "#02b2de",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#00CCFF",
+              },
             },
           },
         },

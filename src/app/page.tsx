@@ -4,6 +4,8 @@ import {
   ConvertIcon,
   DoubleQuotationMarkLeftIcon,
   DoubleQuotationMarkRightIcon,
+  EarthConvert,
+  FlowerIcon,
   IcBaselineDiscord,
   LogoIcon,
   MdiGithub,
@@ -13,10 +15,11 @@ import {
   MonitorIcon,
   ResourceIcon,
   RobotIcon,
+  Rocket,
   ScheduleIcon,
   ToolsIcon,
 } from "@/components/Icons"
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Button, IconButton, Typography } from "@mui/material"
 import Link from "next/link"
 import "animate.css"
 import { AnimationOnScroll } from "react-animation-on-scroll"
@@ -131,9 +134,16 @@ export default function Home() {
               <Box className="text-sm font-sans antialiased 2xl:text-4xl md:text-3xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-logo-from to-logo-to">
                 <Typewriter
                   options={{
-                    strings: ["Infinite Network", "Flexible Switching", "Decentralized AI"],
+                    strings: [
+                      "Infinite Network",
+                      "Flexible Switching",
+                      "Decentralized AI",
+                      "The GPU Grid of Infinite Compute",
+                      "Build Your AI Factory with Ease",
+                      "Maximize Your Profits",
+                    ],
                     delay: 40,
-                    deleteSpeed: 40,
+                    deleteSpeed: 20,
                     autoStart: true,
                     loop: true,
                     cursor: "|",
@@ -217,56 +227,60 @@ export default function Home() {
           <Box className="flex justify-center space-x-2 items-center 2xl:text-5xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-t from-logo-from to-logo-to">
             <LogoIcon className="md:mr-4 mr-1 md:text-8xl md:w-40 text-xl w-20" /> | DMOS
           </Box>
-          <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">
-            Distributed Cloud Operating System
-          </Typography>
-          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-24 2xl:px-32 md:py-10 rounded-xl ">
+          <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold">Route Smarter, Scale Faster</Typography>
+          <Box className="w-full mt-8 bg-gray-300 bg-opacity-10 backdrop-blur-md md:px-24 2xl:px-32 md:py-10 p-2 rounded-xl ">
             <Image src={dmosPic} className="w-full" alt="dmos-construction"></Image>
-            <Box className="grid md:grid-cols-3 grid-cols-2 gap-4 md:px-20 mt-5">
-              <Box className="flex flex-col items-center text-center gap-y-2">
-                <MonitorIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  Comprehensive Resource Monitoring
-                </Typography>
-              </Box>
-              <Box className="flex flex-col items-center tect-center gap-y-2">
-                <MeterIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  Optimized Concurrency Performance
-                </Typography>
-              </Box>
-              <Box className="flex flex-col items-center tect-center gap-y-2">
-                <ConvertIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  Seamless Application Switching
-                </Typography>
-              </Box>
-              <Box className="flex flex-col items-center tect-center gap-y-2">
-                <ScheduleIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  Flexible Resource Scheduling
-                </Typography>
-              </Box>
-              <Box className="flex flex-col items-center tect-center gap-y-2">
-                <ToolsIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  AI Frameworks and Tools
-                </Typography>
-              </Box>
-              <Box className="flex flex-col items-center tect-center gap-y-2">
-                <ResourceIcon className="text-3xl" />
-                <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
-                  Heterogeneous Resource Compatibility
-                </Typography>
-              </Box>
-            </Box>
           </Box>
         </Box>
         <Box id="why-us" className="flex flex-col text-center space-y-10 justify-center mt-20">
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-t from-logo-from to-logo-to">
             Why US?
           </Typography>
-          <Image className="w-full" src={whyUsPic} alt="why-us"></Image>
+          <Box className="grid md:grid-cols-2 grid-cols-1 gap-4 md:gap-8 2xl:gap-12 md:px-20 2xl:px-32 mt-5">
+            <Box className="flex flex-col items-center text-center gap-y-4">
+              <EarthConvert className="text-6xl" />
+              <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
+                Access Global Opportunities
+              </Typography>
+              <Typography className="text-gray-300 md:text-base text-sm 2xl:text-lg w-full text-left">
+                Dive directly into the world&apos;s top GPU ecosystem, securing project task revenues, airdrop rewards,
+                and mainnet token incentives. Embark on a journey to wealth by exploring global opportunities with us.
+              </Typography>
+            </Box>
+            <Box className="flex flex-col items-center text-center gap-y-4">
+              <Rocket className="text-6xl" />
+              <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
+                AI Development Accelerator
+              </Typography>
+              <Typography className="text-gray-300 md:text-base text-sm 2xl:text-lg w-full text-left">
+                A one-stop AI development solution, integrating mainstream frameworks like TensorFlow and PyTorch.
+                Catering to startups and large enterprises alike, fulfilling all-around AI development needs. Begin your
+                AI innovation journey now.
+              </Typography>
+            </Box>
+            <Box className="flex flex-col items-center text-center gap-y-4">
+              <ConvertIcon className="text-6xl" />
+              <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
+                Intelligent Scheduling
+              </Typography>
+              <Typography className="text-gray-300 md:text-base text-sm 2xl:text-lg w-full text-left">
+                Maximize your resource efficiency with our smart scheduling technology, ensuring optimal resource
+                allocation. The flexible project engagement mechanism allows you to adjust strategies anytime for higher
+                gains. Experience intelligent scheduling today.
+              </Typography>
+            </Box>
+            <Box className="flex flex-col items-center text-center gap-y-4">
+              <FlowerIcon className="text-6xl" />
+              <Typography className="font-semibold md:text-lg text-base 2xl:text-2xl w-full">
+                Professional Technical Support
+              </Typography>
+              <Typography className="text-gray-300 md:text-base text-sm 2xl:text-lg w-full text-left">
+                24/7 professional SRE operation and maintenance management, supported by global data center
+                infrastructure, guarantees the continuous and stable running of your projects. Enjoy worry-free
+                technical support while focusing on your core business.
+              </Typography>
+            </Box>
+          </Box>
         </Box>
         <Box id="vision" className="flex flex-col text-center space-y-10 justify-center mt-20">
           <Typography className="mt-4 2xl:text-5xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-t from-logo-from to-logo-to">
@@ -288,7 +302,6 @@ export default function Home() {
                 </Typography>
               </Box>
             </AnimationOnScroll>
-            <DoubleQuotationMarkRightIcon className="2xl:text-6xl md:text-5xl text-3xl self-end" />
           </Box>
         </Box>
         <Box id="plan" className="flex flex-col text-center space-y-10 justify-center mt-20">
@@ -336,9 +349,13 @@ export default function Home() {
               <LogoIcon className="text-8xl w-40" />
             </Box>
             <Box className="flex justify-center gap-x-5 px-10">
-              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
+              <IconButton
+                className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200"
+                href="https://twitter.com/AdionNetwork"
+                target="_blank"
+              >
                 <MdiTwitter fontSize={32} color="black"></MdiTwitter>
-              </Box>
+              </IconButton>
               <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
                 <BiYoutube fontSize={32} color="black"></BiYoutube>
               </Box>
@@ -348,9 +365,13 @@ export default function Home() {
               <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
                 <IcBaselineDiscord fontSize={32} color="black"></IcBaselineDiscord>
               </Box>
-              <Box className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200">
+              <IconButton
+                className="bg-gray-400 rounded-full p-2 cursor-pointer hover:bg-gray-200"
+                href="https://github.com/adion-network"
+                target="_blank"
+              >
                 <MdiGithub fontSize={32} color="black"></MdiGithub>
-              </Box>
+              </IconButton>
             </Box>
           </Box>
           <Box className="md:w-2/3 flex flex-row md:justify-end">
