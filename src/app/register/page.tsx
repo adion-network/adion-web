@@ -337,7 +337,7 @@ export default function Register() {
         "Ubuntu 22.04",
         "Stable internet connection",
         "Static public IP Support",
-        <ul className="space-y-1">
+        <ul className="space-y-1" key="ai-cloud-req-3">
           <li>Internet speed: </li>
           <li>Download &gt; 1 GBps</li>
           <li>Upload &gt; 500 Mbps</li>
@@ -353,11 +353,11 @@ export default function Register() {
       hardwareRequirements: [
         "At least 24 GPUs",
         "NVIDIA GeForce RTX 30xx and RTX 40xx series or higher",
-        <ul>
+        <ul key="hd-req-2">
           <li>Option 1:</li>
           <li>Minimum 6 servers with 4 GPUs and 8GB VRAM per GPU</li>
         </ul>,
-        <ul>
+        <ul key="hd-req-3">
           <li>Option 2:</li>
           <li>Minimum 3 servers with 8 GPUs and 24GB VRAM per GPU.</li>
         </ul>,
@@ -770,7 +770,7 @@ export default function Register() {
               label={
                 <Typography variant="body1">
                   I agree to receive communications from Adion, and I understand Adion will process my personal
-                  information in accordance with Adion's{" "}
+                  information in accordance with Adion&apos;s{" "}
                   <Link href="#" className="font-semibold hover:opacity-70">
                     Privacy Policy.
                   </Link>
