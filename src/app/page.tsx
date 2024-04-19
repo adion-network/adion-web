@@ -46,25 +46,6 @@ const NextIcon = () => {
 }
 
 export default function Home() {
-  const headerUrl = [
-    {
-      name: "Vision",
-      href: "#vision",
-    },
-    {
-      name: "Roadmap",
-      href: "#plan",
-    },
-    {
-      name: "Node Provider",
-      href: "/cloud",
-    },
-    {
-      name: "Docs",
-      href: "#",
-    },
-  ]
-
   const chainListEl = [
     {
       title: "Global Connectivity",
@@ -98,7 +79,7 @@ export default function Home() {
       <Box className="opacity-15">
         <TorusOfCubesBg />
       </Box>
-      <Header menu={headerUrl} />
+      <Header />
       <Box id="instruction" className="h-screen">
         <Box component={"div"}>
           <Box className="w-4/5 2xl:w-2/3 md:w-4/5 mx-auto">

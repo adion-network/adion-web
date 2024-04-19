@@ -1,8 +1,10 @@
+"use client"
 import { Box, Typography, Button, Menu, MenuItem, Divider } from "@mui/material"
 import { LogoIcon } from "../Icons"
 import Link from "next/link"
 import { Menu as MenuIcon } from "@mui/icons-material"
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 interface MenuItem {
   name: string
@@ -13,7 +15,7 @@ interface HeaderProps {
   menu: MenuItem[]
 }
 
-export default function Header({ menu }: HeaderProps) {
+export default function Header() {
   const [isScroll, setIsScroll] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -25,6 +27,27 @@ export default function Header({ menu }: HeaderProps) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const pathName = usePathname()
+
+  const headerUrl = [
+    {
+      name: "Vision",
+      href: "#vision",
+    },
+    {
+      name: "Roadmap",
+      href: "#plan",
+    },
+    {
+      name: "Node Provider",
+      href: "/cloud",
+    },
+    {
+      name: "Docs",
+      href: "#",
+    },
+  ]
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true, capture: true })
@@ -52,9 +75,15 @@ export default function Header({ menu }: HeaderProps) {
           </Link>
         </Box>
         <Box className="flex gap-x-10 items-center">
-          {menu.map((link: any, index: number) => (
+          {headerUrl.map((link: any, index: number) => (
             <Link href={link.href} key={`menu-${index}`}>
-              <Typography className="font-semibold text-gray-400 text-xl hover:text-white">{link.name}</Typography>
+              <Typography
+                className={`font-semibold  text-xl hover:text-white ${
+                  pathName === link.href ? "text-white" : "text-gray-400"
+                }`}
+              >
+                {link.name}
+              </Typography>
             </Link>
           ))}
           <Link href="/login">
@@ -77,7 +106,7 @@ export default function Header({ menu }: HeaderProps) {
             "aria-labelledby": "basic-button",
           }}
         >
-          {menu.map((link: any, index: number) => (
+          {headerUrl.map((link: any, index: number) => (
             <MenuItem key={`mobile-menu-${index}`}>
               <Link href={link.href}>{link.name}</Link>
             </MenuItem>

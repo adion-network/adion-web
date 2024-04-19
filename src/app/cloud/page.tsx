@@ -56,13 +56,6 @@ export default function Home() {
     }
   }, [vantaEffect])
 
-  const headerUrl = [
-    {
-      name: "Docs",
-      href: "#",
-    },
-  ]
-
   const explorEfil = [
     {
       title: "One-Stop Solution: Seamless Filecoin Integration.",
@@ -93,7 +86,7 @@ export default function Home() {
   return (
     <Box component={"div"}>
       <Box component={"div"} className="bg-black bg-opacity-50">
-        <Header menu={headerUrl} />
+        <Header />
         <Box ref={myRef} className="h-screen">
           <Box className="w-4/5 2xl:w-2/3 h-full mx-auto md:items-start items-center flex flex-col justify-center">
             <Box className="flex-col md:w-2/3 flex justify-start space-y-8">
@@ -108,9 +101,8 @@ export default function Home() {
               <Link href="/register" className="w-[180px] animate__animated animate__fadeIn">
                 <Button
                   variant="contained"
-                  color="success"
                   size="large"
-                  className="w-full text-md mt-10 font-extrabold py-3 text-base"
+                  className="w-full bg-logo-from hover:opacity-85 text-md mt-10 font-extrabold py-3 text-base"
                   startIcon={<NorthEast />}
                 >
                   Start Now
@@ -368,9 +360,8 @@ export default function Home() {
               <Link href="/register">
                 <Button
                   variant="contained"
-                  color="success"
                   size="large"
-                  className="w-[180px] text-md mt-10 font-extrabold py-3 text-base"
+                  className="w-[180px] bg-logo-from hover:opacity-85 text-md mt-10 font-extrabold py-3 text-base"
                   startIcon={<NorthEast />}
                 >
                   Start Now
