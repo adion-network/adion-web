@@ -296,7 +296,7 @@ export default function Home() {
               <Button
                 variant="text"
                 className="transition duration-300 px-0 hover:scale-110 ease-in-out hover:bg-transparent"
-                href="/cloud"
+                href="/register"
               >
                 <Box className="flex flex-col text-nowrap text-center">
                   <Typography className=" text-white font-bold text-lg 2xl:text-xl">

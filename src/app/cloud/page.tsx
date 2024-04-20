@@ -18,7 +18,7 @@ import detailPic1 from "@/../public/images/cloud/3.png"
 import detailPic2 from "@/../public/images/cloud/4.png"
 import detailPic3 from "@/../public/images/cloud/5.png"
 import projectListPic from "@/../public/images/cloud/7.png"
-import dFilPic from "@/../public/images/cloud/8.png"
+import dFilPic from "@/../public/images/cloud/8.svg"
 import { useRef, useState, useEffect } from "react"
 import globe from "vanta/dist/vanta.globe.min"
 import * as THREE from "three"
@@ -224,7 +224,7 @@ export default function Home() {
                   AI R&D Acceleration: Streamline Development.
                 </Typography>
               </AnimationOnScroll>
-              <AnimationOnScroll animateIn="animate__fadeIn" duration={0.5}>
+              <AnimationOnScroll animateIn="animate__fadeIn">
                 <Typography className="2xl:text-lg text-sm text-gray-300 ">
                   Harness advanced ML Tools and Platforms to fast-track AI project cycles—from model training to
                   inference acceleration.

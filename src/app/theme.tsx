@@ -1,4 +1,4 @@
-import { grey } from "@mui/material/colors"
+import { blue, grey } from "@mui/material/colors"
 import { createTheme, responsiveFontSizes } from "@mui/material/styles"
 
 export const darkTheme = responsiveFontSizes(
@@ -43,7 +43,7 @@ export const darkTheme = responsiveFontSizes(
         styleOverrides: {
           root: {
             "&.Mui-focused": {
-              color: "#00CCFF",
+              color: blue[600],
             },
           },
         },
@@ -52,7 +52,7 @@ export const darkTheme = responsiveFontSizes(
         styleOverrides: {
           root: {
             "&.Mui-checked": {
-              color: "#00CCFF",
+              color: blue[600],
             },
           },
         },
@@ -61,7 +61,7 @@ export const darkTheme = responsiveFontSizes(
         styleOverrides: {
           root: {
             "& label.Mui-focused": {
-              color: "#00CCFF",
+              color: blue[600],
             },
             "&.MuiInput-underline:after": {
               borderBottomColor: "#B2BAC2",
@@ -71,10 +71,10 @@ export const darkTheme = responsiveFontSizes(
                 borderRadius: "0.75rem",
               },
               "&:hover fieldset": {
-                borderColor: "#02b2de",
+                borderColor: blue[500],
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#00CCFF",
+                borderColor: blue[600],
               },
             },
           },

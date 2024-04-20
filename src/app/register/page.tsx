@@ -444,13 +444,13 @@ export default function Register() {
           <Button
             size="large"
             variant="contained"
-            className="bg-logo-to hover:opacity-80"
+            className="bg-blue-500 hover:opacity-80"
             onClick={() => setIsSubmited(false)}
           >
             OK
           </Button>
           <Link href="/">
-            <Button size="large" variant="text" className="underline text-logo-to">
+            <Button size="large" variant="text" className="underline text-blue-500">
               Return To Home Page
             </Button>
           </Link>
@@ -480,11 +480,11 @@ export default function Register() {
         <Box className="w-full py-8">
           <Box ref={(el: any) => (stepRefs.current[0] = el)} className="flex flex-row gap-x-4">
             <Box className="flex flex-col justify-end w-1/6 min-w-48 bg-[#333333] rounded-t-2xl px-4">
-              <Box className="flex text-logo-to flex-row justify-between w-full items-center">
+              <Box className="flex text-blue-500 flex-row justify-between w-full items-center">
                 <Typography className="2xl:text-base md:text-sm text-xs">1.Basic Information</Typography>
                 <RadioButtonChecked className="text-base" />
               </Box>
-              <Box className="border-r h-1/2 border-r-logo-to mx-2 mt-2"></Box>
+              <Box className="border-r h-1/2 border-r-blue-500 mx-2 mt-2"></Box>
             </Box>
             <Box className="w-5/6 flex flex-col space-y-5 px-12 py-6 rounded-2xl bg-[#181818]">
               <Typography component={"ul"} variant="h6" className="font-semibold list-disc list-outside px-4">
@@ -513,10 +513,10 @@ export default function Register() {
           </Box>
           <Box ref={(el: any) => (stepRefs.current[1] = el)} className="flex flex-row gap-x-4">
             <Box className="flex flex-col justify-end w-1/6 min-w-48 bg-[#333333] px-4">
-              <Box className="border-r h-1/2 border-r-logo-to mx-2 mb-2"></Box>
+              <Box className="border-r h-1/2 border-r-blue-500 mx-2 mb-2"></Box>
               <Box
                 className={`flex ${
-                  activeStep >= 2 && "text-logo-to"
+                  activeStep >= 2 && "text-blue-500"
                 } transition duration-300 ease-out flex-row justify-between w-full items-center`}
               >
                 <Typography className="2xl:text-base md:text-sm text-xs">2.Requirements</Typography>
@@ -528,7 +528,7 @@ export default function Register() {
               </Box>
               <Box
                 className={`border-r h-1/2  ${
-                  activeStep >= 3 && "border-r-logo-to"
+                  activeStep >= 3 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mt-2`}
               ></Box>
             </Box>
@@ -579,12 +579,12 @@ export default function Register() {
             <Box className="flex flex-col justify-end w-1/6 min-w-48 bg-[#333333] px-4">
               <Box
                 className={`border-r h-1/2 ${
-                  activeStep >= 3 && "border-r-logo-to"
+                  activeStep >= 3 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mb-2`}
               ></Box>
               <Box
                 className={`flex ${
-                  activeStep >= 3 && "text-logo-to"
+                  activeStep >= 3 && "text-blue-500"
                 } transition duration-300 ease-out flex-row justify-between w-full items-center`}
               >
                 <Typography className="2xl:text-base md:text-sm text-xs">3.Need to know</Typography>
@@ -596,7 +596,7 @@ export default function Register() {
               </Box>
               <Box
                 className={`border-r h-1/2  ${
-                  activeStep >= 4 && "border-r-logo-to"
+                  activeStep >= 4 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mt-2`}
               ></Box>
             </Box>
@@ -617,14 +617,14 @@ export default function Register() {
               <Box className="flex gap-4">
                 <Button
                   variant="outlined"
-                  className={`rounded-lg border ${registerInfo.external && "border-logo-to"}`}
+                  className={`rounded-lg border ${registerInfo.external && "border-blue-500"}`}
                   onClick={() => setRegisterInfo({ ...registerInfo, external: true })}
                 >
                   Yes
                 </Button>
                 <Button
                   variant="outlined"
-                  className={`rounded-lg border ${!registerInfo.external && "border-logo-to"}`}
+                  className={`rounded-lg border ${!registerInfo.external && "border-blue-500"}`}
                   onClick={() => setRegisterInfo({ ...registerInfo, external: false })}
                 >
                   No
@@ -636,12 +636,12 @@ export default function Register() {
             <Box className="flex flex-col justify-end w-1/6 min-w-48 bg-[#333333] px-4">
               <Box
                 className={`border-r h-1/2 ${
-                  activeStep >= 4 && "border-r-logo-to"
+                  activeStep >= 4 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mb-2`}
               ></Box>
               <Box
                 className={`flex ${
-                  activeStep >= 4 && "text-logo-to"
+                  activeStep >= 4 && "text-blue-500"
                 } transition duration-300 ease-out flex-row justify-between w-full items-center`}
               >
                 <Typography className="2xl:text-base md:text-sm text-xs">4.System Information</Typography>
@@ -653,7 +653,7 @@ export default function Register() {
               </Box>
               <Box
                 className={`border-r h-1/2  ${
-                  activeStep >= 5 && "border-r-logo-to"
+                  activeStep >= 5 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mt-2`}
               ></Box>
             </Box>
@@ -730,12 +730,12 @@ export default function Register() {
             <Box className="flex flex-col justify-start w-1/6 min-w-48 bg-[#333333] px-4 rounded-b-2xl">
               <Box
                 className={`border-r h-1/2 ${
-                  activeStep >= 5 && "border-r-logo-to"
+                  activeStep >= 5 && "border-r-blue-500"
                 } transition duration-300 ease-out mx-2 mb-2`}
               ></Box>
               <Box
                 className={`flex ${
-                  activeStep >= 5 && "text-logo-to"
+                  activeStep >= 5 && "text-blue-500"
                 } transition duration-300 ease-out flex-row justify-between w-full items-center`}
               >
                 <Typography className="2xl:text-base md:text-sm text-xs">5.Prerequisites</Typography>
@@ -800,7 +800,7 @@ export default function Register() {
         <Box className="w-full text-center">
           <Button
             variant="contained"
-            className="font-extrabold bg-logo-to hover:opacity-80 rounded-2xl py-3 text-lg w-80"
+            className="font-extrabold bg-logo-from hover:opacity-80 rounded-2xl py-3 text-lg w-80"
             size="large"
             onClick={handleRegister}
           >

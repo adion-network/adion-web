@@ -33,11 +33,11 @@ export default function Header() {
   const headerUrl = [
     {
       name: "Vision",
-      href: "#vision",
+      href: "/#vision",
     },
     {
       name: "Roadmap",
-      href: "#plan",
+      href: "/#plan",
     },
     {
       name: "Node Provider",

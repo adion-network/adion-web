@@ -59,7 +59,7 @@ export default function Login() {
         <Box className="flex flex-row py-2">
           <Typography>
             Looking for an GPU onboarding?{" "}
-            <Link href="/register" className="hover:opacity-80 text-logo-to font-semibold">
+            <Link href="/register" className="hover:opacity-80 text-logo-from font-semibold">
               Sign up here!
             </Link>
           </Typography>
@@ -70,7 +70,7 @@ export default function Login() {
             size="large"
             loading={isLoging}
             onClick={handleSubmit}
-            className="bg-logo-to hover:bg-opacity-80 w-full border-none rounded-2xl font-extrabold text-lg h-14"
+            className="bg-logo-from hover:bg-opacity-80 w-full border-none rounded-2xl font-extrabold text-lg h-14"
           >
             Sign In
           </LoadingButton>
