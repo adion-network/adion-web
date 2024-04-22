@@ -84,22 +84,15 @@ export default function Home() {
         <Box component={"div"}>
           <Box className="w-4/5 2xl:w-2/3 md:w-4/5 mx-auto">
             <Box className="min-h-screen flex-col flex items-center justify-center gap-y-16">
-              <Typography className="text-3xl 2xl:text-7xl md:text-6xl md:leading-snug 2xl:leading-snug text-center font-extrabold animate__animated animate__slideInDown">
-                Aggregating Global{" "}
+              <Typography className="text-3xl 2xl:text-7xl md:text-6xl text-center font-extrabold animate__animated animate__slideInDown">
+                The{" "}
                 <Box
                   component={"span"}
                   className="bg-clip-text text-transparent bg-gradient-to-b from-logo-from to-logo-to"
                 >
                   GPU
                 </Box>{" "}
-                Resources to Accelerate{" "}
-                <Box
-                  component={"span"}
-                  className="bg-clip-text text-transparent bg-gradient-to-b from-logo-from to-logo-to"
-                >
-                  AI
-                </Box>{" "}
-                Innovation
+                Grid of Infinite Compute
               </Typography>
               <Box className="text-sm font-sans antialiased 2xl:text-4xl md:text-3xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-logo-from to-logo-to">
                 <Typewriter
@@ -108,7 +101,6 @@ export default function Home() {
                       "Infinite Network",
                       "Flexible Switching",
                       "Decentralized AI",
-                      "The GPU Grid of Infinite Compute",
                       "Build Your AI Factory with Ease",
                       "Maximize Your Profits",
                     ],
