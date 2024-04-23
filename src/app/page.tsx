@@ -114,11 +114,7 @@ export default function Home() {
                 />
               </Box>
               <Box className="flex md:flex-row flex-col gap-y-2 gap-x-6 items-center animate__animated animate__fadeIn animate__delay-1s">
-                <Button
-                  variant="contained"
-                  className="rounded-2xl px-16 bg-logo-from hover:opacity-80 py-2 2xl:py-3"
-                  href="/cloud"
-                >
+                <Button variant="contained" color="primary" className="rounded-2xl px-16 py-2 2xl:py-3" href="/cloud">
                   <Typography className="text-white font-semibold text-xl 2xl:text-2xl">Get Started</Typography>
                 </Button>
                 <Link href="#" className="text-gray-400 2xl:text-xl md:text-lg text-base hover:text-white">

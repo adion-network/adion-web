@@ -21,7 +21,7 @@ import useProfile from "@/contexts/profile"
 import Link from "next/link"
 import { AILogo, GpuMiningPool, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
 import { useSearchParams } from "next/navigation"
-import Header from "@/components/Header"
+import Header from "@/components/node-provider/Header"
 
 export default function Overview() {
   const {

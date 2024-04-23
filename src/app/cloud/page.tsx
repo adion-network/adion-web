@@ -102,7 +102,7 @@ export default function Home() {
                 <Button
                   variant="contained"
                   size="large"
-                  className="w-full bg-logo-from hover:opacity-85 text-md mt-10 font-extrabold py-3 text-base"
+                  className="w-full text-md mt-10 font-extrabold py-3 text-base"
                   startIcon={<NorthEast />}
                 >
                   Start Now
@@ -361,7 +361,7 @@ export default function Home() {
                 <Button
                   variant="contained"
                   size="large"
-                  className="w-[180px] bg-logo-from hover:opacity-85 text-md mt-10 font-extrabold py-3 text-base"
+                  className="w-[180px] text-md mt-10 font-extrabold py-3 text-base"
                   startIcon={<NorthEast />}
                 >
                   Start Now

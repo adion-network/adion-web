@@ -24,10 +24,7 @@ export const darkTheme = responsiveFontSizes(
         default: "#121212",
       },
       primary: {
-        main: grey[50],
-      },
-      success: {
-        main: "#0AE390",
+        main: "#0066FF",
       },
     },
     components: {

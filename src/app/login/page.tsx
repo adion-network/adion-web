@@ -15,7 +15,7 @@ export default function Login() {
 
   useEffect(() => {
     if (userInfo.isLogin) {
-      router.push("/node-provider/supplier/list")
+      router.push("/node-provider/workers")
     }
   }, [userInfo.isLogin])
 
@@ -66,11 +66,11 @@ export default function Login() {
         </Box>
         <Box className="mt-16">
           <LoadingButton
-            variant="outlined"
+            variant="contained"
             size="large"
             loading={isLoging}
             onClick={handleSubmit}
-            className="bg-logo-from hover:bg-opacity-80 w-full border-none rounded-2xl font-extrabold text-lg h-14"
+            className="w-full rounded-2xl font-extrabold text-lg h-14"
           >
             Sign In
           </LoadingButton>

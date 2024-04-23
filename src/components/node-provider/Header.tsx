@@ -2,13 +2,14 @@
 
 import Button from "@mui/material/Button"
 import { Avatar, Box, MenuItem, Backdrop, CircularProgress } from "@mui/material"
-import Link from "next/link"
-import { LogoIcon } from "./Icons"
+import { LogoIconWithDotAi } from "../Icons"
 import { styled } from "@mui/material/styles"
 import Menu, { MenuProps } from "@mui/material/Menu"
 import { useState, Fragment, useEffect } from "react"
 import useProfile from "@/contexts/profile"
 import { usePathname } from "next/navigation"
+import { BlockIcon, DocsIcon, ExplorerIcon } from "./Icons"
+import Link from "next/link"
 
 const Header = () => {
   const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null)
@@ -52,20 +53,44 @@ const Header = () => {
   }))
 
   return (
-    <Box className="h-[80px]">
+    <Box className="h-20">
       <Backdrop open={isLogouting} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
-      <Box className="h-full flex justify-between items-center mx-20">
+      <Box className="h-full flex justify-between items-center px-24">
         <Box className="flex justify-between items-center">
-          <Box className="ml-10 w-full flex items-center">
-            <Box>
-              <Link href="/node-provider/supplier/list">
-                <Button startIcon={<LogoIcon className="text-3xl" />} variant="text" className="text-xl font-extrabold">
-                  Node Provider
-                </Button>
-              </Link>
+          <Box className="w-full flex justify-start items-center space-x-4">
+            <Box className="px-10">
+              <LogoIconWithDotAi className="text-5xl w-full" />
             </Box>
+            <Button
+              variant="text"
+              startIcon={<BlockIcon />}
+              href="/node-provider/workers"
+              className={`2xl:text-lg hover:bg-gray-100/20 px-6 ${
+                path.startsWith("/node-provider") && "bg-gray-100/20"
+              }`}
+            >
+              Node Provider
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<ExplorerIcon />}
+              href="#"
+              className={`2xl:text-lg hover:bg-gray-100/20 px-6 ${
+                path === "/node-provider/explorer" && "bg-gray-100/20"
+              }`}
+            >
+              Explorer
+            </Button>
+            <Button
+              variant="text"
+              startIcon={<DocsIcon />}
+              href="#"
+              className={`2xl:text-lg hover:bg-gray-100/20 px-6 ${path === "/Docs" && "bg-gray-100/20"}`}
+            >
+              Docs
+            </Button>
           </Box>
         </Box>
         {userInfo.isLogin && (
@@ -93,6 +118,26 @@ const Header = () => {
             </Box>
           </Fragment>
         )}
+      </Box>
+      <Box className="h-full flex justify-start space-x-8 items-center px-36">
+        <Link href="/node-provider/workers">
+          <Box
+            className={`border-b-2 ${
+              path === "/node-provider/workers" ? "border-white text-white" : " text-gray-400 border-b-transparent"
+            }  py-2 px-1 hover:border-gray-300`}
+          >
+            Workers
+          </Box>
+        </Link>
+        <Link href="/node-provider/app-chain">
+          <Box
+            className={`border-b-2 ${
+              path === "/node-provider/app-chain" ? "border-white text-white" : " text-gray-400 border-b-transparent"
+            }  py-2 px-1 hover:border-gray-300`}
+          >
+            App Chain
+          </Box>
+        </Link>
       </Box>
     </Box>
   )

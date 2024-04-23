@@ -800,7 +800,7 @@ export default function Register() {
         <Box className="w-full text-center">
           <Button
             variant="contained"
-            className="font-extrabold bg-logo-from hover:opacity-80 rounded-2xl py-3 text-lg w-80"
+            className="font-extrabold rounded-2xl py-3 text-lg w-80"
             size="large"
             onClick={handleRegister}
           >

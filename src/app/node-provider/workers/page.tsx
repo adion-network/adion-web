@@ -35,7 +35,7 @@ import { useRouter } from "next/navigation"
 import { Fragment, useEffect, useMemo, useState } from "react"
 import NoProject from "@/components/node-provider/NoProject"
 import Link from "next/link"
-import Header from "@/components/Header"
+import Header from "@/components/node-provider/Header"
 
 const GraphicsCardStatusIcon = createSvgIcon(GraphicsCardStatus({}), "GraphicsCardStatusIcon")
 
@@ -133,7 +133,7 @@ export default function List() {
   return (
     <Fragment>
       <Header />
-      <Box className="mx-auto w-[1000px] mt-20">
+      <Box className="mx-auto 2xl:w-3/5 md:w-2/3 w-4/5 mt-20">
         <Backdrop
           open={isProjectListFetching || isUserProjectListFetching || isCheckingHasProject}
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
