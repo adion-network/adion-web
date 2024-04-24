@@ -125,56 +125,65 @@ Command: ${res.data}
     }
   }
 
-  const fetchProjectNodes = useCallback(async (projectId: number, filterStatus: string = "all") => {
-    try {
-      setIsProjectNodeFetching(true)
-      if (!projectId) {
-        throw new Error("project id invaild")
-      }
-      const { data } = await get("/api/v1/user/node/list/?project_id=" + projectId)
-      if (!data) {
-        setProjectNodeList([])
-      } else {
-        let result = data.map((node: any) => {
-          const gpuStatus = {
-            y: 0,
-            n: 0,
-          }
-          const gpuModel: { [key: string]: number } = {}
+  const fetchProjectNodes = useCallback(
+    async (projectId: number, filterStatus: string = "all", keyword: string = "") => {
+      try {
+        setIsProjectNodeFetching(true)
+        if (!projectId) {
+          throw new Error("project id invaild")
+        }
+        const { data } = await get("/api/v1/user/node/list/?project_id=" + projectId)
+        if (!data) {
+          setProjectNodeList([])
+        } else {
+          let result = data.map((node: any) => {
+            const gpuStatus = {
+              y: 0,
+              n: 0,
+            }
+            const gpuModel: { [key: string]: number } = {}
 
-          if (node.gpu) {
-            node.gpu.map((g: any) => {
-              g.status === "ok" ? gpuStatus.y++ : gpuStatus.n++
-              if (gpuModel[g.product] === undefined) {
-                gpuModel[g.product] = 0
-              }
-              gpuModel[g.product]++
+            if (node.gpu) {
+              node.gpu.map((g: any) => {
+                g.status === "ok" ? gpuStatus.y++ : gpuStatus.n++
+                if (gpuModel[g.product] === undefined) {
+                  gpuModel[g.product] = 0
+                }
+                gpuModel[g.product]++
+              })
+            }
+            return {
+              deviceId: node.device_id,
+              ip: node.ip,
+              status: node.status,
+              gpuStatus: { y: gpuStatus.y, n: gpuStatus.n },
+              gpuModel: Object.keys(gpuModel).map((k) => {
+                return { model: k, count: gpuModel[k] }
+              }),
+              region: node.geo,
+            }
+          })
+          if (filterStatus !== "all") {
+            result = result.filter((item: any) => {
+              return item.status === filterStatus
             })
           }
-          return {
-            devideId: node.device_id,
-            ip: node.ip,
-            status: node.status,
-            gpuStatus: { y: gpuStatus.y, n: gpuStatus.n },
-            gpuModel: Object.keys(gpuModel).map((k) => {
-              return { model: k, count: gpuModel[k] }
-            }),
-            region: node.geo,
+
+          if (keyword.length > 0) {
+            result = result.filter((item: any) => {
+              return item.deviceId.match(keyword) || item.ip === keyword
+            })
           }
-        })
-        if (filterStatus !== "all") {
-          result = result.filter((item: any) => {
-            return item.status === filterStatus
-          })
+          setProjectNodeList(result)
         }
-        setProjectNodeList(result)
+      } catch (error: any) {
+        enqueueSnackbar(error.message, { variant: "error" })
+      } finally {
+        setIsProjectNodeFetching(false)
       }
-    } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: "error" })
-    } finally {
-      setIsProjectNodeFetching(false)
-    }
-  }, [])
+    },
+    []
+  )
 
   const clearProjectData = useCallback(() => {
     setHasProject(true)

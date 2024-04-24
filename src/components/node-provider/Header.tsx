@@ -124,7 +124,7 @@ const Header = () => {
           <Box
             className={`border-b-2 ${
               path === "/node-provider/workers" ? "border-white text-white" : " text-gray-400 border-b-transparent"
-            }  py-2 px-1 hover:border-gray-300`}
+            }  py-2 px-1 hover:border-gray-300 hover:text-white`}
           >
             Workers
           </Box>
@@ -133,7 +133,7 @@ const Header = () => {
           <Box
             className={`border-b-2 ${
               path === "/node-provider/app-chain" ? "border-white text-white" : " text-gray-400 border-b-transparent"
-            }  py-2 px-1 hover:border-gray-300`}
+            }  py-2 px-1 hover:border-gray-300 hover:text-white`}
           >
             App Chain
           </Box>
