@@ -76,7 +76,7 @@ export default function List() {
         okText="DELETE"
       ></WarningDialog>
       <Header />
-      <Box className="mx-auto 2xl:w-3/5 md:w-2/3 w-4/5 mt-20">
+      <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
         {fetchProjectNodes?.length === 0 ? (
           <NoProject />
         ) : (

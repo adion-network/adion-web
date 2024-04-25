@@ -96,11 +96,11 @@ export default function List() {
   return (
     <Fragment>
       <Header />
-      <Box className="mx-auto 2xl:w-3/5 md:w-2/3 w-4/5 mt-20">
+      <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
         <Box className="grid grid-cols-3 gap-4">
           <ChainSummary
             logo={
-              <Box className="flex space-y-2 flex-col justify-center items-center">
+              <Box className="flex space-y-2 flex-col justify-center items-center text-gray-100/30">
                 <NoAppChain sx={{ fontSize: 32 }}></NoAppChain>
                 <Typography>No App Chain</Typography>
               </Box>
