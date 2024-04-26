@@ -1,59 +1,21 @@
 "use client"
-import { useProjects } from "@/contexts/projects"
-import { GraphicsCard, GraphicsCardStatus, SvgSpinners12DotsScaleRotate } from "@/components/Icons"
-import {
-  ArrowBack,
-  ArrowBackIos,
-  ArrowBackIosNew,
-  Circle,
-  Delete,
-  KeyboardArrowDown,
-  Search,
-  Warning,
-  WarningAmberOutlined,
-  WarningOutlined,
-} from "@mui/icons-material"
-import {
-  Box,
-  Button,
-  Typography,
-  ToggleButtonGroup,
-  ToggleButton,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableFooter,
-  TablePagination,
-  createSvgIcon,
-  TextField,
-  InputAdornment,
-  Checkbox,
-  Divider,
-} from "@mui/material"
-import { useParams } from "next/navigation"
-import { Fragment, useEffect, useMemo, useState } from "react"
-import NoProject from "@/components/node-provider/NoProject"
+import { GraphicsCard, GraphicsCardStatus } from "@/components/Icons"
+import { ArrowBackIosNew, Circle, Delete } from "@mui/icons-material"
+import { Box, Button, Typography, createSvgIcon, Divider } from "@mui/material"
+import { Fragment, useState } from "react"
 import Header from "@/components/node-provider/Header"
-import CommandContent from "@/components/node-provider/CommandContent"
-import Link from "next/link"
 import { LogosUbuntu } from "@/components/node-provider/Icons"
 import WarningDialog from "@/components/node-provider/WarningDialog"
+import { useRouter } from "next/navigation"
 
 const GraphicsCardStatusIcon = createSvgIcon(GraphicsCardStatus({}), "GraphicsCardStatusIcon")
 
 export default function Page({ params }: { params: { device: string } }) {
+  const router = useRouter()
   //delete workers
   const handleDeleteWorkers = async () => {
     console.log("111")
   }
-
-  // command visable
-  const [commandVisble, setCommandVisble] = useState(false)
-  const joinCommand =
-    "curl https://demeters.s3.amazonaws.com/dmos_install.sh | bash -s b98080bdf63948a3bd49361e024f8ec8"
 
   const [showWarning, setShowWarning] = useState(false)
 
@@ -72,12 +34,14 @@ export default function Page({ params }: { params: { device: string } }) {
         <Box className="flex flex-col space-y-4">
           <Box className="flex justify-start">
             <Button
-              href="/node-provider/workers"
+              onClick={() => {
+                router.back()
+              }}
               variant="text"
               className="hover:scale-105 transition"
               startIcon={<ArrowBackIosNew />}
             >
-              Back to workers
+              Go Back
             </Button>
           </Box>
           <Box className="py-8 flex flex-row justify-between">

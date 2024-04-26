@@ -15,7 +15,7 @@ import {
 } from "@mui/material"
 import { GraphicsCard, GraphicsCardStatus, SvgSpinners12DotsScaleRotate } from "../Icons"
 import { useProjects } from "@/contexts/projects"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import { Circle } from "@mui/icons-material"
 
@@ -36,13 +36,7 @@ export default function WorkersList({
   rowsPerPage: number
   onRowsPerPageChange: (newRowsPerPage: number) => void
 }) {
-  const { projectNodeList, isProjectNodeFetching } = useProjects()
-
-  //table pagination
-  const visibleRows = useMemo(
-    () => projectNodeList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [page, projectNodeList, rowsPerPage]
-  )
+  const { projectNodeList, isProjectNodeFetching, projectNodeListCount } = useProjects()
 
   //table select
   const isSelected = (workerId: string) => rowSelected.indexOf(workerId) !== -1
@@ -64,7 +58,7 @@ export default function WorkersList({
 
   const handleSelectAllRowsClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = visibleRows.map((n: any) => n.deviceId)
+      const newSelected = projectNodeList.map((n: any) => n.deviceId)
       onSelectedRow(newSelected)
       return
     }
@@ -79,8 +73,8 @@ export default function WorkersList({
             <TableCell padding="checkbox">
               <Checkbox
                 color="primary"
-                indeterminate={rowSelected.length > 0 && rowSelected.length < visibleRows.length}
-                checked={visibleRows.length > 0 && rowSelected.length === visibleRows.length}
+                indeterminate={rowSelected.length > 0 && rowSelected.length < projectNodeList.length}
+                checked={projectNodeList.length > 0 && rowSelected.length === projectNodeList.length}
                 onChange={handleSelectAllRowsClick}
                 inputProps={{
                   "aria-label": "select all desserts",
@@ -120,7 +114,7 @@ export default function WorkersList({
           </TableBody>
         )) || (
           <TableBody>
-            {visibleRows.map((node: any, index: number) => {
+            {projectNodeList.map((node: any, index: number) => {
               const isItemSelected = isSelected(node.deviceId)
               return (
                 <TableRow
@@ -203,8 +197,8 @@ export default function WorkersList({
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 20, 50, 100]}
-              count={projectNodeList.length}
+              rowsPerPageOptions={[10, 20, 50, 100]}
+              count={projectNodeListCount}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(event, newPage) => {
@@ -212,7 +206,6 @@ export default function WorkersList({
               }}
               onRowsPerPageChange={(event) => {
                 onRowsPerPageChange(parseInt(event.target.value, 10))
-                onPageChange(0)
               }}
             ></TablePagination>
           </TableRow>

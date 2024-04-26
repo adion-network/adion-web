@@ -61,7 +61,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       if (res.code !== 200) {
         throw new Error(res.msg || "not login")
       }
-      router.push("/node-provider/supplier/list")
+      router.push("/node-provider/workers")
     } catch (error: any) {
       enqueueSnackbar(error.message.toString(), { variant: "error" })
     } finally {

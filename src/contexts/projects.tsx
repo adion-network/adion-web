@@ -16,12 +16,17 @@ export const ProjectProvider = ({ children }: any) => {
   const [hasPorject, setHasProject] = useState(true)
   const [isProjectNodeFetching, setIsProjectNodeFetching] = useState(false)
   const [projectNodeList, setProjectNodeList] = useState<any>([])
+  const [projectNodeListCount, setProjectNodeListCount] = useState<number>(0)
 
   const { userInfo, fetchUserInfo } = useProfile()
   //user project list
   const [userProjectList, setUserProjectList] = useState<any[]>([])
   const [isUserProjectListFetching, setIsUserProjectListFetching] = useState(false)
   const [isCheckingHasProject, setIsCheckingHasProject] = useState(false)
+
+  //agent install command
+  const [agentInstallCommand, setAgentInstallCommand] = useState("")
+  const [isAgentInstallCommandFetching, setIsAgentInstallCommandFetching] = useState(false)
 
   //router
   const router = useRouter()
@@ -42,33 +47,16 @@ export const ProjectProvider = ({ children }: any) => {
     return projectList[index].project
   }
 
-  const fetchUserProjectList = useCallback(async (catalogId: number) => {
+  const fetchUserProjectList = useCallback(async () => {
     setIsUserProjectListFetching(true)
     try {
-      const { data } = await get("/api/v1/user/project/list/?catalog_id=" + catalogId)
+      const { data } = await get("/api/v1/user/project/list/")
       setUserProjectList(data)
       return data
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" })
     } finally {
       setIsUserProjectListFetching(false)
-    }
-  }, [])
-
-  const isUserHasProject = useCallback(async (projectList: any) => {
-    try {
-      setIsCheckingHasProject(true)
-      for (let i = 0; i < projectList.length; i++) {
-        const { data } = await get("/api/v1/user/project/list/?catalog_id=" + projectList[i].id)
-        if (data.length > 0) {
-          return
-        }
-      }
-      setHasProject(false)
-    } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: "error" })
-    } finally {
-      setIsCheckingHasProject(false)
     }
   }, [])
 
@@ -126,13 +114,30 @@ Command: ${res.data}
   }
 
   const fetchProjectNodes = useCallback(
-    async (projectId: number, filterStatus: string = "all", keyword: string = "") => {
+    async ({
+      page,
+      pageSize,
+      status = "all",
+      keyword = "",
+      projectId = 0,
+    }: {
+      page: number
+      pageSize: number
+      status: "all" | "running" | "offline"
+      keyword: string
+      projectId: number
+    }) => {
       try {
         setIsProjectNodeFetching(true)
-        if (!projectId) {
-          throw new Error("project id invaild")
+        let url = `/api/v1/user/node/list/?page=${page + 1}&page_size=${pageSize}&keyword=${keyword}`
+        if (status !== "all") {
+          url += `&status=${status}`
         }
-        const { data } = await get("/api/v1/user/node/list/?project_id=" + projectId)
+        if (projectId > 0) {
+          url += `&project_id=${projectId}`
+        }
+
+        const { data, paging_info } = await get(url)
         if (!data) {
           setProjectNodeList([])
         } else {
@@ -163,18 +168,8 @@ Command: ${res.data}
               region: node.geo,
             }
           })
-          if (filterStatus !== "all") {
-            result = result.filter((item: any) => {
-              return item.status === filterStatus
-            })
-          }
-
-          if (keyword.length > 0) {
-            result = result.filter((item: any) => {
-              return item.deviceId.match(keyword) || item.ip === keyword
-            })
-          }
           setProjectNodeList(result)
+          setProjectNodeListCount(paging_info.count)
         }
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" })
@@ -184,6 +179,20 @@ Command: ${res.data}
     },
     []
   )
+
+  const fetchUserAgentInstallCommand = useCallback(async () => {
+    try {
+      setIsAgentInstallCommandFetching(true)
+      const { data } = await get("/api/v1/user/agent/install/")
+      if (data) {
+        setAgentInstallCommand(data)
+      }
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsAgentInstallCommandFetching(false)
+    }
+  }, [])
 
   const clearProjectData = useCallback(() => {
     setHasProject(true)
@@ -209,7 +218,6 @@ Command: ${res.data}
         isJoiningProject,
         fetchUserProjectList,
         userProjectList,
-        isUserHasProject,
         hasPorject,
         fetchProjectNodes,
         projectNodeList,
@@ -218,6 +226,10 @@ Command: ${res.data}
         switchProject,
         isCheckingHasProject,
         clearProjectData,
+        fetchUserAgentInstallCommand,
+        agentInstallCommand,
+        isAgentInstallCommandFetching,
+        projectNodeListCount,
       }}
     >
       {children}

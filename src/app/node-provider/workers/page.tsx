@@ -11,30 +11,13 @@ import WarningDialog from "@/components/node-provider/WarningDialog"
 import WorkersList from "@/components/node-provider/WorkersList"
 
 export default function List() {
-  const currentNodeProjectId = 7
-  const {
-    projectList,
-    userProjectList,
-    isProjectListFetching,
-    isUserProjectListFetching,
-    fetchProjectList,
-    fetchUserProjectList,
-    isCheckingHasProject,
-    fetchProjectNodes,
-    projectNodeList,
-    isProjectNodeFetching,
-    setProjectNodeList,
-  } = useProjects()
+  const { fetchProjectNodes, isProjectNodeFetching } = useProjects()
   const router = useRouter()
-
-  useEffect(() => {
-    fetchProjectNodes(currentNodeProjectId)
-  }, [])
 
   //table related
   const [rowSelected, setRowSelected] = useState<string[]>([])
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
 
   //filter
   const [currentFilter, setCurrentFilter] = useState("all")
@@ -48,9 +31,22 @@ export default function List() {
   const handleChangeFilter = async (event: any, newAlignment: string) => {
     setRowSelected([])
     setCurrentFilter(newAlignment)
-    fetchProjectNodes(currentNodeProjectId, newAlignment, keyword)
-    setRowsPerPage(5)
+    fetchProjectNodes({ page: page, pageSize: rowsPerPage, status: newAlignment, keyword: keyword })
+    setRowsPerPage(10)
     setPage(0)
+  }
+
+  const handlePageChange = async (newPage: number) => {
+    setRowSelected([])
+    setPage(newPage)
+    fetchProjectNodes({ page: newPage, pageSize: rowsPerPage, status: currentFilter, keyword: keyword })
+  }
+
+  const handlePageSizeChange = async (newPageSize: number) => {
+    setRowSelected([])
+    setPage(0)
+    setRowsPerPage(newPageSize)
+    fetchProjectNodes({ page: 0, pageSize: newPageSize, status: currentFilter, keyword: keyword })
   }
 
   //delete workers
@@ -62,8 +58,10 @@ export default function List() {
 
   // command visable
   const [commandVisble, setCommandVisble] = useState(false)
-  const joinCommand =
-    "curl https://demeters.s3.amazonaws.com/dmos_install.sh | bash -s b98080bdf63948a3bd49361e024f8ec8"
+
+  useEffect(() => {
+    fetchProjectNodes({ page: page, pageSize: rowsPerPage })
+  }, [])
 
   return (
     <Fragment>
@@ -98,7 +96,7 @@ export default function List() {
                 commandVisble ? " max-h-60 overflow-y-scroll" : "max-h-0 overflow-y-hidden"
               } duration-300`}
             >
-              <CommandContent script={joinCommand}></CommandContent>
+              <CommandContent></CommandContent>
             </Box>
             <Box className="flex flex-row justify-between">
               <Box className="flex justify-start space-x-4 w-full">
@@ -128,10 +126,6 @@ export default function List() {
                     <Circle className="text-green-600 text-sm mr-2" />
                     Running
                   </ToggleButton>
-                  <ToggleButton value="pending" className="font-semibold px-6">
-                    <Circle className="text-yellow-600 text-sm mr-2" />
-                    Pending
-                  </ToggleButton>
                   <ToggleButton value="offline" className="font-semibold px-6 rounded-r-xl">
                     <Circle className="text-red-600 text-sm mr-2" />
                     Offline
@@ -154,9 +148,9 @@ export default function List() {
                 rowSelected={rowSelected}
                 onSelectedRow={setRowSelected}
                 page={page}
-                onPageChange={setPage}
+                onPageChange={handlePageChange}
                 rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={setRowsPerPage}
+                onRowsPerPageChange={handlePageSizeChange}
               ></WorkersList>
             </Box>
           </Box>
