@@ -9,13 +9,14 @@ import Header from "@/components/node-provider/Header"
 import CommandContent from "@/components/node-provider/CommandContent"
 import WarningDialog from "@/components/node-provider/WarningDialog"
 import WorkersList from "@/components/node-provider/WorkersList"
+import { enqueueSnackbar } from "notistack"
 
 export default function List() {
-  const { fetchProjectNodes, isProjectNodeFetching } = useProjects()
+  const { fetchProjectNodes, isProjectNodeFetching, removeNodes, isRemovingNode } = useProjects()
   const router = useRouter()
 
   //table related
-  const [rowSelected, setRowSelected] = useState<string[]>([])
+  const [rowSelected, setRowSelected] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
@@ -51,9 +52,15 @@ export default function List() {
 
   //delete workers
   const [showDeleteWarning, setShowDeleteWaning] = useState(false)
-  const handleDeleteWorkers = async () => {
-    //todo: delete
-    console.log(rowSelected)
+  const handleDeleteWorkers = () => {
+    removeNodes(rowSelected.map((item) => item.deviceId))
+      .then(() => {
+        setShowDeleteWaning(false)
+        fetchProjectNodes({ page: page, pageSize: rowsPerPage, status: currentFilter, keyword: keyword })
+      })
+      .catch((error: any) => {
+        console.log(error)
+      })
   }
 
   // command visable
@@ -70,6 +77,7 @@ export default function List() {
         onOk={handleDeleteWorkers}
         onCancel={() => setShowDeleteWaning(false)}
         title="Delete Device"
+        okLoading={isRemovingNode}
         description={`Are you sure you want to delete ${rowSelected.length} device(s)? This action cannot be undone.`}
         okText="DELETE"
       ></WarningDialog>

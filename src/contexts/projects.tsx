@@ -4,6 +4,7 @@ import { post, get, sendMessageToDiscord } from "@/app/api/request"
 import { useState, useCallback, createContext, useContext } from "react"
 import useProfile from "./profile"
 import { useRouter } from "next/navigation"
+import { error } from "console"
 
 const ProjectContext = createContext({} as any)
 
@@ -27,6 +28,16 @@ export const ProjectProvider = ({ children }: any) => {
   //agent install command
   const [agentInstallCommand, setAgentInstallCommand] = useState("")
   const [isAgentInstallCommandFetching, setIsAgentInstallCommandFetching] = useState(false)
+
+  //node detail
+  const [nodeDetail, setNodeDetail] = useState<any>()
+  const [isNodeDetailFetching, setIsNodeDetailFetching] = useState(false)
+
+  //nodes to operation
+  const [selectedNodes, setSelectedNodes] = useState<any[]>([])
+
+  //remove node
+  const [isRemovingNode, setIsRemovingNode] = useState(false)
 
   //router
   const router = useRouter()
@@ -60,20 +71,27 @@ export const ProjectProvider = ({ children }: any) => {
     }
   }, [])
 
-  const joinProject = async (projectInfo: any, user: string) => {
+  const joinProject = async (projectInfo: any, user: string, deviceList: any[]) => {
     try {
       setIsJoiningProject(true)
       if (!projectInfo?.id) {
         throw new Error("project id invaild")
       }
 
-      const res = await post("/api/v1/user/project/join", { project_id: projectInfo.id })
+      if (deviceList.length === 0) {
+        throw new Error("no device selected")
+      }
+
+      const requestParam = {
+        project_id: projectInfo.id,
+        device_list: deviceList.map((item) => item.deviceId),
+      }
+
+      const res = await post("/api/v1/user/project/join", requestParam)
       if (res.code === 200) {
-        await sendMessageToDiscord(`
-User: ${user} requested to join project: ${projectInfo.name}, projectId: ${projectInfo.id}
-Command: ${res.data}
-          `)
-        router.push("/node-provider/supplier/list")
+        enqueueSnackbar("Join project success", { variant: "success" })
+        setSelectedNodes([])
+        router.push("/node-provider/app-chain?projectId=" + projectInfo?.id)
       } else {
         throw new Error(res.msg)
       }
@@ -84,25 +102,28 @@ Command: ${res.data}
     }
   }
 
-  const switchProject = async (fromProject: any, toProject: any, user: String) => {
+  const switchProject = async (fromProject: any, toProject: any, user: String, deviceList: any[]) => {
     try {
       setIsJoiningProject(true)
       if (!fromProject?.id || !toProject?.id) {
         throw new Error("project id invaild")
       }
 
-      const res = await post("/api/v1/user/project/switch/", {
+      if (deviceList.length === 0) {
+        throw new Error("no device selected")
+      }
+
+      const switchParams = {
         dest_project_id: toProject.id,
         src_project_id: fromProject.id,
-      })
+        device_list: deviceList.map((item) => item.deviceId),
+      }
+
+      const res = await post("/api/v1/user/project/switch/", switchParams)
       if (res.code === 200) {
-        await sendMessageToDiscord(`
-User: ${user} requested to switch project: 
-  From project: ${fromProject.name}, Id: ${fromProject.id}
-  To project: ${toProject.name}, Id: ${toProject.id}
-Command: ${res.data}
-          `)
-        router.push("/node-provider/supplier/list")
+        enqueueSnackbar("Switch project success", { variant: "success" })
+        setSelectedNodes([])
+        router.push("/node-provider/app-chain?projectId=" + toProject.id)
       } else {
         throw new Error(res.msg)
       }
@@ -194,6 +215,46 @@ Command: ${res.data}
     }
   }, [])
 
+  const fetchNodeDetail = useCallback(async (deviceId: string) => {
+    try {
+      if (!deviceId) {
+        enqueueSnackbar("device id invaild", { variant: "error" })
+      }
+      setIsNodeDetailFetching(true)
+      const res = await get("/api/v1/user/node/detail/?device_id=" + deviceId)
+      if (res.code !== 200) {
+        throw new Error(res.msg)
+      }
+      setNodeDetail(res.data)
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsNodeDetailFetching(false)
+    }
+  }, [])
+
+  const removeNodes = useCallback(async (deviceIds: string[]) => {
+    try {
+      if (deviceIds.length === 0) {
+        enqueueSnackbar("device id invaild", { variant: "error" })
+      }
+      setIsRemovingNode(true)
+      const res = await post("/api/v1/user/node/remove", { device_list: deviceIds })
+      if (res.code !== 200) {
+        throw new Error(res.msg)
+      }
+      enqueueSnackbar(`remove ${deviceIds.length} node(s) success`, { variant: "success" })
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" })
+    } finally {
+      setIsRemovingNode(false)
+    }
+  }, [])
+
+  function sleep(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds))
+  }
+
   const clearProjectData = useCallback(() => {
     setHasProject(true)
     setProjectList([])
@@ -230,6 +291,13 @@ Command: ${res.data}
         agentInstallCommand,
         isAgentInstallCommandFetching,
         projectNodeListCount,
+        fetchNodeDetail,
+        isNodeDetailFetching,
+        nodeDetail,
+        selectedNodes,
+        setSelectedNodes,
+        removeNodes,
+        isRemovingNode,
       }}
     >
       {children}

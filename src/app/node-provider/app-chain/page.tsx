@@ -6,24 +6,33 @@ import Header from "@/components/node-provider/Header"
 import { ConnectToChain, NoAppChain } from "@/components/node-provider/Icons"
 import WorkersList from "@/components/node-provider/WorkersList"
 import { UilExchange } from "@/components/Icons"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function List() {
+  const router = useRouter()
+  const requestParams = useSearchParams()
   const [currentProject, setCurrentProject] = useState<any>({})
-  const { userProjectList, fetchUserProjectList, isUserProjectListFetching, fetchProjectNodes } = useProjects()
+  const {
+    userProjectList,
+    fetchUserProjectList,
+    isUserProjectListFetching,
+    fetchProjectNodes,
+    selectedNodes,
+    setSelectedNodes,
+  } = useProjects()
 
   //table related
-  const [rowSelected, setRowSelected] = useState<string[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const handlePageChange = async (newPage: number) => {
-    setRowSelected([])
+    setSelectedNodes([])
     setPage(newPage)
     fetchProjectNodes({ page: newPage, pageSize: rowsPerPage, projectId: currentProject.project.id })
   }
 
   const handlePageSizeChange = async (newPageSize: number) => {
-    setRowSelected([])
+    setSelectedNodes([])
     setPage(0)
     setRowsPerPage(newPageSize)
     fetchProjectNodes({ page: 0, pageSize: newPageSize, projectId: currentProject.project.id })
@@ -36,12 +45,17 @@ export default function List() {
 
   useEffect(() => {
     fetchUserProjectList()
-    fetchProjectNodes({ page: page, pageSize: rowsPerPage, projectId: 0 })
   }, [])
 
   useEffect(() => {
     if (Object.keys(currentProject).length === 0 && userProjectList.length > 0) {
-      setCurrentProject(userProjectList[0])
+      const _id = Number(requestParams.get("projectId")) || 0
+      if (_id > 0) {
+        setCurrentProject(userProjectList.find((item: any) => item.project.id === _id))
+      } else {
+        setCurrentProject(userProjectList[0])
+      }
+      fetchProjectNodes({ page: page, pageSize: rowsPerPage, projectId: _id })
     }
   }, [userProjectList])
 
@@ -63,7 +77,7 @@ export default function List() {
               props.active ? "bg-gray-100/20 border-transparent" : " border-gray-100/20 hover:bg-gray-100/10"
             }`}
           >
-            {props.isHot && <Box className="absolute px-10 bg-red-500 -rotate-45 z-10 -left-8 top-3">Hot!</Box>}
+            {props.isHot && <Box className="absolute px-5 bg-red-500 rotate-45 z-10 -right-4 top-2 text-xs">Hot!</Box>}
             <Box className="flex flex-row items-end">
               <Box className={`w-5/12`}>{props.logo}</Box>
               <Box className="w-7/12 flex justify-between">
@@ -162,7 +176,12 @@ export default function List() {
             <Button
               variant="contained"
               startIcon={currentProject?.project?.id === 0 ? <ConnectToChain /> : <UilExchange />}
-              disabled={rowSelected.length === 0}
+              onClick={() => {
+                currentProject?.project?.id === 0
+                  ? router.push("/node-provider/app-chain/join")
+                  : router.push("/node-provider/app-chain/switch?from_project_id=" + currentProject?.project?.id)
+              }}
+              disabled={selectedNodes.length === 0}
             >
               {" "}
               {currentProject?.project?.id === 0 ? "Join App Chain" : "Switch App Chain"}
@@ -171,8 +190,8 @@ export default function List() {
           <Divider className="w-full"></Divider>
         </Box>
         <WorkersList
-          rowSelected={rowSelected}
-          onSelectedRow={setRowSelected}
+          rowSelected={selectedNodes}
+          onSelectedRow={setSelectedNodes}
           page={page}
           onPageChange={handlePageChange}
           rowsPerPage={rowsPerPage}

@@ -15,7 +15,6 @@ import {
 } from "@mui/material"
 import { GraphicsCard, GraphicsCardStatus, SvgSpinners12DotsScaleRotate } from "../Icons"
 import { useProjects } from "@/contexts/projects"
-import { useMemo, useState } from "react"
 import Link from "next/link"
 import { Circle } from "@mui/icons-material"
 
@@ -29,7 +28,7 @@ export default function WorkersList({
   rowsPerPage,
   onRowsPerPageChange,
 }: {
-  rowSelected: string[]
+  rowSelected: any[]
   onSelectedRow: (rowSelected: string[]) => void
   page: number
   onPageChange: (newPage: number) => void
@@ -39,13 +38,13 @@ export default function WorkersList({
   const { projectNodeList, isProjectNodeFetching, projectNodeListCount } = useProjects()
 
   //table select
-  const isSelected = (workerId: string) => rowSelected.indexOf(workerId) !== -1
+  const isSelected = (workerId: string) => rowSelected.findIndex((item) => item.deviceId === workerId) !== -1
 
-  const handleRowClick = (event: React.MouseEvent<unknown>, deviceId: string) => {
-    const selectedIndex = rowSelected.indexOf(deviceId)
-    let newSelected: string[] = []
+  const handleRowClick = (event: React.MouseEvent<unknown>, node: any) => {
+    const selectedIndex = rowSelected.findIndex((item) => item.deviceId === node.deviceId)
+    let newSelected: any[] = []
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(rowSelected, deviceId)
+      newSelected = newSelected.concat(rowSelected, node)
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(rowSelected.slice(1))
     } else if (selectedIndex === rowSelected.length - 1) {
@@ -58,8 +57,7 @@ export default function WorkersList({
 
   const handleSelectAllRowsClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = projectNodeList.map((n: any) => n.deviceId)
-      onSelectedRow(newSelected)
+      onSelectedRow(projectNodeList)
       return
     }
     onSelectedRow([])
@@ -121,7 +119,7 @@ export default function WorkersList({
                   key={`tbl-content-${index}`}
                   hover
                   selected={isItemSelected}
-                  onClick={(event) => handleRowClick(event, node.deviceId)}
+                  onClick={(event) => handleRowClick(event, node)}
                   role="checkbox"
                   className="cursor-pointer"
                 >

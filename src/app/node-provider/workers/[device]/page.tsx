@@ -1,36 +1,80 @@
 "use client"
 import { GraphicsCard, GraphicsCardStatus } from "@/components/Icons"
 import { ArrowBackIosNew, Circle, Delete } from "@mui/icons-material"
-import { Box, Button, Typography, createSvgIcon, Divider } from "@mui/material"
-import { Fragment, useState } from "react"
+import { Box, Button, Typography, createSvgIcon, Divider, Backdrop, CircularProgress } from "@mui/material"
+import { Fragment, ReactNode, useEffect, useMemo, useState } from "react"
 import Header from "@/components/node-provider/Header"
-import { LogosUbuntu } from "@/components/node-provider/Icons"
+import { LogosUbuntu, NoAppChain } from "@/components/node-provider/Icons"
 import WarningDialog from "@/components/node-provider/WarningDialog"
 import { useRouter } from "next/navigation"
+import { useProjects } from "@/contexts/projects"
+import { filesize } from "filesize"
 
 const GraphicsCardStatusIcon = createSvgIcon(GraphicsCardStatus({}), "GraphicsCardStatusIcon")
 
 export default function Page({ params }: { params: { device: string } }) {
   const router = useRouter()
+  const { fetchNodeDetail, isNodeDetailFetching, nodeDetail, removeNodes, isRemovingNode } = useProjects()
+  const [showWarning, setShowWarning] = useState(false)
+
   //delete workers
-  const handleDeleteWorkers = async () => {
-    console.log("111")
+
+  const handleDeleteWorker = () => {
+    removeNodes([params.device])
+      .then(() => {
+        setShowWarning(false)
+        router.push("/node-provider/workers")
+      })
+      .catch((error: any) => {
+        console.log(error)
+      })
   }
 
-  const [showWarning, setShowWarning] = useState(false)
+  useEffect(() => {
+    fetchNodeDetail([params.device])
+  }, [])
+
+  const gpuStatus = useMemo(() => {
+    const gpu_status = {
+      y: 0,
+      n: 0,
+      model: [] as any[],
+    }
+    const modelCount: any = {}
+    if (nodeDetail?.gpu) {
+      nodeDetail.gpu.map((g: any) => {
+        g.status === "ok" ? gpu_status.y++ : gpu_status.n++
+        if (modelCount[g.product] === undefined) {
+          modelCount[g.product] = 0
+        }
+        modelCount[g.product]++
+      })
+      Object.keys(modelCount).map((k) => {
+        gpu_status.model.push({
+          model: k,
+          count: modelCount[k],
+        })
+      })
+    }
+    return gpu_status
+  }, [nodeDetail])
 
   return (
     <Fragment>
       <WarningDialog
         open={showWarning}
-        onOk={handleDeleteWorkers}
+        onOk={handleDeleteWorker}
         onCancel={() => setShowWarning(false)}
         title="Delete Device"
         description={`Are you sure you want to delete this device? This action cannot be undone.`}
         okText="DELETE"
+        okLoading={isRemovingNode}
       ></WarningDialog>
       <Header />
-      <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
+      <Backdrop open={isNodeDetailFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <CircularProgress />
+      </Backdrop>
+      <Box hidden={isNodeDetailFetching} className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
         <Box className="flex flex-col space-y-4">
           <Box className="flex justify-start">
             <Button
@@ -47,7 +91,7 @@ export default function Page({ params }: { params: { device: string } }) {
           <Box className="py-8 flex flex-row justify-between">
             <Box className="flex flex-row items-center space-x-3">
               <Typography className="font-semibold 2xl:text-4xl md:text-3xl">
-                <span className="text-gray-100/50">IP:</span> 192.168.0.1
+                <span className="text-gray-100/50">IP:</span> {nodeDetail?.ip}
               </Typography>
               <LogosUbuntu className="2xl:text-4xl md:text-3xl"></LogosUbuntu>
             </Box>
@@ -68,38 +112,45 @@ export default function Page({ params }: { params: { device: string } }) {
           <Box>
             <Typography className="text-gray-100/50">Up For: 2 days 09:40:12</Typography>
           </Box>
-          <Box className="flex justify-between pb-8">
+          <Box className="flex justify-between pb-8 items-start">
             <Box className="flex flex-row gap-x-4">
               <Typography className="flex items-center">
-                <Circle className="text-green-600 text-sm mr-2" />
-                Running
+                {nodeDetail?.status === "running" && <Circle className="text-green-600 text-sm mr-2" />}
+                {nodeDetail?.status === "offline" && <Circle className="text-red-600 text-sm mr-2" />}
+                {nodeDetail?.status.charAt(0).toUpperCase() + nodeDetail?.status.slice(1)}
               </Typography>
               <Typography>
                 <span className="text-gray-100/50">DiviceId: </span>
                 {params.device}
               </Typography>
             </Box>
-            <Box className="flex flex-row gap-x-6">
-              <Box className="flex justify-center items-center">
-                <GraphicsCard className="text-base mr-1" />
-                <Typography>IO.net</Typography>
-              </Box>
+            <Box className="flex flex-row gap-x-6 items-start">
+              {!nodeDetail?.project && (
+                <Box className="flex items-center text-gray-100/50">
+                  <NoAppChain className="text-base mr-1" />
+                  <Typography>No Project</Typography>
+                </Box>
+              )}
               <Typography>
                 <span className="text-gray-100/50">Region: </span>
-                US
+                {nodeDetail?.geo}
               </Typography>
               <Box className="flex flex-row gap-x-2">
                 <span className="text-gray-100/50">GPU Status: </span>
                 <Box className="flex space-x-1 justify-center gap-x-1">
                   <GraphicsCardStatusIcon className="text-green-600"></GraphicsCardStatusIcon>
-                  <Typography className="text-base">4</Typography>
+                  <Typography className="text-base">{gpuStatus.y}</Typography>
                   <GraphicsCardStatusIcon color="disabled"></GraphicsCardStatusIcon>
-                  <Typography className="text-base">0</Typography>
+                  <Typography className="text-base">{gpuStatus.n}</Typography>
                 </Box>
               </Box>
-              <Box className="flex items-center">
-                x4
-                <GraphicsCard className="text-base text-green-600 mx-1" /> RTX 2080Ti
+              <Box className="flex justify-center flex-col space-y-1">
+                {gpuStatus.model.map((k) => (
+                  <Box className="flex items-center">
+                    x{k.count}
+                    <GraphicsCard className="text-base text-green-600 mx-1" /> {k.model}
+                  </Box>
+                ))}
               </Box>
             </Box>
           </Box>
@@ -115,28 +166,52 @@ export default function Page({ params }: { params: { device: string } }) {
               <Typography variant="body1">0 GPU Pending</Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
-              <Typography variant="subtitle1">GPU</Typography>
-              <Typography variant="body1">4 GPU Available</Typography>
-              <Typography variant="body1">4 GPU Active</Typography>
-              <Typography variant="body1">0 GPU Pending</Typography>
+              <Typography variant="subtitle1">Memory</Typography>
+              <Typography variant="body1" className="text-[#40B883]">
+                {filesize(nodeDetail?.memory?.capacity || 0)} Available
+              </Typography>
+              <Typography variant="body1" className="text-[#FF8A65]">
+                {filesize(nodeDetail?.memory?.used || 0)} Active
+              </Typography>
+              <Typography variant="body1" className="text-[#FAAE1A]">
+                {nodeDetail?.memory?.used_percent?.toFixed(2) || 0}% Usage rate
+              </Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
-              <Typography variant="subtitle1">GPU</Typography>
-              <Typography variant="body1">4 GPU Available</Typography>
-              <Typography variant="body1">4 GPU Active</Typography>
-              <Typography variant="body1">0 GPU Pending</Typography>
+              <Typography variant="subtitle1">Storage</Typography>
+              <Typography variant="body1" className="text-[#40B883]">
+                {filesize(nodeDetail?.memory?.capacity || 0)} Available
+              </Typography>
+              <Typography variant="body1" className="text-[#FF8A65]">
+                {filesize(nodeDetail?.memory?.used || 0)} Active
+              </Typography>
+              <Typography variant="body1" className="text-[#FAAE1A]">
+                {nodeDetail?.memory?.used_percent?.toFixed(2) || 0}% Usage rate
+              </Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
-              <Typography variant="subtitle1">GPU</Typography>
-              <Typography variant="body1">4 GPU Available</Typography>
-              <Typography variant="body1">4 GPU Active</Typography>
-              <Typography variant="body1">0 GPU Pending</Typography>
+              <Typography variant="subtitle1">Bandwidth</Typography>
+              <Typography variant="body1" className="text-[#40B883]">
+                {filesize(nodeDetail?.memory?.capacity || 0)} Available
+              </Typography>
+              <Typography variant="body1" className="text-[#FF8A65]">
+                {filesize(nodeDetail?.memory?.used || 0)} Active
+              </Typography>
+              <Typography variant="body1" className="text-[#FAAE1A]">
+                {nodeDetail?.memory?.used_percent?.toFixed(2) || 0}% Usage rate
+              </Typography>
             </Box>
             <Box className="col-span-2 pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
-              <Typography variant="subtitle1">GPU</Typography>
-              <Typography variant="body1">4 GPU Available</Typography>
-              <Typography variant="body1">Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz</Typography>
-              <Typography variant="body1">0 GPU Pending</Typography>
+              <Typography variant="subtitle1">CPU</Typography>
+              <Typography variant="body1" className="text-[#40B883]">
+                {nodeDetail?.cpu_core || 0} Cores
+              </Typography>
+              <Typography variant="body1" className="text-[#FF8A65]">
+                {nodeDetail?.cpu?.model || ""}
+              </Typography>
+              <Typography variant="body1" className="text-[#FAAE1A]">
+                {nodeDetail?.cpu?.mhz?.toFixed(2) || 0} MHz
+              </Typography>
             </Box>
           </Box>
         </Box>

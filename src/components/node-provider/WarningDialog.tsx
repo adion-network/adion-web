@@ -1,4 +1,5 @@
 import { WarningAmberOutlined } from "@mui/icons-material"
+import { LoadingButton } from "@mui/lab"
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Box, Typography } from "@mui/material"
 import { ReactNode } from "react"
 
@@ -10,6 +11,7 @@ export default function WarningDialog(props: {
   okText?: string
   cancelText?: string
   onCancel: () => void
+  okLoading?: boolean
 }) {
   return (
     <Dialog open={props.open} maxWidth="md">
@@ -21,9 +23,9 @@ export default function WarningDialog(props: {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" color="error" onClick={props.onOk}>
+        <LoadingButton loading={props.okLoading} variant="outlined" color="error" onClick={props.onOk}>
           {props.okText || "OK"}
-        </Button>
+        </LoadingButton>
         <Button variant="text" onClick={props.onCancel}>
           {props.cancelText || "CANCEL"}
         </Button>
