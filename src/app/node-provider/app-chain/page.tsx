@@ -61,7 +61,7 @@ export default function List() {
 
   const ChainSummary = useMemo(
     () =>
-      (props: {
+      function ChainSummary(props: {
         logo: ReactNode
         workers: number
         gpus: number
@@ -69,7 +69,7 @@ export default function List() {
         active?: boolean
         isHot?: boolean
         onClick: () => void
-      }) => {
+      }) {
         return (
           <Box
             onClick={props.onClick}

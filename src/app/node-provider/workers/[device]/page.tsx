@@ -145,8 +145,8 @@ export default function Page({ params }: { params: { device: string } }) {
                 </Box>
               </Box>
               <Box className="flex justify-center flex-col space-y-1">
-                {gpuStatus.model.map((k) => (
-                  <Box className="flex items-center">
+                {gpuStatus.model.map((k, index: number) => (
+                  <Box className="flex items-center" key={`gpu-status-${index}`}>
                     x{k.count}
                     <GraphicsCard className="text-base text-green-600 mx-1" /> {k.model}
                   </Box>
