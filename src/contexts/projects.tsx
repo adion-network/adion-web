@@ -140,13 +140,13 @@ export const ProjectProvider = ({ children }: any) => {
       pageSize,
       status = "all",
       keyword = "",
-      projectId = 0,
+      projectId = undefined,
     }: {
       page: number
       pageSize: number
       status: "all" | "running" | "offline"
       keyword: string
-      projectId: number
+      projectId: number | undefined
     }) => {
       try {
         setIsProjectNodeFetching(true)
