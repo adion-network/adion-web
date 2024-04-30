@@ -66,8 +66,8 @@ export default function Page({ params }: { params: { device: string } }) {
         onOk={handleDeleteWorker}
         onCancel={() => setShowWarning(false)}
         title="Delete Device"
-        description={`Are you sure you want to delete this device? This action cannot be undone.`}
-        okText="DELETE"
+        description={`Are you sure you want to delete this device? This action cannot be revert.`}
+        okText="Delete"
         okLoading={isRemovingNode}
       ></WarningDialog>
       <Header />

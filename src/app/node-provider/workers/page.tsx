@@ -78,8 +78,8 @@ export default function List() {
         onCancel={() => setShowDeleteWaning(false)}
         title="Delete Device"
         okLoading={isRemovingNode}
-        description={`Are you sure you want to delete ${rowSelected.length} device(s)? This action cannot be undone.`}
-        okText="DELETE"
+        description={`Are you sure you want to delete ${rowSelected.length} device(s)? This action cannot be revert.`}
+        okText="Delete"
       ></WarningDialog>
       <Header />
       <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
