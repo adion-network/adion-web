@@ -1,5 +1,6 @@
 "use client"
 import {
+  Avatar,
   Box,
   Checkbox,
   Table,
@@ -17,6 +18,7 @@ import { GraphicsCard, GraphicsCardStatus, SvgSpinners12DotsScaleRotate } from "
 import { useProjects } from "@/contexts/projects"
 import Link from "next/link"
 import { Circle } from "@mui/icons-material"
+import { NoAppChain } from "./Icons"
 
 const GraphicsCardStatusIcon = createSvgIcon(GraphicsCardStatus({}), "GraphicsCardStatusIcon")
 
@@ -183,8 +185,15 @@ export default function WorkersList({
                   </TableCell>
                   <TableCell align="center" className="text-base">
                     <Box className="flex justify-center items-center">
-                      <GraphicsCard className="text-base mr-1" />
-                      <Typography>IO.net</Typography>
+                      {node?.projectInfo ? (
+                        <Avatar className="mr-1" src={node?.projectInfo?.logo} sx={{ width: 20, height: 20 }}>
+                          {node?.projectInfo?.name}{" "}
+                        </Avatar>
+                      ) : (
+                        <NoAppChain className="text-base mr-1" />
+                      )}
+
+                      <Typography>{node?.projectInfo?.name || "No App Chain"}</Typography>
                     </Box>
                   </TableCell>
                 </TableRow>

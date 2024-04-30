@@ -2,7 +2,7 @@
 import { GraphicsCard, GraphicsCardStatus } from "@/components/Icons"
 import { ArrowBackIosNew, Circle, Delete } from "@mui/icons-material"
 import { Box, Button, Typography, createSvgIcon, Divider, Backdrop, CircularProgress } from "@mui/material"
-import { Fragment, ReactNode, useEffect, useMemo, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import Header from "@/components/node-provider/Header"
 import { LogosUbuntu, NoAppChain } from "@/components/node-provider/Icons"
 import WarningDialog from "@/components/node-provider/WarningDialog"
@@ -18,7 +18,6 @@ export default function Page({ params }: { params: { device: string } }) {
   const [showWarning, setShowWarning] = useState(false)
 
   //delete workers
-
   const handleDeleteWorker = () => {
     removeNodes([params.device])
       .then(() => {
@@ -57,6 +56,48 @@ export default function Page({ params }: { params: { device: string } }) {
       })
     }
     return gpu_status
+  }, [nodeDetail])
+
+  function TimeElapsed({ createdAt }: { createdAt: number }) {
+    const [currentTime, setCurrentTime] = useState(Date.now())
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(Date.now())
+      }, 1000) // Update every second
+
+      return () => clearInterval(interval) // Clean up the interval on component unmount
+    }, [])
+
+    function formatDuration(createdAt: number, currentTime: number) {
+      const milliseconds = currentTime - createdAt
+      let seconds = Math.floor(milliseconds / 1000)
+      let minutes = Math.floor(seconds / 60)
+      let hours = Math.floor(minutes / 60)
+      let days = Math.floor(hours / 24)
+
+      seconds = seconds % 60
+      minutes = minutes % 60
+      hours = hours % 24
+
+      return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+    }
+
+    return <span>{formatDuration(createdAt * 1000, currentTime)}</span>
+  }
+
+  const storageDisplay = useMemo(() => {
+    const storageDisplay = {
+      totalSize: 0,
+    }
+    if (nodeDetail?.disk) {
+      nodeDetail.disk.map((d: any) => {
+        if (d.name.startsWith("sd")) {
+          storageDisplay.totalSize += d.total
+        }
+      })
+    }
+    return storageDisplay
   }, [nodeDetail])
 
   return (
@@ -109,8 +150,8 @@ export default function Page({ params }: { params: { device: string } }) {
             <Typography>Attributes</Typography>
             <Divider className="py-2"></Divider>
           </Box>
-          <Box>
-            <Typography className="text-gray-100/50">Up For: 2 days 09:40:12</Typography>
+          <Box className="text-gray-100/50">
+            Up For: <TimeElapsed createdAt={nodeDetail?.created_at} />
           </Box>
           <Box className="flex justify-between pb-8 items-start">
             <Box className="flex flex-row gap-x-4">
@@ -161,9 +202,15 @@ export default function Page({ params }: { params: { device: string } }) {
           <Box className="grid grid-flow-row-dense grid-cols-6 gap-4 w-full">
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
               <Typography variant="subtitle1">GPU</Typography>
-              <Typography variant="body1">4 GPU Available</Typography>
-              <Typography variant="body1">4 GPU Active</Typography>
-              <Typography variant="body1">0 GPU Pending</Typography>
+              <Typography variant="body1" className="text-[#40B883]">
+                {filesize(nodeDetail?.gpu[0]?.memory || 0)} Memory
+              </Typography>
+              <Typography variant="body1" className="text-[#FF8A65]">
+                {nodeDetail?.gpu[0]?.temperature || "-"} Temperature
+              </Typography>
+              <Typography variant="body1" className="text-[#FAAE1A]">
+                {nodeDetail?.gpu[0]?.fan_speed || "-"} Fan speed
+              </Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
               <Typography variant="subtitle1">Memory</Typography>
@@ -180,13 +227,7 @@ export default function Page({ params }: { params: { device: string } }) {
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
               <Typography variant="subtitle1">Storage</Typography>
               <Typography variant="body1" className="text-[#40B883]">
-                {filesize(nodeDetail?.memory?.capacity || 0)} Available
-              </Typography>
-              <Typography variant="body1" className="text-[#FF8A65]">
-                {filesize(nodeDetail?.memory?.used || 0)} Active
-              </Typography>
-              <Typography variant="body1" className="text-[#FAAE1A]">
-                {nodeDetail?.memory?.used_percent?.toFixed(2) || 0}% Usage rate
+                {filesize(storageDisplay.totalSize || 0)} Total
               </Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">

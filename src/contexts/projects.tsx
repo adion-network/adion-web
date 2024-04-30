@@ -140,13 +140,13 @@ export const ProjectProvider = ({ children }: any) => {
       pageSize,
       status = "all",
       keyword = "",
-      projectId = 0,
+      projectId = undefined,
     }: {
       page: number
       pageSize: number
       status: "all" | "running" | "offline"
       keyword: string
-      projectId: number
+      projectId: number | undefined
     }) => {
       try {
         setIsProjectNodeFetching(true)
@@ -154,7 +154,7 @@ export const ProjectProvider = ({ children }: any) => {
         if (status !== "all") {
           url += `&status=${status}`
         }
-        if (projectId > 0) {
+        if (projectId !== undefined) {
           url += `&project_id=${projectId}`
         }
 
@@ -187,6 +187,7 @@ export const ProjectProvider = ({ children }: any) => {
                 return { model: k, count: gpuModel[k] }
               }),
               region: node.geo,
+              projectInfo: node.project,
             }
           })
           setProjectNodeList(result)
