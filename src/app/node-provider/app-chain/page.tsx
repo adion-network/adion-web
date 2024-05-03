@@ -49,11 +49,13 @@ export default function List() {
 
   useEffect(() => {
     if (Object.keys(currentProject).length === 0 && userProjectList.length > 0) {
-      const _id = Number(requestParams.get("projectId")) || 0
+      let _id = Number(requestParams.get("projectId")) || 0
       if (_id > 0) {
         setCurrentProject(userProjectList.find((item: any) => item.project.id === _id))
       } else {
-        setCurrentProject(userProjectList[0])
+        const curProject = userProjectList.find((p: any) => p?.summary?.node_total > 0) || userProjectList[0]
+        setCurrentProject(curProject)
+        _id = curProject.project.id
       }
       fetchProjectNodes({ page: page, pageSize: rowsPerPage, projectId: _id })
     }

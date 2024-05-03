@@ -1,7 +1,7 @@
 "use client"
 import { GraphicsCard, GraphicsCardStatus } from "@/components/Icons"
 import { ArrowBackIosNew, Circle, Delete } from "@mui/icons-material"
-import { Box, Button, Typography, createSvgIcon, Divider, Backdrop, CircularProgress } from "@mui/material"
+import { Box, Button, Typography, createSvgIcon, Divider, Backdrop, CircularProgress, Avatar } from "@mui/material"
 import { Fragment, useEffect, useMemo, useState } from "react"
 import Header from "@/components/node-provider/Header"
 import { LogosUbuntu, NoAppChain } from "@/components/node-provider/Icons"
@@ -166,10 +166,15 @@ export default function Page({ params }: { params: { device: string } }) {
               </Typography>
             </Box>
             <Box className="flex flex-row gap-x-6 items-start">
-              {!nodeDetail?.project && (
+              {!nodeDetail?.project ? (
                 <Box className="flex items-center text-gray-100/50">
                   <NoAppChain className="text-base mr-1" />
                   <Typography>No Project</Typography>
+                </Box>
+              ) : (
+                <Box className="flex items-center text-gray-100/50">
+                  <Avatar src={nodeDetail.project.logo} sx={{ width: 24, height: 24 }} className="text-base mr-1" />
+                  <Typography>{nodeDetail.project.name}</Typography>
                 </Box>
               )}
               <Typography>
