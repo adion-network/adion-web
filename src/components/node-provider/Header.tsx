@@ -57,10 +57,10 @@ const Header = () => {
       <Backdrop open={isLogouting} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
-      <Box className="h-full flex justify-between items-center px-24">
+      <Box className="h-full flex justify-between items-center container mx-auto">
         <Box className="flex justify-between items-center">
           <Box className="w-full flex justify-start items-center space-x-4">
-            <Box className="px-10">
+            <Box>
               <LogoIconWithDotAi className="text-5xl w-full" />
             </Box>
             <Button
@@ -76,10 +76,8 @@ const Header = () => {
             <Button
               variant="text"
               startIcon={<ExplorerIcon />}
-              href="#"
-              className={`2xl:text-lg hover:bg-gray-100/20 px-6 ${
-                path === "/node-provider/explorer" && "bg-gray-100/20"
-              }`}
+              href="/explorer"
+              className={`2xl:text-lg hover:bg-gray-100/20 px-6 ${path.startsWith("/explorer") && "bg-gray-100/20"}`}
             >
               Explorer
             </Button>
@@ -119,30 +117,32 @@ const Header = () => {
           </Fragment>
         )}
       </Box>
-      <Box className="h-full flex justify-start space-x-8 items-center px-36">
-        <Link href="/node-provider/workers">
-          <Box
-            className={`border-b-2 ${
-              path.startsWith("/node-provider/workers")
-                ? "border-white text-white"
-                : " text-gray-400 border-b-transparent"
-            }  py-2 px-1 hover:border-gray-300 hover:text-white`}
-          >
-            Workers
-          </Box>
-        </Link>
-        <Link href="/node-provider/app-chain">
-          <Box
-            className={`border-b-2 ${
-              path.startsWith("/node-provider/app-chain")
-                ? "border-white text-white"
-                : " text-gray-400 border-b-transparent"
-            }  py-2 px-1 hover:border-gray-300 hover:text-white`}
-          >
-            App Chain
-          </Box>
-        </Link>
-      </Box>
+      {path.startsWith("/node-provider") && (
+        <Box className="h-full flex justify-start space-x-8 items-center container mx-auto">
+          <Link href="/node-provider/workers">
+            <Box
+              className={`border-b-2 ${
+                path.startsWith("/node-provider/workers")
+                  ? "border-white text-white"
+                  : " text-gray-400 border-b-transparent"
+              }  py-2 px-1 hover:border-gray-300 hover:text-white`}
+            >
+              Workers
+            </Box>
+          </Link>
+          <Link href="/node-provider/app-chain">
+            <Box
+              className={`border-b-2 ${
+                path.startsWith("/node-provider/app-chain")
+                  ? "border-white text-white"
+                  : " text-gray-400 border-b-transparent"
+              }  py-2 px-1 hover:border-gray-300 hover:text-white`}
+            >
+              App Chain
+            </Box>
+          </Link>
+        </Box>
+      )}
     </Box>
   )
 }

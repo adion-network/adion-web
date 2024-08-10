@@ -9,6 +9,14 @@ const nextConfig = {
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/chain/:path*",
+        destination: `${process.env.ADION_CHAIN}/:path*`,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

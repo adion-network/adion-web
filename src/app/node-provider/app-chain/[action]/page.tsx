@@ -218,7 +218,7 @@ export default function AppChain({ params }: { params: { action: string } }) {
       <Backdrop open={isProjectListFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
-      <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
+      <Box className="mx-auto container mt-20">
         <Box className="mb-4">
           <Button
             onClick={() => {

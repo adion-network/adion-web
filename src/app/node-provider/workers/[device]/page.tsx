@@ -115,7 +115,7 @@ export default function Page({ params }: { params: { device: string } }) {
       <Backdrop open={isNodeDetailFetching} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <CircularProgress />
       </Backdrop>
-      <Box hidden={isNodeDetailFetching} className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
+      <Box hidden={isNodeDetailFetching} className="mx-auto container mt-20">
         <Box className="flex flex-col space-y-4">
           <Box className="flex justify-start">
             <Button
@@ -208,13 +208,13 @@ export default function Page({ params }: { params: { device: string } }) {
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">
               <Typography variant="subtitle1">GPU</Typography>
               <Typography variant="body1" className="text-[#40B883]">
-                {filesize(nodeDetail?.gpu[0]?.memory || 0)} Memory
+                {filesize(nodeDetail?.gpu?.[0]?.memory || 0)} Memory
               </Typography>
               <Typography variant="body1" className="text-[#FF8A65]">
-                {nodeDetail?.gpu[0]?.temperature || "-"} Temperature
+                {nodeDetail?.gpu?.[0]?.temperature || "-"} Temperature
               </Typography>
               <Typography variant="body1" className="text-[#FAAE1A]">
-                {nodeDetail?.gpu[0]?.fan_speed || "-"} Fan speed
+                {nodeDetail?.gpu?.[0]?.fan_speed || "-"} Fan speed
               </Typography>
             </Box>
             <Box className="pl-6 py-4 rounded-lg bg-gray-100/10 flex flex-col">

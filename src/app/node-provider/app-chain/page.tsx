@@ -106,15 +106,15 @@ export default function List() {
   return (
     <Fragment>
       <Header />
-      <Box className="mx-auto 2xl:w-2/3 w-4/5 mt-20">
+      <Box className="mx-auto container mt-20">
         {isUserProjectListFetching ? (
-          <Box className="grid grid-cols-3 gap-4">
+          <Box className="grid md:grid-cols-3 gap-4">
             {Array.from({ length: 3 }, (_, index) => (
               <Skeleton className="h-36" key={`loading-project-${index}`}></Skeleton>
             ))}
           </Box>
         ) : (
-          <Box className="grid grid-cols-3 gap-4">
+          <Box className="grid md:grid-cols-3 gap-4">
             <ChainSummary
               logo={
                 <Box className="flex space-y-2 flex-col justify-center items-center text-inherit">
